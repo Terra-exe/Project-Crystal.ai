@@ -37,18 +37,10 @@ import tools.bineural as bineural
 ##################
 
 HOME_TITLE = r"Home"
-APP1_TITLE = r"App1"
-APP2_TITLE = r"App2"
-APP3_TITLE = r"App3"
-APP4_TITLE = r"App4"
 APP5_TITLE = r"App5"
 APP6_TITLE = r"App6"
 
 
-APP1_DESCRIPTION = r"Transcribe Youtube to Summary Audio"
-APP2_DESCRIPTION = r"Upload JSON to Audio"
-APP3_DESCRIPTION = r"Local audio gen"
-APP4_DESCRIPTION = r"Copy of - Transcribe Youtube to Summary Audio"
 APP5_DESCRIPTION = r"API Audio gen"
 APP6_DESCRIPTION = r"Audio / Bineural Merge"
 
@@ -60,121 +52,6 @@ APP6_DESCRIPTION = r"Audio / Bineural Merge"
 
 app = Flask(__name__)
 app.register_blueprint(webhook, url_prefix='/')
-
-@app.route("/")
-def index():
-    context = {
-        'app_title': HOME_TITLE + ' Inactive Page',
-        'app_header': HOME_TITLE + ' Inactive Page',
-        'form_action': '/submit' + HOME_TITLE,
-        'form_label': 'Enter text for ' + HOME_TITLE
-    }
-    return render_template("index.php", context=context)
-
-@app.route("/" + APP1_TITLE.lower())
-def app1():
-    context = {
-        'app_title': APP1_TITLE + ' ' + APP1_DESCRIPTION,
-        'app_header': APP1_TITLE + ' ' + APP1_DESCRIPTION,
-        'form_action': '/submit_' + APP1_TITLE,
-        'form_label': 'Enter YouTube URL for ' + APP1_TITLE
-    }
-    return render_template("app1.php", context=context)
-
-@app.route("/" + APP1_TITLE.lower() + "/list_summary_files")
-def list_summary_files():
-    path = r'\\server\python server\website\app_tools\summarization\summary_texts'
-    files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
-    return jsonify(files)
-
-
-@app.route('/' + APP1_TITLE.lower() + '/replay-summary', methods=['POST'])
-def replay_summary():
-    print("---Received POST to python---")
-    data = {}
-    try:
-        data = request.get_json() # get the JSON object from the request
-        summary_filename = os.path.join(r"\\server\python server\website\app_tools\summarization\summary_texts", data["filename"])
-        print("X!X!X!X!  "  +  summary_filename  + "    X!X!X!X!")
-        server_ip = "server"  # Replace with the actual IP address of the server
-        port = 13713  # Replace with the correct port number
-
-        send_string_to_server(server_ip, port, summary_filename)
-
-        
-    except Exception as e:
-        print(e)
-        return {"success": False}, 500 
-    
-    return "Success"
-
-
-@app.route("/" + APP2_TITLE.lower())
-def app2():
-    context = {
-        'app_title': APP2_TITLE + ' ' + APP2_DESCRIPTION,
-        'app_header': APP2_TITLE + ' ' + APP2_DESCRIPTION,
-        'form_action': '/submit_' + APP2_TITLE,
-        'form_label': 'Enter text for ' + APP2_TITLE
-    }
-    return render_template("app2.php", context=context)
-
-
-@app.route("/" + APP3_TITLE.lower())
-def app3():
-    context = {
-        'app_title': APP3_TITLE + ' ' + APP3_DESCRIPTION,
-        'app_header': APP3_TITLE + ' ' + APP3_DESCRIPTION,
-        'form_action': '/submit_' + APP3_TITLE,
-        'form_label': 'Enter text for ' + APP3_TITLE
-    }
-    return render_template(APP3_TITLE.lower() + ".php", context=context)
-
-@app.route("/" + APP3_TITLE.lower() + "/audio/crystal_demo")
-def serve_audio():
-    return send_file(r'\\server\python server\website\TTS\audios\demos\crystal_demo.wav', mimetype='audio/wav')
-
-@app.route('/' + APP3_TITLE.lower() + '/create-audio-file', methods=['POST'])
-def create_audio_file():
-    data = {}
-    try:
-        data = request.get_json() # get the JSON object from the request
-        print(data)
-        
-    except Exception as e:
-        print(e)
-        return {"success": False}, 500 
-
-    title = data["title"]
-
-    try:
-        # call your Python function to create the audio file
-        #audio_file_path = crystalTTS.create_audio_file_single_phrase(title, data)
-        print("\n\nJSON OUTPUT\n\n")
-        jsondata = kriya_json_builder.kriya_webformat_to_json(data)
-        audio_file_path = crystalTTS.json_to_audio(jsondata)
-        #print(jsondata)
-        print("\n\nJSON COMPLETE\n\n")
-        return f"audios\{title}"
-    except Exception as e:
-        print(e)
-        return {"success": False}, 500
-
-
-
-@app.route('/audios/<path:filename>', endpoint='audio_endpoint')
-def serve_audio(filename):
-    return send_from_directory('D:\\audios', filename + '_combined.wav', as_attachment=True)
-
-@app.route("/" + APP4_TITLE.lower())
-def app4():
-    context = {
-            'app_title': APP4_TITLE + ' ' + APP4_DESCRIPTION,
-            'app_header': APP4_TITLE + ' ' + APP4_DESCRIPTION,
-            'form_action': '/submit_' + APP4_TITLE,
-            'form_label': 'Enter text for ' + APP4_TITLE
-        }
-    return render_template(APP4_TITLE.lower() + ".php", context=context)
 
 @app.route("/" + APP5_TITLE.lower())
 def app5():    
