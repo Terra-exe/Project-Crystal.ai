@@ -1,15 +1,3 @@
-from flask import Flask
-app = Flask(__name__)
-
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-
-if __name__ == '__main__':
-    app.run()
-
-
-"""
 #############
 ###IMPORTS###
 #############
@@ -22,15 +10,6 @@ import contextlib
 import json
 import wave
 import math
-#sys.path.insert(1, r'\\SERVER\python server\Crystal_TTS')
-sys.path.insert(1, r'\\SERVER\d\audios')
-sys.path.insert(1, r'\\THE-DOCTOR\website')
-sys.path.insert(1, r'\\THE-DOCTOR\website\tools')
-
-#sys.path.append(r"C:\python server\Crystal_TTS")
-
-
-#sys.path.append(r"D:\audios")
 import io
 
 from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
@@ -38,6 +17,32 @@ from ifttt_webhook import webhook, run_app_script
 import TTS.crystal_tts as crystalTTS
 import json_builder.bin.kriya_json_builder as kriya_json_builder
 import tools.bineural as bineural
+
+#from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+if __name__ == '__main__':
+    app.run()
+
+
+"""
+
+#sys.path.insert(1, r'\\SERVER\python server\Crystal_TTS')
+sys.path.insert(1, r'\\SERVER\d\audios')
+sys.path.insert(1, r'\\THE-DOCTOR\website')
+sys.path.insert(1, r'\\THE-DOCTOR\website\tools')
+
+"""
+"""
+
+
+
+
+
 
 #disabled because the server can't handle.
 #import app_tools.transcription.bin.transcribe_audio as transcribe_audio
