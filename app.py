@@ -11,6 +11,8 @@ import json
 import wave
 import math
 import io
+import boto3
+from io import BytesIO
 
 #from flask import Flask
 from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
@@ -55,7 +57,23 @@ def app5():
 
 @app.route("/" + APP5_TITLE.lower() + "/audio/crystal_demo")
 def api_serve_audio():
-    return send_file(r'\\THE-DOCTOR\website\TTS\audios\demos\crystal_demo.wav', mimetype='audio/wav')
+    # Create a boto3 client
+    s3 = boto3.client('s3', region_name='us-west-2')
+
+    # Replace 'your_bucket_name' and 'path/to/your/file.wav'
+    # with your actual bucket name and file path inside the bucket
+    bucket_name = 'project-crystal'
+    key = 'audio/demos/simple/crystal_demo.wav'
+
+    # Download the file from S3 into an in-memory bytes buffer
+    file_obj = BytesIO()
+    s3.download_fileobj(bucket_name, key, file_obj)
+
+    # Serve the audio file
+    file_obj.seek(0)  # Move file pointer back to the beginning of the file
+    return send_file(file_obj, mimetype='audio/wav')
+
+    #return send_file(r'\\THE-DOCTOR\website\TTS\audios\demos\crystal_demo.wav', mimetype='audio/wav')
 
 
 
