@@ -1,0 +1,1105 @@
+{
+    "title": "kriya_for_transforming_the_lower_to_the_higher_triangle",
+    "kriya": [
+        {
+            "exercise": "1) Camel pose",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "To come into  camel pose"
+                        },
+                        {
+                            "substep": "sit on the heels and grab the ankles"
+                        },
+                        {
+                            "substep": "And Ark up"
+                        },
+                        {
+                            "substep": "Lifting the heart center upwards"
+                        },
+                        {
+                            "substep": "Letting the hips follow"
+                        },
+                        {
+                            "substep": "Lifting them as high as you can."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "The head is relaxed back"
+                        },
+                        {
+                            "substep": "With a light neck lock"
+                        },
+                        {
+                            "substep": "The chest is lifted."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin breath of fire powerfully."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Mentally inhale SAT"
+                        },
+                        {
+                            "substep": "And exhale NAAM."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Continue for 3 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Inhale And hold the breath for 10 seconds."
+                        },
+                        {
+                            "wait": {
+                                "value": "10",
+                                "timeframe": "s",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "In this position"
+                        },
+                        {
+                            "substep": "Begins Sat Kriya"
+                        },
+                        {
+                            "substep": "Sucking the navel point in as you say SAT"
+                        },
+                        {
+                            "substep": "Releasing it as you say NAAM."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Continue for 3 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "2) Knee and forehead balance",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Immediately bring the head forward to the ground."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Lock hands in Venus lock at the base of the spine."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Raise the feet and shins off the ground near the buttocks."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Balance on the knees and forehead and meditate at the brow point for 3 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "3) Knee and forehead balance with buttocks kick.",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "From position 2"
+                        },
+                        {
+                            "substep": "Bring the hands to the ground and extend the left leg straight back and up 60 degrees."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Start kicking the buttocks coordinated with breath of fire."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Continue for 2 minutes"
+                        },
+                        {
+                            "wait": {
+                                "value": "2",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Switch legs And repeat for 2 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "2",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "4) Celibate pose",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Immediately come into celibate pose"
+                        },
+                        {
+                            "substep": "with buttocks on the ground between the heels."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin long deep and slow breathing for 2 minutes"
+                        },
+                        {
+                            "wait": {
+                                "value": "2",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "5) Fish pose and celibate pose",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Sit as above and lie back on the ground."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Extend the hands straight up over the head Perpendicular to the ground"
+                        },
+                        {
+                            "substep": "With palms flat together."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin sat Kriya In this position for 3 to 5 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "6) Camel pose",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Come up into camel pose."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin long deep and slow breathing for 2 minutes"
+                        },
+                        {
+                            "wait": {
+                                "value": "2",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Inhale"
+                        },
+                        {
+                            "substep": "Hold briefly"
+                        },
+                        {
+                            "substep": "And with the exhale stretch forward into Guru Pranam."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "7) Guru Pranam",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "With a third eye point on the ground"
+                        },
+                        {
+                            "substep": "Extend the arms straight forward on the ground"
+                        },
+                        {
+                            "substep": "With the palms together."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "The elbows hug the ears."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Continue for 3 minutes in this position breathing deeply."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "8) Stretch pose sequence",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Lie on the back."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Engage the navel point and a strong root lock"
+                        },
+                        {
+                            "substep": "Rooting through the navel point and the sacrum"
+                        },
+                        {
+                            "substep": "So the lower back presses against the floor in order to protect the lower back."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Lift the head up"
+                        },
+                        {
+                            "substep": "Bring the feet 6 inches off the ground"
+                        },
+                        {
+                            "substep": "Toes pointed"
+                        },
+                        {
+                            "substep": "Fingers pointing towards the toes."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin breath of fire for 3 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Immediately begin to inhale deeply and lift the knees to the chest."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Exhale and lower the legs straight on the ground."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Continue with long"
+                        },
+                        {
+                            "substep": "Deep"
+                        },
+                        {
+                            "substep": "And slow breathing for 2 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "2",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "9) Shoulder stand",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Support the lower back with the hands and swing the legs up to the shoulder stand."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Support the spine with the hands"
+                        },
+                        {
+                            "substep": "Weigh on the elbows"
+                        },
+                        {
+                            "substep": "Not on the neck."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin breath of fire for 3 minutes."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "10) Plow pose",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "From shoulder stand"
+                        },
+                        {
+                            "substep": "Lower the legs over the head to the ground in plow pose"
+                        },
+                        {
+                            "substep": "And stretch the arms straight on the ground."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin breath of fire for 3 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Then raise the shoulder stand and again do breath of fire for 3 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Relax on the back."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "11) Stretch pose sequence",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Repeat exercise 8"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "12)",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Roll immediately onto the stomach and apply venous lock."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Interlace the hands together behind the back (Palms face the head)"
+                        },
+                        {
+                            "substep": "And lift the head and shoulders off the ground."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Lead with the heart center."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin breath of fire for 3 minutes and then Relax."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "13) Buttocks kicks",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "In the same position as exercise 12"
+                        },
+                        {
+                            "substep": "But the chest and Chin relaxed on the ground"
+                        },
+                        {
+                            "substep": "Begin to kick the buttocks with alternate legs."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Continue for 3 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "14) Bow pose",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Still on the stomach"
+                        },
+                        {
+                            "substep": "engage the naval point"
+                        },
+                        {
+                            "substep": "Root/ground Through the pubic bone."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "As you press down use the thighs and pull up so that the chest/heart Center and head rise as you reach back and grab the ankles."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Keep drawing the shoulder blades down the back"
+                        },
+                        {
+                            "substep": "And elongate the spine and neck."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Pull up so the navel and the sex organs are on the ground with the chest lifting out and up"
+                        },
+                        {
+                            "substep": "And the neck arched back."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Rock gently back and forth."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Continue for 2 to 3 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "2",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "15) Cobra pose",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin with the hands flat on the floor underneath the shoulders."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Elongate the spine stretch the head up and back"
+                        },
+                        {
+                            "substep": "Leading with the heart"
+                        },
+                        {
+                            "substep": "and drop the shoulders down."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Straighten the arms gradually without straining."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Relax your lower back."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Begin breath of fire for 3 minutes."
+                        },
+                        {
+                            "wait": {
+                                "value": "3",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Relax the stomach"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "exercise": "16) Butterfly pose",
+            "steps": [
+                {
+                    "substeps": [
+                        {
+                            "substep": "Sit up and bring the souls of the feet together  holding the feet together with both hands."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Rock back and forth in rhythm with the chant."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Make the spine elongated and aligned"
+                        },
+                        {
+                            "substep": "Rocking forward and back from the hip joint."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Movement is subtle and rhythmic."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "CHANT)"
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "gobinday mukunday udhaaray apaaray haree-ung karee-ung nirnaamay akaamay"
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Continue for 5 to 31 minutes."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "This is a chance of bliss and joy put your heart and lungs into it."
+                        },
+                        {
+                            "wait": {
+                                "value": "5",
+                                "timeframe": "m",
+                                "type": "waitLong"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Comments)"
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "If the energy in the lower triangle of chakras is not balanced or not allowed to transform to higher energy frequencies"
+                        },
+                        {
+                            "substep": "One is totally a slave to the whim of the body."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "This creates great difficulty with any form of discipline."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "the sexual potency of that person will be sporadic."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "This Kriya stimulates the energy of the lower triangle-Rectum"
+                        },
+                        {
+                            "substep": "Sex organs"
+                        },
+                        {
+                            "substep": "Naval point-and Transforms the energy into the higher brain structures:"
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Including the pituitary and pineal glands."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Breathing should be robust."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "relaxation between exercises is short."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Exercise is 1&6 Conquer the rule of hunger"
+                        },
+                        {
+                            "substep": "Thirst and poor digestion."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Exercises 2&3 Release energy to the brain and are known as Adi Shakti Chanlnee Kriya."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "It is said to give Clarity of thought and clear sparkling eyes."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Sciatica can be avoided."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Exercise for is for potency and exercise 5 eliminates wet dreams"
+                        },
+                        {
+                            "substep": "Enabling you to gain sensitivity to the truth in any situation."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "It creates alliance between your mind and soul so that your mind will never bow before the ego of any person."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "It gives you radiant power."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "In exercise 6 you will sweat."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Any pain that occurs can be a result of too much sexual activity or activity with the wrong frame of mind and tension."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Exercise 7 is for upper centers of the head."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Exercise 8 is for the naval point energy release."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Exercise 9/8 that digestion and elimination."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "Exercise 10 through 15 adjust the naval point and balance the aura"
+                        },
+                        {
+                            "substep": "Distributing the sexual energy smoothly."
+                        }
+                    ]
+                },
+                {
+                    "substeps": [
+                        {
+                            "substep": "After this Kriya"
+                        },
+                        {
+                            "substep": "meditation becomes automatic."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        },
+        {
+            "wait": {
+                "value": 20,
+                "timeframe": "s",
+                "type": "breakLong"
+            }
+        }
+    ]
+}
