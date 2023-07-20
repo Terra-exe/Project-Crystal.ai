@@ -31,14 +31,22 @@ APP5_DESCRIPTION = r"API Audio gen"
 APP6_DESCRIPTION = r"Audio / Bineural Merge"
 
 
+#from flask import Flask
+app = Flask(__name__)
 
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+if __name__ == '__main__':
+    app.run()
 
 
 ###########
 ###FLASK###
 ###########
 
-app = Flask(__name__)
+"""app = Flask(__name__)
 @app.route("/" + APP5_TITLE.lower())
 def app5():    
     context = {
@@ -98,7 +106,7 @@ def api_create_audio_file():
         return f"audios\{title}"
     except Exception as e:
         print(e)
-        return {"success": False}, 500
+        return {"success": False}, 500"""
     
 
 """
