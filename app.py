@@ -53,21 +53,11 @@ def app5():
         }
     return render_template(APP5_TITLE.lower() + ".php", context=context)
 
-
-"""app = Flask(__name__)
-@app.route("/" + APP5_TITLE.lower())
-def app5():    
-    context = {
-            'app_title': APP5_TITLE + ' ' + APP5_DESCRIPTION,
-            'app_header': APP5_TITLE + ' ' + APP5_DESCRIPTION,
-            'form_action': '/submit_' + APP5_TITLE,
-            'form_label': 'Enter text for ' + APP5_TITLE
-        }
-    return render_template(APP5_TITLE.lower() + ".php", context=context)
-
 @app.route("/" + APP5_TITLE.lower() + "/audio/crystal_demo")
 def api_serve_audio():
     return send_file(r'\\THE-DOCTOR\website\TTS\audios\demos\crystal_demo.wav', mimetype='audio/wav')
+
+
 
 @app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
 def api_create_audio_file():
@@ -114,7 +104,10 @@ def api_create_audio_file():
         return f"audios\{title}"
     except Exception as e:
         print(e)
-        return {"success": False}, 500"""
+        return {"success": False}, 500
+    
+"""
+"""
     
 
 """
