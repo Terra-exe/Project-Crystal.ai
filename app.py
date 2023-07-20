@@ -67,7 +67,11 @@ def api_serve_audio():
 
     # Download the file from S3 into an in-memory bytes buffer
     file_obj = BytesIO()
-    s3.download_fileobj(bucket_name, key, file_obj)
+    try:
+        # Download the file from S3 into an in-memory bytes buffer
+        s3.download_fileobj(bucket_name, key, file_obj)
+    except Exception as e:
+        print("An error occurred while downloading the file from S3: ", str(e))
 
     # Serve the audio file
     file_obj.seek(0)  # Move file pointer back to the beginning of the file
