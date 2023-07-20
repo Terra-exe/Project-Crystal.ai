@@ -51,8 +51,6 @@ APP6_DESCRIPTION = r"Audio / Bineural Merge"
 ###########
 
 app = Flask(__name__)
-app.register_blueprint(webhook, url_prefix='/')
-
 @app.route("/" + APP5_TITLE.lower())
 def app5():    
     context = {
@@ -208,3 +206,5 @@ def get_audio_length(audio_file_path):
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
     app.run(debug=True)
+
+application = app
