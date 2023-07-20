@@ -58,7 +58,12 @@ def app5():
 @app.route("/" + APP5_TITLE.lower() + "/audio/crystal_demo")
 def api_serve_audio():
     # Create a boto3 client
-    s3 = boto3.client('s3', region_name='us-west-2')
+    s3 = boto3.client(
+        's3',
+        region_name='us-west-2',
+        aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+        aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+    )
 
     # Replace 'your_bucket_name' and 'path/to/your/file.wav'
     # with your actual bucket name and file path inside the bucket
