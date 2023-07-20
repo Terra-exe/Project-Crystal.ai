@@ -1,53 +1,6 @@
 import json
-import sys
-sys.path.insert(1, r'\\server\python server\Bambi Voice API\json_builder\bin')
-#sys.path.append(r"C:\python server\website\json_builder\bin")
 import stringCleanup
 
-import string
-SOURCE_FOLDER = "C:\\python server\\Bambi Voice API\\json_builder\\src\\"
-OUTPUT_FOLDER = "C:\\python server\\Bambi Voice API\\json_builder\\output\\"
-
-def kriya_file_to_json(filename, title, defaultBreakLong, defaultWaitLong, defaultPauseMedium, defaultPauseShort, speed):
-    data = {"title": title, "kriya": []}
-    with open(filename, "r") as file:
-        for line in file:
-            setTime = False
-            setCommaPause = False
-            setPeriodPause = False
-            setNewLine = False
-
-            if line.strip() == "":  # break for empty lines
-                setNewLine = True
-                defineTime = {"value": defaultBreakLong, "timeframe": "s", "type": "breakLong"}
-                wait = {"wait": defineTime}
-                data["kriya"].append(wait)
-                continue
-
-            if line.startswith("#"):  # if line starts with "#" it's a time marker
-                line = line.rstrip('\n')
-                value = line[1:-2]
-                timeframe = line[-2:-1]
-            
-                defineTime = {"value": value, "timeframe": timeframe, "type": "waitLong"}
-                wait = {"wait": defineTime}
-                step["substeps"].append(wait)
-                continue
-
-            if line and line[0].isdigit():  # if line starts with a number, it's a new exercise
-                exercise = {"exercise": line.strip(), "steps": []}
-                data["kriya"].append(exercise)
-            else:
-                step = {"substeps": []}
-                parts = line.strip().split(", ")
-                for part in parts:
-                    substep = {"substep": part}
-                    step["substeps"].append(substep)
-                exercise["steps"].append(step)
-
-    # output the data in JSON format
-    with open(OUTPUT_FOLDER + "output.json", "w") as f:
-        f.write(json.dumps(data, indent=4))
 
 def kriya_webformat_to_json(obj):
     
@@ -56,10 +9,6 @@ def kriya_webformat_to_json(obj):
     defaultNewLine = obj["newline_pause"]
     defaultNewSectionPause = obj["newsection_pause"]
 
-   # print("##############")
-  #  print(defaultComma)
-   # print(obj["period_pause"])
-   # print("##############")
     title = obj["title"] + ".json"
     json_dict = {}
 
@@ -164,15 +113,3 @@ def processText(inputText, comma, period, newLine):
     result = substeps
 
     return result
-
-
-def run_from_file(file, title):
-    filename = SOURCE_FOLDER + file
-    kriya_file_to_json(filename, title, 20, 10, 5, 2, 1)
-
-def run_from_web(title, defaultBreakLong, defaultWaitLong, defaultPauseMedium, defaultPauseShort, speed):
-    tmptxt = SOURCE_FOLDER + title
-    #kriya_obj_to_json(tmptxt, title, defaultBreakLong, defaultWaitLong, defaultPauseMedium, defaultPauseShort, speed)
-
-#if __name__ == "__main__":
-    #run_from_file("kriya_for_transforming_the_lower_to_the_higher_triangle.txt", "kriya_for_transforming_the_lower_to_the_higher_triangle")

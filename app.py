@@ -14,8 +14,6 @@ import io
 
 #from flask import Flask
 from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
-#from ifttt_webhook import webhook, run_app_script
-#import TTS.crystal_tts as crystalTTS
 import json_builder.bin.kriya_json_builder as kriya_json_builder
 #import tools.bineural as bineural
 
