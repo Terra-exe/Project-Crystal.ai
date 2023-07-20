@@ -12,11 +12,30 @@ import wave
 import math
 import io
 
+#from flask import Flask
 from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
-from ifttt_webhook import webhook, run_app_script
-import TTS.crystal_tts as crystalTTS
-import json_builder.bin.kriya_json_builder as kriya_json_builder
-import tools.bineural as bineural
+#from ifttt_webhook import webhook, run_app_script
+#import TTS.crystal_tts as crystalTTS
+#import json_builder.bin.kriya_json_builder as kriya_json_builder
+#import tools.bineural as bineural
+
+
+##################
+###MAIN GLOBALS###
+##################
+
+HOME_TITLE = r"Home"
+APP5_TITLE = r"App5"
+APP6_TITLE = r"App6"
+
+
+APP5_DESCRIPTION = r"API Audio gen"
+APP6_DESCRIPTION = r"Audio / Bineural Merge"
+
+
+
+
+
 
 #from flask import Flask
 app = Flask(__name__)
@@ -41,25 +60,6 @@ sys.path.insert(1, r'\\THE-DOCTOR\website\tools')
 
 
 
-
-
-
-#disabled because the server can't handle.
-#import app_tools.transcription.bin.transcribe_audio as transcribe_audio
-#import ai_models.SummarizeAI.bin.summaryai as summary_ai
-
-
-##################
-###MAIN GLOBALS###
-##################
-
-HOME_TITLE = r"Home"
-APP5_TITLE = r"App5"
-APP6_TITLE = r"App6"
-
-
-APP5_DESCRIPTION = r"API Audio gen"
-APP6_DESCRIPTION = r"Audio / Bineural Merge"
 
 
 
