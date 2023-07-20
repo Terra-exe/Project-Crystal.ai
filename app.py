@@ -34,17 +34,25 @@ APP6_DESCRIPTION = r"Audio / Bineural Merge"
 #from flask import Flask
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-
-if __name__ == '__main__':
-    app.run()
-
 
 ###########
 ###FLASK###
 ###########
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+@app.route("/" + APP5_TITLE.lower())
+def app5():    
+    context = {
+            'app_title': APP5_TITLE + ' ' + APP5_DESCRIPTION,
+            'app_header': APP5_TITLE + ' ' + APP5_DESCRIPTION,
+            'form_action': '/submit_' + APP5_TITLE,
+            'form_label': 'Enter text for ' + APP5_TITLE
+        }
+    return render_template(APP5_TITLE.lower() + ".php", context=context)
+
 
 """app = Flask(__name__)
 @app.route("/" + APP5_TITLE.lower())
@@ -232,3 +240,6 @@ if __name__ == "__main__":
 application = app
 
 """
+
+if __name__ == '__main__':
+    app.run()
