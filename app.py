@@ -300,7 +300,7 @@ def convert_text_to_speech():
     
     return jsonify({'message': 'Success'})
 
-@app.route('/create_hello_world_audio', methods=['POST'])
+@app.route('/create_hello_world_audio')
 def create_hello_world_audio():
     # Initialize clients for Polly and S3
     polly = boto3.client('polly', region_name='us-west-2')
