@@ -1,5 +1,6 @@
 import json
-import stringCleanup
+from . import stringCleanup
+
 
 
 def kriya_webformat_to_json(obj):
