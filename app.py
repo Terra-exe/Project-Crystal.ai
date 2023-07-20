@@ -62,8 +62,8 @@ def api_serve_audio():
 
     # Replace 'your_bucket_name' and 'path/to/your/file.wav'
     # with your actual bucket name and file path inside the bucket
-    bucket_name = 'project-crystal'
-    key = 'audio/demos/simple/crystal_demo.wav'
+    bucket_name = 'project-crystal-public'
+    key = 'audio/demo/voice demo/crystal_demo.wav'
 
     # Download the file from S3 into an in-memory bytes buffer
     file_obj = BytesIO()
