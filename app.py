@@ -318,7 +318,13 @@ def create_hello_world_audio():
     # If we have an audiostream in the response
     if "AudioStream" in response:
         with closing(response["AudioStream"]) as stream:
-            output = os.path.join("/tmp", s3_key)
+            dir_path = "/tmp/audio-dumps/audio-gen-files"
+
+            # Check if the directories exist, and create them if they do not
+            if not os.path.exists(dir_path):
+                os.makedirs(dir_path)
+
+            output = os.path.join(dir_path, 'hello_world.wav')
 
             try:
                 # Open a file for writing the output as a binary stream
