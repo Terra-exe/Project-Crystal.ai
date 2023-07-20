@@ -16,7 +16,7 @@ import io
 from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
 #from ifttt_webhook import webhook, run_app_script
 #import TTS.crystal_tts as crystalTTS
-#import json_builder.bin.kriya_json_builder as kriya_json_builder
+import json_builder.bin.kriya_json_builder as kriya_json_builder
 #import tools.bineural as bineural
 
 
@@ -31,33 +31,6 @@ APP6_TITLE = r"App6"
 
 APP5_DESCRIPTION = r"API Audio gen"
 APP6_DESCRIPTION = r"Audio / Bineural Merge"
-
-
-
-
-
-
-#from flask import Flask
-app = Flask(__name__)
-
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-
-if __name__ == '__main__':
-    app.run()
-
-
-"""
-
-#sys.path.insert(1, r'\\SERVER\python server\Crystal_TTS')
-sys.path.insert(1, r'\\SERVER\d\audios')
-sys.path.insert(1, r'\\THE-DOCTOR\website')
-sys.path.insert(1, r'\\THE-DOCTOR\website\tools')
-
-"""
-"""
-
 
 
 
@@ -128,6 +101,32 @@ def api_create_audio_file():
     except Exception as e:
         print(e)
         return {"success": False}, 500
+    
+
+"""
+#from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+if __name__ == '__main__':
+    app.run()
+"""
+
+"""
+
+#sys.path.insert(1, r'\\SERVER\python server\Crystal_TTS')
+sys.path.insert(1, r'\\SERVER\d\audios')
+sys.path.insert(1, r'\\THE-DOCTOR\website')
+sys.path.insert(1, r'\\THE-DOCTOR\website\tools')
+
+"""
+"""
+
+
+
 
 
 
