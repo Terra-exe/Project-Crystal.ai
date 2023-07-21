@@ -563,7 +563,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     polly_client = boto3.client('polly', region_name='us-west-2')
     response = polly_client.synthesize_speech(
                     VoiceId='Salli',
-                    OutputFormat='wav',
+                    OutputFormat='mp3',
                     Text=text
                 )
 
