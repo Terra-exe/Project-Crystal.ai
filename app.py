@@ -562,6 +562,7 @@ def write_to_s3(bucket_name, s3_key, data):
     object.put(Body=data)
 
 def tts_and_save_to_s3(bucket_name, s3_key, text):
+    print("about to write to S3 with poly")
     polly_client = boto3.client('polly', region_name='us-west-2')
     response = polly_client.synthesize_speech(
                     VoiceId='Salli',
@@ -570,7 +571,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
                 )
     # The response's 'AudioStream' body contains the audio data in the specified format
     audio_data = response['AudioStream'].read()
-
+    print("read audio steam")
     # Save directly to an object in an S3 bucket
     write_to_s3(bucket_name, s3_key, audio_data)
                     
