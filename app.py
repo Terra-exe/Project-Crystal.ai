@@ -114,7 +114,7 @@ def api_create_audio_file():
         # Make sure jsondata is serializable
         try:
             jsondata = kriya_json_builder.kriya_webformat_to_json(data)
-            url = r"https://project-crystal-19ff85f9ac04.herokuapp.com/convert_text_to_speech"
+            url = r"http://192.168.0.34:5001/bambi-tts-api"
             headers = {'Content-Type': 'application/json'}
             
             # Send the request to create the tts-audio
@@ -267,7 +267,7 @@ application = app
 
 """
 
-@app.route('/convert_text_to_speech', methods=['POST'])
+@app.route('/' + APP5_TITLE.lower() + '/convert_text_to_speech', methods=['POST'])
 def convert_text_to_speech():
     # Initialize clients for Polly and S3
     polly = boto3.client('polly', region_name='us-west-2')

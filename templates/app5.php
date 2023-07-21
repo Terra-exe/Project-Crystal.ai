@@ -500,7 +500,7 @@
             console.log('count 1');
             // send an AJAX request to the call the Python function
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/app5/create-audio-file', true);
+            xhr.open('POST', '/app5/convert_text_to_speech'', true);
            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.setRequestHeader('Content-Type', 'application/json');
             console.log('count 2');
