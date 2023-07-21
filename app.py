@@ -389,7 +389,7 @@ def api_create_audio_file():
                             # Increment counter
                             i+=1
                             created_files += 1
-                            file_counter += 1
+                            file_counter += 1 
 
                             # Print progress every 100 files
                             if created_files % 10 == 0:
