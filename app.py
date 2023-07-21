@@ -384,9 +384,8 @@ def api_create_audio_file():
                             #segment_full_file_path = os.path.join(dump_dir_path, segment_filename)
                             
                             # Using Amazon Polly for text-to-speech, value = text
-                            tts_and_save_to_s3(bucket_name, s3_key, value)
-                            #response = polly.synthesize_speech( VoiceId='Salli', OutputFormat='wav', Text=value)
-                                
+                            tts_and_save_to_s3(bucket_name, segment_filename, value)
+
                             # Increment counter
                             i+=1
                             created_files += 1
