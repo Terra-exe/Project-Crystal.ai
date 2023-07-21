@@ -92,7 +92,7 @@ def api_serve_audio():
 
 
 
-@app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
+@app.route('/' + APP5_TITLE.lower() + '/xcreate-audio-file', methods=['POST'])
 def api_create_audio_file():
     data = {}
     try:
@@ -267,7 +267,7 @@ application = app
 
 """
 
-@app.route('/' + APP5_TITLE.lower() + '/convert_text_to_speech', methods=['POST'])
+@app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
 def convert_text_to_speech():
     input_json = {}
 
