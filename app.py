@@ -269,6 +269,14 @@ application = app
 
 @app.route('/' + APP5_TITLE.lower() + '/convert_text_to_speech', methods=['POST'])
 def convert_text_to_speech():
+    input_json = {}
+
+    print("\n\n---------GENERATING JSON---------\n\n")
+    print("\n\n---------GENERATING JSON---------\n\n")
+    print("\n\n---------GENERATING JSON---------\n\n")
+
+    
+
     # Initialize clients for Polly and S3
     polly = boto3.client('polly', region_name='us-west-2')
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
