@@ -377,7 +377,7 @@ def api_create_audio_file():
                     # Is it a string?
                     if (type(value) == str): 
                         try:
-                            print("yes it's a string")
+
                             value_cut = re.sub(r'[^a-zA-Z0-9\s]+', '', value[:50])
                             value_cut = re.sub(r'\s+', ' ', value_cut)
 
@@ -385,8 +385,7 @@ def api_create_audio_file():
                             #segment_full_file_path = os.path.join(dump_dir_path, segment_filename)
                             
                             # Using Amazon Polly for text-to-speech, value = text
-                            tts_and_save_to_s3(bucket_name, segment_filename, value)
-                            print("saved to s3")
+                            tts_and_save_to_s3(bucket_name, s3_gen_file_key + segment_filename, value)
                             # Increment counter
                             i+=1
                             created_files += 1
@@ -562,7 +561,6 @@ def write_to_s3(bucket_name, s3_key, data):
     object.put(Body=data)
 
 def tts_and_save_to_s3(bucket_name, s3_key, text):
-    print("about to write to S3 with poly")
     polly_client = boto3.client('polly', region_name='us-west-2')
     response = polly_client.synthesize_speech(
                     VoiceId='Salli',
@@ -571,7 +569,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
                 )
     # The response's 'AudioStream' body contains the audio data in the specified format
     audio_data = response['AudioStream'].read()
-    print("read audio steam")
+
     # Save directly to an object in an S3 bucket
     write_to_s3(bucket_name, s3_key, audio_data)
                     
