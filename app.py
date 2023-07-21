@@ -270,13 +270,25 @@ application = app
 
 @app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
 def api_create_audio_file():
+
+    # Path to audio-gen directory
+    dir_path = "/tmp/audio-dumps/audio-gen-files"
+    # Check if audio-gen directory exists, create one if not
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+
+    # Path to error file directory
+    error_dir_path = "/tmp/audio-dumps/audio-gen-files"
+    # Check if error file directory exists, create one if not
+    if not os.path.exists(error_dir_path):
+        os.makedirs(error_dir_path)
+
     input_json = {}
 
     print("\n\n---------GENERATING JSON---------\n\n")
     print("\n\n---------GENERATING JSON---------\n\n")
     print("\n\n---------GENERATING JSON---------\n\n")
 
-    
 
     # Initialize clients for Polly and S3
     polly = boto3.client('polly', region_name='us-west-2')
@@ -288,6 +300,12 @@ def api_create_audio_file():
     error_file_path = os.path.join("/tmp", s3_key_error)
 
     try:
+        dir_path = "/tmp/audio-dumps/audio-gen-files"
+
+        # Check if the directories exist, and create them if they do not
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+
 
         # Getting JSON data from the POST request
         input_json = request.get_json()
