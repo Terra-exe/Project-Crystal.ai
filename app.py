@@ -567,7 +567,11 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
                     OutputFormat='mp3',
                     Text=text
                 )
+    # The response's 'AudioStream' body contains the audio data in the specified format
+    audio_data = response['AudioStream'].read()
 
+    # Save directly to an object in an S3 bucket
+    write_to_s3(bucket_name, s3_key, audio_data)
                     
 if __name__ == '__main__':
     app.run()
