@@ -11,10 +11,11 @@ import json
 import wave
 import math
 import io
+import re
 import boto3
 from contextlib import closing
 from io import BytesIO
-
+from pydub import AudioSegment
 
 
 
@@ -291,11 +292,13 @@ def api_create_audio_file():
 
 
     # Initialize clients for Polly and S3
-    polly = boto3.client('polly', region_name='us-west-2')
+    polly = boto3.client('polly', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     bucket_name = 'crystal-audio-processing'
     s3_key = 'audio-dumps/audio-gen-files/Kriya.wav'
+    s3_gen_file_key = r'audio-dumps/audio-gen-files/'
     s3_key_json = 'audio-dumps/audio-gen-files/json_input.json'
+    s3_key_json_kriya = 'audio-dumps/audio-gen-files/json__kriya.json'
     s3_key_error = 'audio-dumps/audio-gen-files/error.txt'
     error_file_path = os.path.join("/tmp", s3_key_error)
 
@@ -329,6 +332,15 @@ def api_create_audio_file():
 
     #Make sure jsondata is serializable
     jsondata = kriya_json_builder.kriya_webformat_to_json(input_json)
+    
+    # Save the JSON data to a file and upload the file to S3
+    json_kriya_file_path = os.path.join("/tmp", s3_key_json_kriya)
+    with open(json_kriya_file_path, 'w') as json_kriya_file:
+        json.dump(jsondata, json_kriya_file)
+
+    # Upload JSON file to S3
+    s3.upload_file(json_file_path, bucket_name, s3_key_json_kriya)
+
     # Create Kriya object
     try:
         kriya_obj = kriya_object.create_kriya_obj_from_json(jsondata)
@@ -338,10 +350,84 @@ def api_create_audio_file():
             s3.upload_file(error_file_path, bucket_name, s3_key_error)
             print(f"Error during Text-To-Speech: {e2}")
         return jsonify({'message': f'Error decoding JSON: {e2}'}), 400
+    
+
+    filename = kriya_obj.title.replace(".json", "")
+    print("\n---\n")
+
+    audio_segments = []
+    i = 1
+
+    # Get total expected files
+    total_files = sum(1 for kriya in jsondata['kriya'] for step in kriya['steps'] for substep in step['substeps'] for key in substep if key.startswith("substep"))
+    
+    # Create a counter for created files
+    created_files = 0
+    print(f"Total files: 0 of {total_files}")
+    print(f"Segment Creation Progress: {created_files / total_files * 100:.2f}%")
+
+    checkpoint_counter = 1
+    file_counter = 0
+
+
+    for e_array_counter, e_array in enumerate(kriya_obj.kriya, start=1):
+        for e_counter, exercise in enumerate(e_array.steps, start=1):
+            for s_counter, substep in enumerate(exercise.substeps, start=1):
+                for ss_counter, (key, value) in enumerate(substep.__dict__.items(), start=1):
+                    # Is it a string?
+                    if (type(value) == str): 
+                        try:
+                            value_cut = re.sub(r'[^a-zA-Z0-9\s]+', '', value[:50])
+                            value_cut = re.sub(r'\s+', ' ', value_cut)
+
+                            segment_filename = f"genfile_{filename}_{i}_#_{value_cut}.wav"
+                            #segment_full_file_path = os.path.join(dump_dir_path, segment_filename)
+                            
+                            # Using Amazon Polly for text-to-speech, value = text
+                            tts_and_save_to_s3(bucket_name, s3_key, value)
+                            #response = polly.synthesize_speech( VoiceId='Salli', OutputFormat='wav', Text=value)
+                                
+                            # Increment counter
+                            i+=1
+                            created_files += 1
+                            file_counter += 1
+
+                            # Print progress every 100 files
+                            if created_files % 10 == 0:
+                                print(f"Segment Creation Progress: {created_files / total_files * 100:.2f}%")
+
+                            # This might be removable
+                            if file_counter % 500 == 0:
+                                checkpoint_counter += 1
+                                file_counter = 0
+
+                        except Exception as e4:
+                            with open(error_file_path, 'w') as error_file:
+                                error_file.write(str(e4))
+                            s3.upload_file(error_file_path, bucket_name, s3_key_error)
+                            print(f"Error during conversion to speech: {e4}")
+                            return jsonify({'message': f'Error during conversion to speech: {e4}'}), 500
+                    
+                    elif (isinstance(value, dict) and \
+                        (value['type'] == "pauseMedium" or value['type'] == "pauseShort" or value['type'] == "waitLong" or value['type'] == "breakLong")):
+                        
+                        segment_filename_s3 = f"genfile_{filename}_{i}_#_{value['type']}.wav"
+                        segment_filename_local = generate_silent_file(int(float(value['value']) * 1000), "/tmp/silence.wav")
+                        upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
+                        i+=1
+            
+            if hasattr(e_array, 'wait'):
+                for wait in e_array.wait:
+                    segment_filename_s3 = f"genfile_{filename}_{i}_#_{value['type']}.wav"
+                    segment_filename_local = generate_silent_file(int(float(wait.value) * 1000), "/tmp/silence.wav")
+                    upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
+                    i+=1
+                        
+
 
     # Use Amazon Polly to convert the text to speech
     try:
-        response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='mp3', VoiceId='Salli')
+        response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='wav', VoiceId='Salli')
         
     except Exception as e3:
         with open(error_file_path, 'w') as error_file:
@@ -455,6 +541,32 @@ def create_hello_world_audio():
     return jsonify({'message': 'Success'})
 
 """
+# Step 1: Generate the silent segment
+def generate_silent_file(duration_milliseconds, filename):
+    silence = AudioSegment.silent(duration=duration_milliseconds)
+    # Export to wav
+    silence.export(filename, format="wav")
+    return filename
+    
 
+# Step 2: Upload the silent segment to S3
+def upload_to_s3(bucket_name, s3_key, file_path):
+    s3 = boto3.client('s3')
+    s3.upload_file(file_path, bucket_name, s3_key)
+
+def write_to_s3(bucket_name, s3_key, data):
+    s3 = boto3.resource('s3')
+    object = s3.Object(bucket_name, s3_key)
+    object.put(Body=data)
+
+def tts_and_save_to_s3(bucket_name, s3_key, text):
+    polly_client = boto3.client('polly', region_name='us-west-2')
+    response = polly_client.synthesize_speech(
+                    VoiceId='Salli',
+                    OutputFormat='wav',
+                    Text=text
+                )
+
+                    
 if __name__ == '__main__':
     app.run()
