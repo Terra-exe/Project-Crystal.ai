@@ -90,7 +90,7 @@ def api_serve_audio():
 
     #return send_file(r'\\THE-DOCTOR\website\TTS\audios\demos\crystal_demo.wav', mimetype='audio/wav')
 
-
+"""
 
 @app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
 def api_create_audio_file():
@@ -139,6 +139,7 @@ def api_create_audio_file():
         print(e)
         return {"success": False}, 500
     
+"""
 """
 """
     
@@ -267,8 +268,8 @@ application = app
 
 """
 
-@app.route('/' + APP5_TITLE.lower() + '/convert_text_to_speech', methods=['POST'])
-def convert_text_to_speech():
+@app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
+def api_create_audio_file():
     input_json = {}
 
     print("\n\n---------GENERATING JSON---------\n\n")
