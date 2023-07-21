@@ -411,14 +411,16 @@ def api_create_audio_file():
                     elif (isinstance(value, dict) and \
                         (value['type'] == "pauseMedium" or value['type'] == "pauseShort" or value['type'] == "waitLong" or value['type'] == "breakLong")):
                         
-                        segment_filename_s3 = f"genfile_{filename}_{i}_#_{value['type']}.mp3"
+                        silent_type = value['type']
+                        segment_filename_s3 = f"genfile_{filename}_{i}_#_{silent_type}.mp3"
                         segment_filename_local = generate_silent_file(int(float(value['value']) * 1000), "/tmp/silence.mp3")
                         upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                         i+=1
             
             if hasattr(e_array, 'wait'):
                 for wait in e_array.wait:
-                    segment_filename_s3 = f"genfile_{filename}_{i}_#_{value['type']}.mp3"
+                    silent_type = value['type']
+                    segment_filename_s3 = f"genfile_{filename}_{i}_#_{silent_type}.mp3"
                     segment_filename_local = generate_silent_file(int(float(wait.value) * 1000), "/tmp/silence.mp3")
                     upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                     i+=1
