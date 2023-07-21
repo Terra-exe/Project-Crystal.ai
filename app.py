@@ -295,7 +295,7 @@ def api_create_audio_file():
     polly = boto3.client('polly', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     bucket_name = 'crystal-audio-processing'
-    s3_key = 'audio-dumps/audio-gen-files/Kriya.wav'
+    s3_key = 'audio-dumps/audio-gen-files/Kriya.mp3'
     s3_gen_file_key = r'audio-dumps/audio-gen-files/'
     s3_key_json = 'audio-dumps/audio-gen-files/json_input.json'
     s3_key_json_kriya = 'audio-dumps/audio-gen-files/json__kriya.json'
@@ -380,7 +380,7 @@ def api_create_audio_file():
                             value_cut = re.sub(r'[^a-zA-Z0-9\s]+', '', value[:50])
                             value_cut = re.sub(r'\s+', ' ', value_cut)
 
-                            segment_filename = f"genfile_{filename}_{i}_#_{value_cut}.wav"
+                            segment_filename = f"genfile_{filename}_{i}_#_{value_cut}.mp3"
                             #segment_full_file_path = os.path.join(dump_dir_path, segment_filename)
                             
                             # Using Amazon Polly for text-to-speech, value = text
@@ -411,15 +411,15 @@ def api_create_audio_file():
                     elif (isinstance(value, dict) and \
                         (value['type'] == "pauseMedium" or value['type'] == "pauseShort" or value['type'] == "waitLong" or value['type'] == "breakLong")):
                         
-                        segment_filename_s3 = f"genfile_{filename}_{i}_#_{value['type']}.wav"
-                        segment_filename_local = generate_silent_file(int(float(value['value']) * 1000), "/tmp/silence.wav")
+                        segment_filename_s3 = f"genfile_{filename}_{i}_#_{value['type']}.mp3"
+                        segment_filename_local = generate_silent_file(int(float(value['value']) * 1000), "/tmp/silence.mp3")
                         upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                         i+=1
             
             if hasattr(e_array, 'wait'):
                 for wait in e_array.wait:
-                    segment_filename_s3 = f"genfile_{filename}_{i}_#_{value['type']}.wav"
-                    segment_filename_local = generate_silent_file(int(float(wait.value) * 1000), "/tmp/silence.wav")
+                    segment_filename_s3 = f"genfile_{filename}_{i}_#_{value['type']}.mp3"
+                    segment_filename_local = generate_silent_file(int(float(wait.value) * 1000), "/tmp/silence.mp3")
                     upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                     i+=1
                         
@@ -427,7 +427,7 @@ def api_create_audio_file():
 
     # Use Amazon Polly to convert the text to speech
     try:
-        response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='wav', VoiceId='Salli')
+        response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='mp3', VoiceId='Salli')
         
     except Exception as e3:
         with open(error_file_path, 'w') as error_file:
