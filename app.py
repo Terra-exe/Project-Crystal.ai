@@ -284,7 +284,7 @@ def api_create_audio_file():
         os.makedirs(error_dir_path)
 
     input_json = {}
-
+    
     print("\n\n---------GENERATING JSON---------\n\n")
     print("\n\n---------GENERATING JSON---------\n\n")
     print("\n\n---------GENERATING JSON---------\n\n")
@@ -326,9 +326,12 @@ def api_create_audio_file():
         print(f"Error saving JSON: {e1}")
         return jsonify({'message': f'Error saving JSON: {e1}'}), 500
     
+
+    #Make sure jsondata is serializable
+    jsondata = kriya_json_builder.kriya_webformat_to_json(input_json)
     # Create Kriya object
     try:
-        kriya_obj = kriya_object.create_kriya_obj_from_json(input_json)
+        kriya_obj = kriya_object.create_kriya_obj_from_json(jsondata)
     except json.JSONDecodeError as e2:
         with open(error_file_path, 'w') as error_file:
             error_file.write(str(e2))
