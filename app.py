@@ -298,7 +298,7 @@ def api_create_audio_file():
     s3_key = 'audio-dumps/audio-gen-files/Kriya.mp3'
     s3_gen_file_key = r'audio-dumps/audio-gen-files/'
     s3_key_json = 'audio-dumps/audio-gen-files/json_input.json'
-    s3_key_json_kriya = 'audio-dumps/audio-gen-files/json__kriya.json'
+    s3_key_json_kriya = 'audio-dumps/audio-gen-files/json_kriya.json'
     s3_key_error = 'audio-dumps/audio-gen-files/error.txt'
     error_file_path = os.path.join("/tmp", s3_key_error)
 
@@ -377,6 +377,7 @@ def api_create_audio_file():
                     # Is it a string?
                     if (type(value) == str): 
                         try:
+                            print("yes it's a string")
                             value_cut = re.sub(r'[^a-zA-Z0-9\s]+', '', value[:50])
                             value_cut = re.sub(r'\s+', ' ', value_cut)
 
