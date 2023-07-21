@@ -386,7 +386,7 @@ def api_create_audio_file():
                             
                             # Using Amazon Polly for text-to-speech, value = text
                             tts_and_save_to_s3(bucket_name, segment_filename, value)
-
+                            print("saved to s3")
                             # Increment counter
                             i+=1
                             created_files += 1
