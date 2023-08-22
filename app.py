@@ -313,9 +313,13 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     # Save directly to an object in an S3 bucket
     write_to_s3(bucket_name, s3_key, audio_data)
                     
-if __name__ == '__main__':
-    app.run()
 
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        port = int(sys.argv[1])
+    else:
+        port = 8000
+    app.run(host='0.0.0.0', port=port)
 
 
 
