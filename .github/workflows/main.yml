@@ -16,4 +16,4 @@ jobs:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_KEY }}
-        script: /path/to/your/deploy.sh
+        script: /opt/my_app/deploy.sh
