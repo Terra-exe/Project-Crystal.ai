@@ -26,6 +26,6 @@ jobs:
     - name: Deploy to Server
       run: |
         # Include your Gunicorn deployment command here:
-        gunicorn -w 4 -b 0.0.0.0:8000 <application>:<flask-app>
+        gunicorn -w 4 -b 0.0.0.0:8000 app:app
       env:
         SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
