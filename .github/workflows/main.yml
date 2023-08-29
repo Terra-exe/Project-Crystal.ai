@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set up SSH
+      run: |
+        echo "${{ secrets.SERVER_SSH_KEY }}" > id_rsa
+        chmod 600 id_rsa
+        sudo apt-get install -y ssh rsync
+
+    - name: Deploy to server
+      env:
+        USER: ec2-user
+        HOST: ec2-34-221-254-181.us-west-2.compute.amazonaws.com
+        TARGET_DIR: /opt/my_app
+      run: |
+        rsync -av --delete -e 'ssh -i id_rsa -o "StrictHostKeyChecking no"' --exclude='.git' --exclude='venv' ./ $USER@$HOST:$TARGET_DIR
+        ssh -i id_rsa -o "StrictHostKeyChecking no" $USER@$HOST "cd $TARGET_DIR && \
+          python3 -m pip install --upgrade pip && \
+          pip3 install -r requirements.txt && \
+          gunicorn -w 4 -b $HOST:8000 app:app"
