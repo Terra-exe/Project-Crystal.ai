@@ -65,12 +65,15 @@ def app5():
 @app.route("/" + APP5_TITLE.lower() + "/audio/crystal_demo")
 def api_serve_audio():
     # Create a boto3 client
+    print("Button pressed.")
+
     s3 = boto3.client(
         's3',
         region_name='us-west-2',
         aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
         aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
     )
+    print("S3 connected.")
 
     # Replace 'your_bucket_name' and 'path/to/your/file.wav'
     # with your actual bucket name and file path inside the bucket
@@ -87,7 +90,9 @@ def api_serve_audio():
 
     # Serve the audio file
     file_obj.seek(0)  # Move file pointer back to the beginning of the file
+    print("success demo button")
     return send_file(file_obj, mimetype='audio/wav')
+    
 
     #return send_file(r'\\THE-DOCTOR\website\TTS\audios\demos\crystal_demo.wav', mimetype='audio/wav')
 
