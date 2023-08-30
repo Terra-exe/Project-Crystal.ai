@@ -74,8 +74,6 @@ def api_serve_audio():
         aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
     )
     print("S3 connected.")
-    print(os.environ.get('AWS_ACCESS_KEY_ID'))
-    print(os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
     # Replace 'your_bucket_name' and 'path/to/your/file.wav'
     # with your actual bucket name and file path inside the bucket
@@ -295,7 +293,7 @@ def api_create_audio_file():
 def generate_silent_file(duration_milliseconds, filename):
     silence = AudioSegment.silent(duration=duration_milliseconds)
     # Export to wav
-    silence.export(filename, format="wav")
+    silence.export(filename, format="mp3")
     return filename
     
 
