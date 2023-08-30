@@ -74,6 +74,8 @@ def api_serve_audio():
         aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
     )
     print("S3 connected.")
+    print(aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'))
+    print(aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
     # Replace 'your_bucket_name' and 'path/to/your/file.wav'
     # with your actual bucket name and file path inside the bucket
