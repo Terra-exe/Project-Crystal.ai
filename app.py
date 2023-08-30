@@ -87,6 +87,8 @@ def api_serve_audio():
         s3.download_fileobj(bucket_name, key, file_obj)
     except Exception as e:
         print("An error occurred while downloading the file from S3: ", str(e))
+        return jsonify(error="An error occurred while fetching the audio file."), 500
+
 
     # Serve the audio file
     file_obj.seek(0)  # Move file pointer back to the beginning of the file
