@@ -34,10 +34,12 @@ import tools.bineural as bineural
 HOME_TITLE = r"Home"
 APP5_TITLE = r"App5"
 APP6_TITLE = r"App6"
+APP51_TITLE = r"App51"
 
 
 APP5_DESCRIPTION = r"API Audio gen"
 APP6_DESCRIPTION = r"Audio / Bineural Merge"
+APP51_DESCRIPTION = r"GenFileMerge"
 
 
 #from flask import Flask
@@ -319,7 +321,55 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
 
     # Save directly to an object in an S3 bucket
     write_to_s3(bucket_name, s3_key, audio_data)
-                    
+
+def download_files_from_s3(bucket_name, title, download_dir='.'):
+    """
+    Downloads audio files from an S3 bucket based on the provided title.
+
+    :param bucket_name: Name of the S3 bucket
+    :param title: Title used in the audio file naming
+    :param download_dir: Directory to download files to (default is current directory)
+    """
+    # Initialize the S3 client
+    s3 = boto3.client('s3')
+
+    # List objects in the bucket
+    objects = s3.list_objects_v2(Bucket=bucket_name)
+
+    # Check if the objects key is in the returned items (it might not be if the bucket is empty)
+    if 'Contents' not in objects:
+        print("No files in bucket.")
+        return
+
+    # Filter files based on the title and naming pattern
+    for obj in objects['Contents']:
+        if obj['Key'].startswith(f"genfile_{title}_") and obj['Key'].endswith(".mp3"):
+            # Download the file
+            local_filename = obj['Key'].split('/')[-1]  # Assuming the file is not inside a subdirectory in the bucket
+            s3.download_file(bucket_name, obj['Key'], f"{download_dir}/{local_filename}")
+            print(f"Downloaded {local_filename}")
+
+def merge_audio_files(directory, title, output_directory):
+    # List all files in the directory and filter them based on the naming pattern
+    files = [f for f in os.listdir(directory) if f.startswith(f"genfile_{title}_") and f.endswith(".mp3")]
+
+    # Sort the files based on the sequence number
+    files.sort(key=lambda f: int(f.split("_")[2]))
+
+    # Create an empty audio segment to concatenate files to
+    merged_audio = AudioSegment.empty()
+
+    # Concatenate the audio files one by one
+    for file in files:
+        audio_path = os.path.join(directory, file)
+        audio = AudioSegment.from_mp3(audio_path)
+        merged_audio += audio
+
+    # Export the merged audio to a new file
+    merged_audio.export(os.path.join(output_directory, f"{title}_combined.mp3"), format="mp3")
+
+
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -462,7 +512,7 @@ def add_binaural_to_audio_file():
         #bineural_file_path = r'X:/website/complete audio'
 
         bn = "bn"
-        bineural_file_path = r'X:\website\tools\audio_dump' + f'\{title}_{bn}.wav'
+        bineural_file_path = 'website/tools/audio_dump/' + f'\{title}_{bn}.wav'
     
         output_path = bineural.create_binaural_audio(preset, audio_length, bineural_file_path, None, volume=0.1)
         
@@ -485,12 +535,110 @@ def add_binaural_to_audio_file():
         print(e)
         return jsonify({"status": "error", "message": str(e)}), 500 
 
+
+
+@app.route("/" + APP51_TITLE.lower())
+def app51():    
+    context = {
+            'app_title': APP51_TITLE + ' ' + APP51_DESCRIPTION,
+            'app_header': APP51_TITLE + ' ' + APP51_DESCRIPTION,
+            'form_action': '/submit_' + APP51_TITLE,
+            'form_label': 'Enter text for ' + APP51_TITLE
+        }
+    return render_template(APP51_TITLE.lower() + ".php", context=context)
+
+
+
+@app.route('/' + APP51_TITLE.lower() + '/merge_s3_genfiles', methods=['POST'])
+def merge_s3_genfiles():
+
+    
+
+    # Initialize clients for  and S3
+    s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
+    bucket_name = 'crystal-audio-processing'
+    s3_gen_file_key = r'audio-dumps/audio-gen-files/'
+
+
+    try:
+        print("Success!!!")
+        title = request.form.get('title')
+        print(title)
+       
+
+        # Save the audio folder locally
+        audio_file_path = '/tmp/audio-dumps/audio-gen-files/' + title
+        
+        dir_path = os.path.dirname(audio_file_path)
+        #audio_file_path = os.path.join("audio_dump", audio_file.filename)
+        
+        # Check if the directory exists and create it if necessary
+        if not os.path.isdir(dir_path):
+            os.makedirs(dir_path)
+
+        
+
+        print("audio file path" + audio_file_path)
+
+
+        print("\n\n---------Time to download the audio from S3 ---------\n\n")
+        BUCKET_NAME = bucket_name
+        TITLE = title
+        print('we will now download the audio files following the title: ' + TITLE)
+        download_files_from_s3(BUCKET_NAME, TITLE, download_dir=audio_file_path)
+        files = [f for f in os.listdir(audio_file_path) if os.path.isfile(os.path.join(audio_file_path, f))]
+        print(files)
+
+
+        print(f"\n\n---------Merging files within {audio_file_path}---------")
+        audio_file_path_output = 'website/tools/audio_dump/' + TITLE + '/combined/'
+        # Check if the directory exists and create it if necessary
+        if not os.path.isdir(audio_file_path_output):
+            os.makedirs(audio_file_path_output)
+
+        merge_audio_files(audio_file_path, TITLE, audio_file_path_output)
+        
+        print(f"---------Merging file complete---------\n\n")
+
+        print(f"---------Saving new file to S3---------\n\n")
+        s3_key_combined = 'audio-dumps/audios-complete/' + TITLE + "_combined.mp3"
+        upload_to_s3(bucket_name, s3_key_combined, audio_file_path_output + "/" + TITLE + "_combined.mp3")
+        
+
+        # Send success response to AJAX
+        return jsonify({"status": "success", "message": f"audios\{title}"}), 200
+        
+    except Exception as e:
+        print(e)
+        return jsonify({"status": "error", "message": str(e)}), 500 
+
+    
+
+
+
+
+
+
 def get_audio_length(audio_file_path):
     with contextlib.closing(wave.open(audio_file_path,'r')) as f:
         frames = f.getnframes()
         rate = f.getframerate()
         duration = frames / float(rate)
         return duration
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 """
 #############################################
