@@ -338,7 +338,7 @@ if __name__ == "__main__":
 
 
 """
-
+### This can be deleted
 @app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
 def api_create_audio_file():
     data = {}
@@ -391,17 +391,7 @@ def api_create_audio_file():
 """
     
 
-"""
-#from flask import Flask
-app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-
-if __name__ == '__main__':
-    app.run()
-"""
 
 """
 
