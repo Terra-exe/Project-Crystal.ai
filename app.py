@@ -24,7 +24,7 @@ from pydub import AudioSegment
 from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
 import json_builder.bin.kriya_json_builder as kriya_json_builder
 import json_builder.bin.kriya_object as kriya_object
-#import tools.bineural as bineural
+import tools.bineural as bineural
 
 
 ##################
@@ -411,7 +411,7 @@ sys.path.insert(1, r'\\THE-DOCTOR\website')
 sys.path.insert(1, r'\\THE-DOCTOR\website\tools')
 
 """
-"""
+
 
 
 
@@ -502,7 +502,7 @@ def get_audio_length(audio_file_path):
         duration = frames / float(rate)
         return duration
 
-
+"""
 #############################################
 
 
