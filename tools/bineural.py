@@ -1,7 +1,7 @@
 import numpy as np
 import wave
 import struct
-from audio_generator import AudioGenerator
+from .audio_generator import AudioGenerator
 
 # Frequency definitions
 # Delta - Sleep - (0.5-4 Hz): 100-400 Hz - Frequency difference between the two tones can be around 1-4 Hz; tones typically in the range of 100-400 Hz.
