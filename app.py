@@ -322,7 +322,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     # Save directly to an object in an S3 bucket
     write_to_s3(bucket_name, s3_key, audio_data)
 
-def download_files_from_s3(bucket_name, title, download_dir='.'):
+def download_files_from_s3(bucket_name, key, title, download_dir='.'):
 
     """
     Downloads audio files from an S3 bucket based on the provided title.
@@ -332,6 +332,7 @@ def download_files_from_s3(bucket_name, title, download_dir='.'):
     :param download_dir: Directory to download files to (default is current directory)
     """
     print("download_files_from_s3()")
+    
 
     # Ensure the download directory exists
     if not os.path.exists(download_dir):
@@ -341,7 +342,8 @@ def download_files_from_s3(bucket_name, title, download_dir='.'):
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
     # List objects in the bucket with a specific prefix
-    prefix = f"genfile_{title}_"
+    prefix = key + f"genfile_{title}_"
+
     print(f"Searching in bucket: {bucket_name} for files with prefix: {prefix}")  # Print bucket and prefix info
 
     objects = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
@@ -596,7 +598,7 @@ def merge_s3_genfiles():
         BUCKET_NAME = bucket_name
         TITLE = title
         print('we will now download the audio files following the title: ' + TITLE)
-        download_files_from_s3(BUCKET_NAME, TITLE, download_dir=audio_file_path)
+        download_files_from_s3(BUCKET_NAME, s3_gen_file_key, TITLE, download_dir=audio_file_path)
         files = [f for f in os.listdir(audio_file_path) if os.path.isfile(os.path.join(audio_file_path, f))]
         print(files)
 
