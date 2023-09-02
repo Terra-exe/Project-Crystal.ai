@@ -577,7 +577,7 @@ def add_binaural_to_audio_file():
         
         print("\n\n---------GENERATING Bineural---------\n\n")
         # Process the audio file
-        audio_length = get_audio_length(audio_file_path + '/' + TITLE '_combined.mp3')
+        audio_length = get_audio_length(audio_file_path + '/' + TITLE + '_combined.mp3')
         print(f"Duration = {audio_length}")
 
         bn = preset
