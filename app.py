@@ -342,6 +342,8 @@ def download_files_from_s3(bucket_name, title, download_dir='.'):
 
     # List objects in the bucket with a specific prefix
     prefix = f"genfile_{title}_"
+    print(f"Searching in bucket: {bucket_name} for files with prefix: {prefix}")  # Print bucket and prefix info
+
     objects = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
 
     # Check if the objects key is in the returned items
