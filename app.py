@@ -639,7 +639,10 @@ def merge_s3_genfiles():
 
         # Send success response to AJAX
         #return jsonify({"status": "success", "message": f"audios\{title}"}), 200
-        return jsonify({"status": "success", "message": s3_key_combined}), 200
+        # Given your existing bucket_name, region, and s3_key_combined:
+        base_url = f"https://{bucket_name}.s3.{s3.meta.region_name}.amazonaws.com"
+        full_s3_url = f"{base_url}/{s3_key_combined}"
+        return jsonify({"status": "success", "message": full_s3_url}), 200
 
         
     except Exception as e:
