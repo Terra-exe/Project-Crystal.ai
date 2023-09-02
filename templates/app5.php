@@ -536,7 +536,8 @@
 
             jsonString = JSON.stringify(formData)
             
-            downloadTextFile(jsonString, formData["title"] + ".json", "text/plain"); // This line triggers the download
+            /* Disable the download text file it's not necessary at the moment */
+            // downloadTextFile(jsonString, formData["title"] + ".json", "text/plain"); // This line triggers the download
                         /*submitButton.addEventListener('click', function(event) {
                             console.log('submit pressed');
                             event.preventDefault();

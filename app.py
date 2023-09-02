@@ -580,6 +580,7 @@ def add_binaural_to_audio_file():
         print("\n\n---------GENERATING Bineural---------\n\n")
 
         # Obtain the duration of the combined MP3 file.
+        audio_file_path_filename = audio_file_path + '/' + TITLE + '_combined.mp3'
         audio_length = get_audio_length(audio_file_path + '/' + TITLE + '_combined.mp3')
         print(f"Duration = {audio_length}")
 
@@ -595,7 +596,7 @@ def add_binaural_to_audio_file():
 
         # Provide feedback on which audio files are being merged.
         print("\n\n---------Merging Audio with Bineural---------\n\n")
-        print(f"\n\n---------Merging {audio_file_path}---------")
+        print(f"\n\n---------Merging {audio_file_path_filename}---------")
         print(f"---------With {bineural_file_path_and_title}---------\n\n")
                 
         # Construct the path for the output merged audio file.
@@ -603,7 +604,7 @@ def add_binaural_to_audio_file():
         outfile = audio_file_output_path + outTitle
 
         # Merge the original audio with the binaural audio.
-        bineural.merge_audio_files(input_file1=audio_file_path, input_file2=bineural_file_path_and_title, output_file=outfile)
+        bineural.merge_audio_files(input_file1=audio_file_path_filename, input_file2=bineural_file_path_and_title, output_file=outfile)
         print(f"---------Saved local {outfile}---------\n\n")
 
         # Upload the merged audio to S3.

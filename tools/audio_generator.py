@@ -99,7 +99,7 @@ class AudioGenerator:
         self.save_wav(save_path + title, arr, sample_rate)
 
         print("Creating binaural audio - 10")
-
+        print("Saved here: " + save_path + title)
 
 
 
