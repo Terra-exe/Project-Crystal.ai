@@ -121,13 +121,20 @@
                 console.log("boing boing");
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
+                        // Parse the JSON response from the server
+                        var response = JSON.parse(xhr.responseText);
+
+                        // Extract the S3 URL from the response
+                        var s3URL = response.message;
+
                         // hide the wait message
                         waitMessage.style.display = 'none';
                         // show the download link
                         downloadLink.style.display = 'block';
 
-                        // set the download URL to the response from the Python script
-                        downloadButton.href = xhr.responseText;
+
+                        // set the download URL to the S3 URL
+                        downloadButton.href = s3URL;
                     } else {
                         // handle the error
                         console.error('Error:', xhr.statusText);
