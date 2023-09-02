@@ -14,6 +14,8 @@ import io
 import re
 import boto3
 import shutil
+from botocore.exceptions import NoCredentialsError
+
 
 from contextlib import closing
 from io import BytesIO
@@ -395,6 +397,20 @@ def remove_local_files(directory_path):
     else:
         print(f"Directory {directory_path} does not exist.")
 
+def generate_presigned_url(bucket_name, object_name, expiration=3600):
+    """Generate a presigned URL to share an S3 object"""
+    s3_client = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
+    try:
+        response = s3_client.generate_presigned_url('get_object',
+                                                    Params={'Bucket': bucket_name,
+                                                            'Key': object_name},
+                                                    ExpiresIn=expiration)
+    except NoCredentialsError:
+        print("Credentials not available")
+        return None
+    return response
+
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -640,8 +656,8 @@ def merge_s3_genfiles():
         # Send success response to AJAX
         #return jsonify({"status": "success", "message": f"audios\{title}"}), 200
         # Given your existing bucket_name, region, and s3_key_combined:
-        base_url = f"https://{bucket_name}.s3.{s3.meta.region_name}.amazonaws.com"
-        full_s3_url = f"{base_url}/{s3_key_combined}"
+        #base_url = f"https://{bucket_name}.s3.{s3.meta.region_name}.amazonaws.com"
+        full_s3_url = generate_presigned_url(bucket_name, s3_key_combined)
         return jsonify({"status": "success", "message": full_s3_url}), 200
 
         
