@@ -22,6 +22,9 @@
         </li>
         <li class="nav-item">
         <a class="nav-link" href="app5">App5</a>
+        </li>       
+        <li class="nav-item">
+        <a class="nav-link" href="app51">App51</a>
         </li>
         <li class="nav-item">
         <a class="nav-link" href="app6">App6</a>
