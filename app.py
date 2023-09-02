@@ -598,11 +598,13 @@ def add_binaural_to_audio_file():
         print("\n\n---------Merging Audio with Bineural---------\n\n")
         print(f"\n\n---------Merging {audio_file_path_filename}---------")
         print(f"---------With {bineural_file_path_and_title}---------\n\n")
-                
+    
         # Construct the path for the output merged audio file.
         outTitle = f'/{title}_{bn}_draft-v1.mp3'
         outfile = audio_file_output_path + outTitle
 
+        print(f"---------Merging into: {outfile}---------\n\n")
+            
         # Merge the original audio with the binaural audio.
         bineural.merge_audio_files(input_file1=audio_file_path_filename, input_file2=bineural_file_path_and_title, output_file=outfile)
         print(f"---------Saved local {outfile}---------\n\n")
