@@ -522,8 +522,8 @@ def add_binaural_to_audio_file():
     # Initialize clients for  and S3
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     bucket_name = 'crystal-audio-processing'
-    s3_input_file_key = r'audio-dumps/audio-combined/'
-    s3_output_file_key = r'' # Changes based off of preset
+    s3_input_file_key = 'audio-dumps/audio-combined/'
+    s3_output_file_key = '' # Changes based off of preset
 
     try:
         print("Success!!!")
@@ -531,7 +531,7 @@ def add_binaural_to_audio_file():
         print(title)
         preset = request.form.get('preset')  # Get preset from form data
         print(preset)
-        s3_output_file_key = r'audios-draft-v1/' + preset + '/'
+        s3_output_file_key = 'audios-draft-v1/' + preset + '/'
 
 
       ###
@@ -638,8 +638,8 @@ def merge_s3_genfiles():
     # Initialize clients for  and S3
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     bucket_name = 'crystal-audio-processing'
-    s3_gen_file_key = r'audio-dumps/audio-gen-files/'
-    s3_gen_file_output_key = r'audio-dumps/audio-combined/'
+    s3_gen_file_key = 'audio-dumps/audio-gen-files/'
+    s3_gen_file_output_key = 'audio-dumps/audio-combined/'
     
 
     try:
