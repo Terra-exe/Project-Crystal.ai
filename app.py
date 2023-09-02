@@ -323,7 +323,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     write_to_s3(bucket_name, s3_key, audio_data)
 
 def download_files_from_s3(bucket_name, title, download_dir='.'):
-    print("download_files_from_s3()")
+
     """
     Downloads audio files from an S3 bucket based on the provided title.
 
@@ -331,28 +331,32 @@ def download_files_from_s3(bucket_name, title, download_dir='.'):
     :param title: Title used in the audio file naming
     :param download_dir: Directory to download files to (default is current directory)
     """
-    print("s3 = boto3.client ('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))")
+    print("download_files_from_s3()")
+
+    # Ensure the download directory exists
+    if not os.path.exists(download_dir):
+        os.makedirs(download_dir)
+
     # Initialize the S3 client
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
+    # List objects in the bucket with a specific prefix
+    prefix = f"genfile_{title}_"
+    objects = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
 
-    # List objects in the bucket
-    print("objects = s3.list_objects_v2(Bucket=bucket_name)")
-    objects = s3.list_objects_v2(Bucket=bucket_name)
-
-
-    # Check if the objects key is in the returned items (it might not be if the bucket is empty)
+    # Check if the objects key is in the returned items
     if 'Contents' not in objects:
         print("No files in bucket.")
         return
 
     # Filter files based on the title and naming pattern
     for obj in objects['Contents']:
-        if obj['Key'].startswith(f"genfile_{title}_") and obj['Key'].endswith(".mp3"):
+        if obj['Key'].endswith(".mp3"):
             # Download the file
             local_filename = obj['Key'].split('/')[-1]  # Assuming the file is not inside a subdirectory in the bucket
-            s3.download_file(bucket_name, obj['Key'], f"{download_dir}/{local_filename}")
+            s3.download_file(bucket_name, obj['Key'], os.path.join(download_dir, local_filename))
             print(f"Downloaded {local_filename}")
+
 
 def merge_audio_files(directory, title, output_directory):
     # List all files in the directory and filter them based on the naming pattern
