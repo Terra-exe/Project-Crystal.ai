@@ -13,6 +13,8 @@ import math
 import io
 import re
 import boto3
+import shutil
+
 from contextlib import closing
 from io import BytesIO
 from pydub import AudioSegment
@@ -386,7 +388,12 @@ def merge_audio_files(directory, title, output_directory):
     # Export the merged audio to a new file
     merged_audio.export(os.path.join(output_directory, f"{title}_combined.mp3"), format="mp3")
 
-
+def remove_local_files(directory_path):
+    if os.path.exists(directory_path):
+        shutil.rmtree(directory_path)
+        print(f"Removed directory: {directory_path}")
+    else:
+        print(f"Directory {directory_path} does not exist.")
 
 
 if __name__ == "__main__":
@@ -626,6 +633,9 @@ def merge_s3_genfiles():
         s3_key_combined = 'audio-dumps/audios-complete/' + TITLE + "_combined.mp3"
         upload_to_s3(bucket_name, s3_key_combined, audio_file_path_output + "/" + TITLE + "_combined.mp3")
         
+        print(f"---------Removing local tmp files---------\n\n")
+        remove_local_files(audio_file_path)
+
 
         # Send success response to AJAX
         return jsonify({"status": "success", "message": f"audios\{title}"}), 200
