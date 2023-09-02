@@ -133,7 +133,7 @@ def api_create_audio_file():
     polly = boto3.client('polly', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     bucket_name = 'crystal-audio-processing'
-    s3_key = 'audio-dumps/audio-gen-files/Kriya.mp3'
+    s3_key = 'audio-dumps/audio-gen-files/Kriya.wav'
     s3_gen_file_key = r'audio-dumps/audio-gen-files/'
     s3_key_json = 'audio-dumps/audio-gen-files/json_input.json'
     s3_key_json_kriya = 'audio-dumps/audio-gen-files/json_kriya.json'
@@ -219,7 +219,7 @@ def api_create_audio_file():
                             value_cut = re.sub(r'[^a-zA-Z0-9\s]+', '', value[:50])
                             value_cut = re.sub(r'\s+', ' ', value_cut)
 
-                            segment_filename = f"genfile_{filename}_{i}_#_{value_cut}.mp3"
+                            segment_filename = f"genfile_{filename}_{i}_#_{value_cut}.wav"
                             #segment_full_file_path = os.path.join(dump_dir_path, segment_filename)
                             
                             # Using Amazon Polly for text-to-speech, value = text
@@ -249,16 +249,16 @@ def api_create_audio_file():
                         (value['type'] == "pauseMedium" or value['type'] == "pauseShort" or value['type'] == "waitLong" or value['type'] == "breakLong")):
                         
                         silent_name = 'pause'
-                        segment_filename_s3 = f"genfile_{filename}_{i}_#_{silent_name}.mp3"
-                        segment_filename_local = generate_silent_file(int(float(value['value']) * 1000), "/tmp/silence.mp3")
+                        segment_filename_s3 = f"genfile_{filename}_{i}_#_{silent_name}.wav"
+                        segment_filename_local = generate_silent_file(int(float(value['value']) * 1000), "/tmp/silence.wav")
                         upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                         i+=1
             
             if hasattr(e_array, 'wait'):
                 for wait in e_array.wait:
                     silent_name = 'pause'
-                    segment_filename_s3 = f"genfile_{filename}_{i}_#_{silent_name}.mp3"
-                    segment_filename_local = generate_silent_file(int(float(wait.value) * 1000), "/tmp/silence.mp3")
+                    segment_filename_s3 = f"genfile_{filename}_{i}_#_{silent_name}.wav"
+                    segment_filename_local = generate_silent_file(int(float(wait.value) * 1000), "/tmp/silence.wav")
                     upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                     i+=1
                         
@@ -371,7 +371,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
 
     # Filter files based on the title and naming pattern
     for obj in objects['Contents']:
-        if obj['Key'].endswith(".mp3"):
+        if obj['Key'].endswith(".wav"):
             # Download the file
             local_filename = obj['Key'].split('/')[-1]  # Assuming the file is not inside a subdirectory in the bucket
             s3.download_file(bucket_name, obj['Key'], os.path.join(download_dir, local_filename))
@@ -381,7 +381,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
 
 def merge_audio_files(directory, title, output_directory):
     # List all files in the directory and filter them based on the naming pattern
-    files = [f for f in os.listdir(directory) if f.startswith(f"genfile_{title}_") and f.endswith(".mp3")]
+    files = [f for f in os.listdir(directory) if f.startswith(f"genfile_{title}_") and f.endswith(".wav")]
 
     # Sort the files based on the sequence number
     files.sort(key=lambda f: int(f.split("_")[2]))
@@ -396,7 +396,7 @@ def merge_audio_files(directory, title, output_directory):
         merged_audio += audio
 
     # Export the merged audio to a new file
-    merged_audio.export(os.path.join(output_directory, f"{title}_combined.mp3"), format="mp3")
+    merged_audio.export(os.path.join(output_directory, f"{title}_combined.wav"), format="mp3")
 
 def remove_local_files(directory_path):
     if os.path.exists(directory_path):
@@ -580,15 +580,15 @@ def add_binaural_to_audio_file():
         print("\n\n---------GENERATING Bineural---------\n\n")
 
         # Obtain the duration of the combined MP3 file.
-        audio_file_path_filename = audio_file_path + '/' + TITLE + '_combined.mp3'
-        audio_length = get_audio_length(audio_file_path + '/' + TITLE + '_combined.mp3')
+        audio_file_path_filename = audio_file_path + '/' + TITLE + '_combined.wav'
+        audio_length = get_audio_length(audio_file_path + '/' + TITLE + '_combined.wav')
         print(f"Duration = {audio_length}")
 
         # Construct the path for the output binaural file.
         bn = preset
         bineural_file_path = audio_file_output_path
-        bineural_file_title = f'/{title}_ONLY_{bn}.mp3'
-        bineural_file_path_and_title = audio_file_output_path + f'/{title}_ONLY_{bn}.mp3'
+        bineural_file_title = f'/{title}_ONLY_{bn}.wav'
+        bineural_file_path_and_title = audio_file_output_path + f'/{title}_ONLY_{bn}.wav'
         # Create binaural audio using the preset and the duration of the input audio.
         print("\n\n---------Creating Binaural function bineural.create_binaural_audio()---------\n\n")
         output_path = bineural.create_binaural_audio(preset, audio_length, bineural_file_path, bineural_file_title, None, volume=0.1)
@@ -600,7 +600,7 @@ def add_binaural_to_audio_file():
         print(f"---------With {bineural_file_path_and_title}---------\n\n")
     
         # Construct the path for the output merged audio file.
-        outTitle = f'/{title}_{bn}_draft-v1.mp3'
+        outTitle = f'/{title}_{bn}_draft-v1.wav'
         outfile = audio_file_output_path + outTitle
 
         print(f"---------Merging into: {outfile}---------\n\n")
@@ -699,8 +699,8 @@ def merge_s3_genfiles():
 
         print(f"---------Saving new file to S3---------\n\n")
 
-        s3_key_combined = s3_gen_file_output_key + TITLE + "_combined.mp3"
-        upload_to_s3(bucket_name, s3_key_combined, audio_file_path_output + "/" + TITLE + "_combined.mp3")
+        s3_key_combined = s3_gen_file_output_key + TITLE + "_combined.wav"
+        upload_to_s3(bucket_name, s3_key_combined, audio_file_path_output + "/" + TITLE + "_combined.wav")
         
         print(f"---------Removing local tmp files---------\n\n")
         remove_local_files(audio_file_path)
@@ -726,7 +726,7 @@ def get_audio_length(audio_file_path):
     _, file_extension = os.path.splitext(audio_file_path)
     
     # If it's an MP3, use the pydub mediainfo method.
-    if file_extension.lower() == ".mp3":
+    if file_extension.lower() == ".wav":
         print("mp3 detected")
         info = mediainfo(audio_file_path)
         duration = float(info["duration"])

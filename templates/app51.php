@@ -85,7 +85,7 @@
 
             // Get the audio file title
             const audioFileTitle = document.getElementById('title').value || 'GenfileTitle';
-            const audioFileName = `${audioFileTitle}.mp3`;
+            const audioFileName = `${audioFileTitle}.wav`;
 
             // Construct the URL for the audio file
             const audioFileURL = `/audios/${audioFileName}`;

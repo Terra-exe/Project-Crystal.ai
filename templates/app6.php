@@ -102,7 +102,7 @@
 
             // Get the audio file title
             const audioFileTitle = document.getElementById('title').value || 'ttsFileTitle';
-            const audioFileName = `${audioFileTitle}_Binaural.mp3`;
+            const audioFileName = `${audioFileTitle}_Binaural.wav`;
             
 
             // Download the audio file
