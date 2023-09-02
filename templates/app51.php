@@ -116,7 +116,7 @@
             }
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/app7/merge_s3_genfiles', true); // adjust the URL if necessary
+            xhr.open('POST', '/app51/merge_s3_genfiles', true); // adjust the URL if necessary
             xhr.onreadystatechange = function() {
                 console.log("boing boing");
                 if (xhr.readyState === XMLHttpRequest.DONE) {
