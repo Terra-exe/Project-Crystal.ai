@@ -138,8 +138,24 @@ def create_background_audio(preset, duration, save_path, volume=1.0):
         volume=volume
     )
 
+def print_wav_properties(filepath):
+    with wave.open(filepath, "rb") as wav_file:
+        print("Channels:", wav_file.getnchannels())
+        print("Sample width:", wav_file.getsampwidth())
+        print("Frame rate (frames/sec):", wav_file.getframerate())
+        print("Number of frames:", wav_file.getnframes())
+        print("Compression type:", wav_file.getcomptype())
+        print("Compression name:", wav_file.getcompname())
+
 def merge_audio_files(input_file1, input_file2, output_file):
     print("Start")
+    print("Input 1: ")
+    print_wav_properties(input_file1)
+    print("Input 2: ")
+    print_wav_properties(input_file2)
+
+
+    
     with wave.open(input_file1, "rb") as f1, wave.open(input_file2, "rb") as f2:
         print("Opened Files")
         samp_width1 = f1.getsampwidth()

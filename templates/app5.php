@@ -36,7 +36,7 @@
                     <li>Typically exercises are divided into major steps/stages/sections. You can add a additional step by pressing the "+" button at the bottom.</li>
                     <li>You can define a default wait time between sections, and you can also override the default. These wait times are perfect when you need to continue and exercise for X minutes.</li>                   
                     <li>You can also add custom sound effects to the beginning and ending of the wait period.</li>
-                    <li>When complete, You can press the submit button to download the mp3.</li>
+                    <li>When complete, You can press the submit button to download the wav.</li>
                 </ul>
 		</details>
 		<br><br>

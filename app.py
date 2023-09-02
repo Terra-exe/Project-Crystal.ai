@@ -266,7 +266,7 @@ def api_create_audio_file():
 
     # Use Amazon Polly to convert the text to speech
     try:
-        response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='mp3', VoiceId='Salli')
+        response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='wav', VoiceId='Salli')
         
     except Exception as e3:
         with open(error_file_path, 'w') as error_file:
@@ -301,7 +301,7 @@ def api_create_audio_file():
 def generate_silent_file(duration_milliseconds, filename):
     silence = AudioSegment.silent(duration=duration_milliseconds)
     # Export to wav
-    silence.export(filename, format="mp3")
+    silence.export(filename, format="wav")
     return filename
     
 
@@ -319,7 +319,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     polly_client = boto3.client('polly', region_name='us-west-2')
     response = polly_client.synthesize_speech(
                     VoiceId='Salli',
-                    OutputFormat='mp3',
+                    OutputFormat='wav',
                     Text=text
                 )
     # The response's 'AudioStream' body contains the audio data in the specified format
@@ -392,11 +392,11 @@ def merge_audio_files(directory, title, output_directory):
     # Concatenate the audio files one by one
     for file in files:
         audio_path = os.path.join(directory, file)
-        audio = AudioSegment.from_mp3(audio_path)
+        audio = AudioSegment.from_wav(audio_path)
         merged_audio += audio
 
     # Export the merged audio to a new file
-    merged_audio.export(os.path.join(output_directory, f"{title}_combined.wav"), format="mp3")
+    merged_audio.export(os.path.join(output_directory, f"{title}_combined.wav"), format="wav")
 
 def remove_local_files(directory_path):
     if os.path.exists(directory_path):
@@ -579,7 +579,7 @@ def add_binaural_to_audio_file():
         
         print("\n\n---------GENERATING Bineural---------\n\n")
 
-        # Obtain the duration of the combined MP3 file.
+        # Obtain the duration of the combined wav file.
         audio_file_path_filename = audio_file_path + '/' + TITLE + '_combined.wav'
         audio_length = get_audio_length(audio_file_path + '/' + TITLE + '_combined.wav')
         print(f"Duration = {audio_length}")
@@ -726,7 +726,7 @@ def get_audio_length(audio_file_path):
     _, file_extension = os.path.splitext(audio_file_path)
     
     # If it's an MP3, use the pydub mediainfo method.
-    if file_extension.lower() == ".wav":
+    if file_extension.lower() == ".mp3":
         print("mp3 detected")
         info = mediainfo(audio_file_path)
         duration = float(info["duration"])
