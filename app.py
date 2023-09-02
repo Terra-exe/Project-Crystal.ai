@@ -323,6 +323,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     write_to_s3(bucket_name, s3_key, audio_data)
 
 def download_files_from_s3(bucket_name, title, download_dir='.'):
+    print("download_files_from_s3()")
     """
     Downloads audio files from an S3 bucket based on the provided title.
 
@@ -330,11 +331,15 @@ def download_files_from_s3(bucket_name, title, download_dir='.'):
     :param title: Title used in the audio file naming
     :param download_dir: Directory to download files to (default is current directory)
     """
+    print("s3 = boto3.client ('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))")
     # Initialize the S3 client
-    s3 = boto3.client('s3')
+    s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
+
 
     # List objects in the bucket
+    print("objects = s3.list_objects_v2(Bucket=bucket_name)")
     objects = s3.list_objects_v2(Bucket=bucket_name)
+
 
     # Check if the objects key is in the returned items (it might not be if the bucket is empty)
     if 'Contents' not in objects:
