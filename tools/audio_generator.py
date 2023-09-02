@@ -40,7 +40,7 @@ class AudioGenerator:
 
         print("Creating binaural audio - 4")
 
-        sample_rate = 44100
+        sample_rate = 22050
         noise_generators = set({"white", "pink", "brown"})
         print("Creating binaural audio - 5")
         try:
