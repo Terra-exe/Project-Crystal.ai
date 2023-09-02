@@ -266,7 +266,8 @@ def api_create_audio_file():
 
     # Use Amazon Polly to convert the text to speech
     try:
-        response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='wav', VoiceId='Salli')
+        response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='pcm', VoiceId='Salli')
+        
         
     except Exception as e3:
         with open(error_file_path, 'w') as error_file:
@@ -278,12 +279,21 @@ def api_create_audio_file():
     # If we have an audiostream in the response
     if "AudioStream" in response:
         with closing(response["AudioStream"]) as stream:
+            pcm_data = stream.read()
+            # Convert PCM to WAV using pydub
+            sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=1, frame_rate=44100)
+            # Convert the WAV data to bytes
+            buffer = io.BytesIO()
+            sound.export(buffer, format="wav")
+            wav_data = buffer.getvalue()
+
+            
             output = os.path.join("/tmp", s3_key)
 
             try:
                 # Open a file for writing the output as a binary stream
                 with open(output, "wb") as file:
-                    file.write(stream.read())
+                    file.write(wav_data)
 
             except IOError as ioe:
                 print(ioe)
@@ -319,14 +329,22 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     polly_client = boto3.client('polly', region_name='us-west-2')
     response = polly_client.synthesize_speech(
                     VoiceId='Salli',
-                    OutputFormat='wav',
+                    OutputFormat='pcm',
                     Text=text
                 )
     # The response's 'AudioStream' body contains the audio data in the specified format
-    audio_data = response['AudioStream'].read()
+    pcm_data = response['AudioStream'].read()
 
-    # Save directly to an object in an S3 bucket
-    write_to_s3(bucket_name, s3_key, audio_data)
+
+    # Convert PCM to WAV using pydub
+    sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=1, frame_rate=44100)
+    # Convert the WAV data to bytes
+    buffer = io.BytesIO()
+    sound.export(buffer, format="wav")
+    wav_data = buffer.getvalue()
+
+    # Save directly to an object in an S3 buckets
+    write_to_s3(bucket_name, s3_key, wav_data)
 
 def download_files_from_s3(bucket_name, key, title, download_dir='.', default_prefix=None):
 
