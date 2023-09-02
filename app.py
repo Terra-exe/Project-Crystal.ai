@@ -15,6 +15,8 @@ import re
 import boto3
 import shutil
 from botocore.exceptions import NoCredentialsError
+from pydub.utils import mediainfo
+
 
 
 from contextlib import closing
@@ -576,38 +578,42 @@ def add_binaural_to_audio_file():
 ###
         
         print("\n\n---------GENERATING Bineural---------\n\n")
-        # Process the audio file
+
+        # Obtain the duration of the combined MP3 file.
         audio_length = get_audio_length(audio_file_path + '/' + TITLE + '_combined.mp3')
         print(f"Duration = {audio_length}")
 
+        # Construct the path for the output binaural file.
         bn = preset
-        bineural_file_path = audio_file_output_path + f'\{title}_ONLY_{bn}.mp3'
-    
+        bineural_file_path = audio_file_output_path + f'/{title}_ONLY_{bn}.mp3'
+            
+        # Create binaural audio using the preset and the duration of the input audio.
         output_path = bineural.create_binaural_audio(preset, audio_length, bineural_file_path, None, volume=0.1)
-        
         print("\n\n---------Bineural Created---------\n\n")
 
+        # Provide feedback on which audio files are being merged.
         print("\n\n---------Merging Audio with Bineural---------\n\n")
         print(f"\n\n---------Merging {audio_file_path}---------")
         print(f"---------With {bineural_file_path}---------\n\n")
-        
-        #bineural.merge_audio_files(input_file1=bineural_file_path, input_file2=output_path, f"{output_path}\{title}.wav):
-        outTitle = f'\{title}_{bn}_draft-v1.mp3'
+                
+        # Construct the path for the output merged audio file.
+        outTitle = f'/{title}_{bn}_draft-v1.mp3'
         outfile = audio_file_output_path + outTitle
-        bineural.merge_audio_files(input_file1=audio_file_path, input_file2=bineural_file_path, output_file=outfile)
-        
-        print(f"---------Saved local {outfile}---------\n\n")
-        print(f"---------Saving new file to S3---------\n\n")
 
+        # Merge the original audio with the binaural audio.
+        bineural.merge_audio_files(input_file1=audio_file_path, input_file2=bineural_file_path, output_file=outfile)
+        print(f"---------Saved local {outfile}---------\n\n")
+
+        # Upload the merged audio to S3.
+        print(f"---------Saving new file to S3---------\n\n")
         s3_key_combined = s3_output_file_key + outTitle
         upload_to_s3(bucket_name, s3_key_combined, outfile)
 
-
+        # Remove the local temporary files.
         print(f"---------Removing local tmp files---------\n\n")
         remove_local_files(audio_file_path)
 
-
-        # Send success response to AJAX
+        # Generate a presigned S3 URL and send it as a success response.
         full_s3_url = generate_presigned_url(bucket_name, s3_key_combined)
         return jsonify({"status": "success", "message": full_s3_url}), 200
 
@@ -712,11 +718,23 @@ def merge_s3_genfiles():
 
 
 def get_audio_length(audio_file_path):
-    with contextlib.closing(wave.open(audio_file_path,'r')) as f:
-        frames = f.getnframes()
-        rate = f.getframerate()
-        duration = frames / float(rate)
+    _, file_extension = os.path.splitext(audio_file_path)
+    
+    # If it's an MP3, use the pydub mediainfo method.
+    if file_extension.lower() == ".mp3":
+        print("mp3 detected")
+        info = mediainfo(audio_file_path)
+        duration = float(info["duration"])
         return duration
+    
+    # Otherwise, assume it's a WAV and use the wave library.
+    else:
+        print("assuming wav")
+        with contextlib.closing(wave.open(audio_file_path,'r')) as f:
+            frames = f.getnframes()
+            rate = f.getframerate()
+            duration = frames / float(rate)
+            return duration
 
 
 
