@@ -48,7 +48,7 @@ presets_background = {
     },
 }
 
-def create_binaural_audio(preset, duration, save_path, gradual_freq_change=None, volume=1.0):
+def create_binaural_audio(preset, duration, save_path, title, gradual_freq_change=None, volume=1.0):
     chosen_preset = {}
     
     print("Creating binaural audio")
@@ -87,7 +87,7 @@ def create_binaural_audio(preset, duration, save_path, gradual_freq_change=None,
         
 
 
-###Tell me something That's not been said before That is paradoxical but true
+    ### Tell me something That's not been said before That is paradoxical but true
 
     print("Creating binaural audio - 0")
     print(f"Chosen preset equals {chosen_preset}")
@@ -99,12 +99,13 @@ def create_binaural_audio(preset, duration, save_path, gradual_freq_change=None,
     print("Creating binaural audio - 1")
     audio_gen = AudioGenerator()
     print("Creating binaural audio - 2")
-    print(f"save_path = {save_path}")
+    print(f"save_path = {save_path}{title}")
 
-    #save_path = r"\\THE-DOCTOR\website\complete audio\output.wav"  # Updated save_path
+   
 
     audio_gen.generate_audio(
         save_path,
+        title,
         duration,
         False, #fade in/out
         sound_type,

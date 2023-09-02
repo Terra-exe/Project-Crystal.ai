@@ -1,4 +1,5 @@
 # https://github.com/SomeName2/audio-entrainment-python/blob/main/generate.py
+import os
 import wave
 import numpy as np
 import sys
@@ -26,6 +27,7 @@ class AudioGenerator:
     def generate_audio(
         self,
         save_path,
+        title,
         duration,
         do_fade_in_out,
         sound_type,
@@ -87,7 +89,14 @@ class AudioGenerator:
         # Scale the audio array by the given volume
         arr *= volume
         print("Creating binaural audio - 9")
-        self.save_wav(save_path, arr, sample_rate)
+
+        if not os.path.isdir(save_path):
+            print(f"Directory '{save_path}' not found. Creating it now...")
+            os.makedirs(save_path)
+        else:
+            print(f"Directory '{save_path}' already exists.")
+
+        self.save_wav(save_path + title, arr, sample_rate)
 
         print("Creating binaural audio - 10")
 

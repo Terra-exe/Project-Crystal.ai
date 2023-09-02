@@ -585,23 +585,25 @@ def add_binaural_to_audio_file():
 
         # Construct the path for the output binaural file.
         bn = preset
-        bineural_file_path = audio_file_output_path + f'/{title}_ONLY_{bn}.mp3'
-            
+        bineural_file_path = audio_file_output_path
+        bineural_file_title = f'/{title}_ONLY_{bn}.mp3'
+        bineural_file_path_and_title = audio_file_output_path + f'/{title}_ONLY_{bn}.mp3'
         # Create binaural audio using the preset and the duration of the input audio.
-        output_path = bineural.create_binaural_audio(preset, audio_length, bineural_file_path, None, volume=0.1)
+        print("\n\n---------Creating Binaural function bineural.create_binaural_audio()---------\n\n")
+        output_path = bineural.create_binaural_audio(preset, audio_length, bineural_file_path, bineural_file_title, None, volume=0.1)
         print("\n\n---------Bineural Created---------\n\n")
 
         # Provide feedback on which audio files are being merged.
         print("\n\n---------Merging Audio with Bineural---------\n\n")
         print(f"\n\n---------Merging {audio_file_path}---------")
-        print(f"---------With {bineural_file_path}---------\n\n")
+        print(f"---------With {bineural_file_path_and_title}---------\n\n")
                 
         # Construct the path for the output merged audio file.
         outTitle = f'/{title}_{bn}_draft-v1.mp3'
         outfile = audio_file_output_path + outTitle
 
         # Merge the original audio with the binaural audio.
-        bineural.merge_audio_files(input_file1=audio_file_path, input_file2=bineural_file_path, output_file=outfile)
+        bineural.merge_audio_files(input_file1=audio_file_path, input_file2=bineural_file_path_and_title, output_file=outfile)
         print(f"---------Saved local {outfile}---------\n\n")
 
         # Upload the merged audio to S3.
@@ -661,7 +663,7 @@ def merge_s3_genfiles():
         #audio_file_path = os.path.join("audio_dump", audio_file.filename)
         
         # Check if the directory exists and create it if necessary
-        print(f"1 Checking directory: {dir_path}")
+        print(f"Checking directory: {dir_path}")
         if not os.path.isdir(dir_path):
             print(f"Directory '{dir_path}' not found. Creating it now...")
             os.makedirs(dir_path)
