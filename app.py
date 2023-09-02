@@ -326,7 +326,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     # Save directly to an object in an S3 bucket
     write_to_s3(bucket_name, s3_key, audio_data)
 
-def download_files_from_s3(bucket_name, key, title, download_dir='.'):
+def download_files_from_s3(bucket_name, key, title, download_dir='.', default_prefix=None):
 
     """
     Downloads audio files from an S3 bucket based on the provided title.
@@ -351,7 +351,12 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.'):
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
     # List objects in the bucket with a specific prefix
-    prefix = key + f"genfile_{title}_"
+    prefix = ""
+    if (default_prefix==None):
+        prefix = key + f"genfile_{title}_"
+    else:
+        prefix = key + title
+    
 
     print(f"Searching in bucket: {bucket_name} for files with prefix: {prefix}")  # Print bucket and prefix info
 
@@ -369,6 +374,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.'):
             local_filename = obj['Key'].split('/')[-1]  # Assuming the file is not inside a subdirectory in the bucket
             s3.download_file(bucket_name, obj['Key'], os.path.join(download_dir, local_filename))
             print(f"Downloaded {local_filename}")
+
 
 
 def merge_audio_files(directory, title, output_directory):
@@ -513,47 +519,69 @@ def app6():
 
 @app.route('/' + APP6_TITLE.lower() + '/add_binaural_to_audio_file', methods=['POST'])
 def add_binaural_to_audio_file():
+    # Initialize clients for  and S3
+    s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
+    bucket_name = 'crystal-audio-processing'
+    s3_input_file_key = r'audio-dumps/audio-combined/'
+    s3_output_file_key = r'' # Changes based off of preset
+
     try:
         print("Success!!!")
         title = request.form.get('title')
         print(title)
         preset = request.form.get('preset')  # Get preset from form data
         print(preset)
+        s3_output_file_key = r'audios-draft-v1/' + preset + '/'
 
-        if 'audio_file' not in request.files:
-            return 'No audio file uploaded.', 400
-        
-        audio_file = request.files['audio_file']  # Assuming file is sent under this name
 
-        if audio_file.filename == '':
-            return 'No audio file selected.', 400
+      ###
 
-        print(audio_file.filename)
-        print("\n\n---------GENERATING Bineural---------\n\n")
-
-        # Save the audio file locally
-        audio_file_path = 'website/tools/audio_dump/' + audio_file.filename
+        # Save the audio folder locally
+        audio_file_path = '/tmp/' + s3_input_file_key + title
+        audio_file_output_path = '/tmp/' + s3_output_file_key + title
         
         dir_path = os.path.dirname(audio_file_path)
-        #audio_file_path = os.path.join("audio_dump", audio_file.filename)
-        
-        # Check if the directory exists and create it if necessary
+        dir_path_output = os.path.dirname(audio_file_output_path)
+
+        # Check if the input directory exists and create it if necessary
+        print(f"Checking directory: {dir_path}")
         if not os.path.isdir(dir_path):
+            print(f"Directory '{dir_path}' not found. Creating it now...")
             os.makedirs(dir_path)
+        else:
+            print(f"Directory '{dir_path}' already exists.")
+        
+        # Check if the output directory exists and create it if necessary
+        print(f"Checking directory: {dir_path_output}")
+        if not os.path.isdir(dir_path_output):
+            print(f"Directory '{dir_path_output}' not found. Creating it now...")
+            os.makedirs(dir_path_output)
+        else:
+            print(f"Directory '{dir_path_output}' already exists.")
+        
 
-        audio_file.save(audio_file_path)
+        print("audio file path: " + audio_file_path)
+        print("audio file path: " + dir_path_output)
 
-        print(audio_file_path)
+
+        print("\n\n---------Time to download the audio from S3 ---------\n\n")
+        BUCKET_NAME = bucket_name
+        TITLE = title
+        print('we will now download the audio files following the title: ' + TITLE)
+        download_files_from_s3(BUCKET_NAME, s3_input_file_key, TITLE, download_dir=audio_file_path, default_prefix=TITLE)
+        files = [f for f in os.listdir(audio_file_path) if os.path.isfile(os.path.join(audio_file_path, f))]
+        print(files)
 
 
+###
+        
         print("\n\n---------GENERATING Bineural---------\n\n")
         # Process the audio file
-        audio_length = get_audio_length(audio_file_path)
+        audio_length = get_audio_length(audio_file_path + '_combined.mp3')
         print(f"Duration = {audio_length}")
-        #bineural_file_path = r'X:/website/complete audio'
 
-        bn = "bn"
-        bineural_file_path = 'website/tools/audio_dump/' + f'\{title}_{bn}.wav'
+        bn = preset
+        bineural_file_path = audio_file_output_path + f'\{title}_ONLY_{bn}.mp3'
     
         output_path = bineural.create_binaural_audio(preset, audio_length, bineural_file_path, None, volume=0.1)
         
@@ -564,13 +592,25 @@ def add_binaural_to_audio_file():
         print(f"---------With {bineural_file_path}---------\n\n")
         
         #bineural.merge_audio_files(input_file1=bineural_file_path, input_file2=output_path, f"{output_path}\{title}.wav):
-        outfile = r'X:\website\tools\audio_dump' + f'\{title}_bineural_complete.wav'
+        outTitle = f'\{title}_{bn}_draft-v1.mp3'
+        outfile = audio_file_output_path + outTitle
         bineural.merge_audio_files(input_file1=audio_file_path, input_file2=bineural_file_path, output_file=outfile)
         
+        print(f"---------Saved local {outfile}---------\n\n")
+        print(f"---------Saving new file to S3---------\n\n")
+
+        s3_key_combined = s3_output_file_key + outTitle
+        upload_to_s3(bucket_name, s3_key_combined, outfile)
+
+
+        print(f"---------Removing local tmp files---------\n\n")
+        remove_local_files(audio_file_path)
 
 
         # Send success response to AJAX
-        return jsonify({"status": "success", "message": f"audios\{title}"}), 200
+        full_s3_url = generate_presigned_url(bucket_name, s3_key_combined)
+        return jsonify({"status": "success", "message": full_s3_url}), 200
+
         
     except Exception as e:
         print(e)
@@ -599,7 +639,8 @@ def merge_s3_genfiles():
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     bucket_name = 'crystal-audio-processing'
     s3_gen_file_key = r'audio-dumps/audio-gen-files/'
-
+    s3_gen_file_output_key = r'audio-dumps/audio-combined/'
+    
 
     try:
         print("Success!!!")
@@ -646,7 +687,8 @@ def merge_s3_genfiles():
         print(f"---------Merging file complete---------\n\n")
 
         print(f"---------Saving new file to S3---------\n\n")
-        s3_key_combined = 'audio-dumps/audios-complete/' + TITLE + "_combined.mp3"
+
+        s3_key_combined = s3_gen_file_output_key + TITLE + "_combined.mp3"
         upload_to_s3(bucket_name, s3_key_combined, audio_file_path_output + "/" + TITLE + "_combined.mp3")
         
         print(f"---------Removing local tmp files---------\n\n")
@@ -654,9 +696,6 @@ def merge_s3_genfiles():
 
 
         # Send success response to AJAX
-        #return jsonify({"status": "success", "message": f"audios\{title}"}), 200
-        # Given your existing bucket_name, region, and s3_key_combined:
-        #base_url = f"https://{bucket_name}.s3.{s3.meta.region_name}.amazonaws.com"
         full_s3_url = generate_presigned_url(bucket_name, s3_key_combined)
         return jsonify({"status": "success", "message": full_s3_url}), 200
 

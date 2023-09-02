@@ -15,9 +15,8 @@
 {% include "pagetitle.php" %}
 <h>Audio / Bineural Merge</h>
 <body>
-	<form id="my-form" method="POST" enctype="multipart/form-data">
-        <input type="text" id="title" name="title" maxlength="128" placeholder="New Bineural Audio Title">
-        <input type="file" id="audioFile" name="audioFile" accept="audio/*">
+<form id="my-form" method="POST" enctype="multipart/form-data">
+        <input type="text" id="title" name="title" maxlength="128" placeholder="ttsFileTitle">
 
         </select>
 		
@@ -77,7 +76,7 @@
 
 
     <script>
-
+        
         function checkCustom(value) {
             if (value === 'custom') {
                 document.getElementById('custom-fields').style.display = 'block';
@@ -100,12 +99,11 @@
         function downloadButtonClickHandler(event) {
             event.preventDefault(); // prevent the default click action of the link
 
-            // Get the audio file title
-            const audioFileTitle = document.getElementById('title').value || 'NewFile';
-            const audioFileName = `${audioFileTitle}_Binaural.wav`;
 
-            // Construct the URL for the audio file
-            const audioFileURL = `/audios/${audioFileName}`;
+            // Get the audio file title
+            const audioFileTitle = document.getElementById('title').value || 'ttsFileTitle';
+            const audioFileName = `${audioFileTitle}_Binaural.mp3`;
+            
 
             // Download the audio file
             const link = document.createElement('a');
@@ -118,8 +116,6 @@
         }
 
 
-
-
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // prevent the form from submitting normally
 
@@ -127,11 +123,10 @@
 
             var formData = new FormData(); // change this to FormData to handle file upload
             formData.append("title", document.getElementById('title').value);
-            formData.append("audio_file", document.getElementById('audioFile').files[0]); // append the uploaded file
             formData.append("preset", document.getElementById('preset').value); // add the preset parameter
 
             if (!formData.get("title")) {
-                formData.set("title", "NewFile");
+                formData.set("title", "ttsFileTitle");
             }
 
             var xhr = new XMLHttpRequest();
@@ -140,13 +135,20 @@
                 console.log("boing boing");
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
+                        // Parse the JSON response from the server
+                        var response = JSON.parse(xhr.responseText);
+
+                        // Extract the S3 URL from the response
+                        var s3URL = response.message;
+
                         // hide the wait message
                         waitMessage.style.display = 'none';
                         // show the download link
                         downloadLink.style.display = 'block';
 
-                        // set the download URL to the response from the Python script
-                        downloadButton.href = xhr.responseText;
+
+                        // set the download URL to the S3 URL
+                        downloadButton.href = s3URL;
                     } else {
                         // handle the error
                         console.error('Error:', xhr.statusText);
@@ -167,3 +169,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF">
 </body>
 </html>
+
+
+
+
+
