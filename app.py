@@ -638,7 +638,9 @@ def merge_s3_genfiles():
 
 
         # Send success response to AJAX
-        return jsonify({"status": "success", "message": f"audios\{title}"}), 200
+        #return jsonify({"status": "success", "message": f"audios\{title}"}), 200
+        return jsonify({"status": "success", "message": s3_key_combined}), 200
+
         
     except Exception as e:
         print(e)
