@@ -347,7 +347,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.'):
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
     # List objects in the bucket with a specific prefix
-    prefix = key + f"genfile_{title}_#"
+    prefix = key + f"genfile_{title}_"
 
     print(f"Searching in bucket: {bucket_name} for files with prefix: {prefix}")  # Print bucket and prefix info
 
@@ -600,7 +600,7 @@ def merge_s3_genfiles():
 
         
 
-        print("audio file path" + audio_file_path)
+        print("audio file path: " + audio_file_path)
 
 
         print("\n\n---------Time to download the audio from S3 ---------\n\n")
