@@ -334,15 +334,20 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.'):
     print("download_files_from_s3()")
     
 
-    # Ensure the download directory exists
-    if not os.path.exists(download_dir):
+    # Check if the directory exists and create it if necessary
+    print(f"2 Checking directory: {download_dir}")
+    if not os.path.isdir(download_dir):
+        print(f"Directory '{download_dir}' not found. Creating it now...")
         os.makedirs(download_dir)
+    else:
+        print(f"Directory '{download_dir}' already exists.")
+
 
     # Initialize the S3 client
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
     # List objects in the bucket with a specific prefix
-    prefix = key + f"genfile_{title}_"
+    prefix = key + f"genfile_{title}_#"
 
     print(f"Searching in bucket: {bucket_name} for files with prefix: {prefix}")  # Print bucket and prefix info
 
@@ -586,8 +591,12 @@ def merge_s3_genfiles():
         #audio_file_path = os.path.join("audio_dump", audio_file.filename)
         
         # Check if the directory exists and create it if necessary
+        print(f"1 Checking directory: {dir_path}")
         if not os.path.isdir(dir_path):
+            print(f"Directory '{dir_path}' not found. Creating it now...")
             os.makedirs(dir_path)
+        else:
+            print(f"Directory '{dir_path}' already exists.")
 
         
 
