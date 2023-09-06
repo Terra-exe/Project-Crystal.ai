@@ -81,6 +81,11 @@ class AudioGenerator:
         else:
             print("Creating binaural audio - 8.3")
             try:
+                print("sound_freq:", sound_freq)
+                print("beat_freq:", beat_freq)
+                print("sample_rate:", sample_rate)
+                print("duration:", duration)
+
                 arr = entrainment_generator(
                     sound_freq, beat_freq, sample_rate, duration, sound_generator
                 )
