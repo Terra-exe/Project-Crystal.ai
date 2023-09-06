@@ -73,13 +73,17 @@ class AudioGenerator:
             traceback.print_exc()
         print("Creating binaural audio - 8")
         if entrainment_type == "isochronic":
+            print("Creating binaural audio - 8.1")
             arr = entrainment_generator(
                 sound_freq, beat_freq, sample_rate, duration, sound_generator, volume_generator
             )
+            print("Creating binaural audio - 8.2")
         else:
+            print("Creating binaural audio - 8.3")
             arr = entrainment_generator(
                 sound_freq, beat_freq, sample_rate, duration, sound_generator
             )
+            print("Creating binaural audio - 8.4")
         print("Creating binaural audio - 11")
         ramp_length = int(sample_rate * 0.5)
 
