@@ -80,9 +80,13 @@ class AudioGenerator:
             print("Creating binaural audio - 8.2")
         else:
             print("Creating binaural audio - 8.3")
-            arr = entrainment_generator(
-                sound_freq, beat_freq, sample_rate, duration, sound_generator
-            )
+            try:
+                arr = entrainment_generator(
+                    sound_freq, beat_freq, sample_rate, duration, sound_generator
+                )
+            except Exception as e:
+                print(f"Error encountered: {e}")
+
             print("Creating binaural audio - 8.4")
         print("Creating binaural audio - 11")
         ramp_length = int(sample_rate * 0.5)
