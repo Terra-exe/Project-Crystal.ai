@@ -15,21 +15,31 @@ class Kriya:
                 for substep in step.substeps:
                     for key, value in substep.__dict__.items():
                         print(f"\t\t\t{key}: {value}")
+
                     if hasattr(exercise, 'wait'):
                         for wait in exercise.wait:
                             print(f"\t\tWait: {wait.value}{wait.timeframe} ({wait.type} - {wait.description})")
+
+                    if hasattr(exercise, 'soundeffect'):
+                        for soundeffect in exercise.soundeffect:
+                            print(f"\t\Soundeffect: {soundeffect.value}{soundeffect.timeframe} ({soundeffect.type} - {soundeffect.description})")
+               
                 if hasattr(exercise, 'wait'):
                     for wait in exercise.wait:
                         print(f"\t\tWait: {wait.value}{wait.timeframe} ({wait.type} - {wait.description})")
+                if hasattr(exercise, 'soundeffect'):
+                    for soundeffect in exercise.soundeffect:
+                        print(f"\t\Soundeffect: {soundeffect.value}{soundeffect.timeframe} ({soundeffect.type} - {soundeffect.description})")
         print("success")
 
 
 
 class Exercise:
-    def __init__(self, exercise, steps, wait):
+    def __init__(self, exercise, steps, wait, soundeffect):
         self.exercise = exercise
         self.steps = steps
         self.wait = wait
+        self.soundeffect = soundeffect
 
 class Step:
     def __init__(self, substeps):
@@ -44,6 +54,12 @@ class Wait:
     def __init__(self, value, timeframe, type, description):
         self.value = value
         self.timeframe = timeframe
+        self.type = type
+        self.description = description
+
+class SoundEffect:
+    def __init__(self, value, type, description):
+        self.value = value
         self.type = type
         self.description = description
 
@@ -66,11 +82,17 @@ def create_kriya_obj_from_json(json_obj):
                     substep = Substep(**substep_dict)
                     substeps_list.append(substep)
             steps_list.append(Step(substeps_list))
+       
         waits_list = []
         for wait_dict in kriya['wait']:
             wait = Wait(**wait_dict)
             waits_list.append(wait)
-        kriya_list.append(Exercise(exercise, steps_list, waits_list))
+
+            sound_effect_list = []
+        for sound_effect_dict in kriya['soundeffect']:
+            sound_effect = SoundEffect(**sound_effect_dict)
+            sound_effect_list.append(sound_effect)
+        kriya_list.append(Exercise(exercise, steps_list, waits_list, sound_effect_list))
     return Kriya(title, voice, kriya_list)
 
 

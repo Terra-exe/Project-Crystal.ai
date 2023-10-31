@@ -9,6 +9,7 @@ def kriya_webformat_to_json(obj):
     defaultPeriod = obj["period_pause"]
     defaultNewLine = obj["newline_pause"]
     defaultNewSectionPause = obj["newsection_pause"]
+    defaultSoundEffect = obj["sound_effect"]
 
     title = obj["title"] + ".json"
     json_dict = {}
@@ -24,6 +25,7 @@ def kriya_webformat_to_json(obj):
         kriya["exercise"] = "Step " + str(i) + ")"
         kriya["steps"] = []
         kriya["wait"] = []
+        kriya["soundeffect"] = []
         
         
 
@@ -33,7 +35,7 @@ def kriya_webformat_to_json(obj):
        
                 #substeps
                     #substep
-        substeps = processText(obj["step" + str(i)], defaultComma, defaultPeriod, defaultNewLine)
+        substeps = processText(obj["step" + str(i)], defaultComma, defaultPeriod, defaultNewLine, defaultSoundEffect)
       
                     #substepwait
         substepwait = {}
@@ -55,6 +57,11 @@ def kriya_webformat_to_json(obj):
         wait["type"] = "breakLong"
         wait["description"] = "new section"
 
+        soundeffect = {}
+        wait["value"] = sectionWaitTime
+        wait["type"] = "soundEffect"
+        wait["description"] = "a sound effect"
+
         #substeps["substep"] = (substep)
         #substeps["wait"].append(substepwait)
         #steps["substeps"] = substeps
@@ -74,7 +81,7 @@ def kriya_webformat_to_json(obj):
     return json_dict
     #return json_str
 
-def processText(inputText, comma, period, newLine): #time values
+def processText(inputText, comma, period, newLine, soundEffect): # values from the main setting of webpage
     string_parts = stringCleanup.segmentTextForTime(inputText)
 
     result = []
@@ -99,11 +106,10 @@ def processText(inputText, comma, period, newLine): #time values
             wait["timeframe"] = "s"
             wait["type"] = "waitLong"
             wait["description"] = "New Line"
-        elif (type == "1"):
-            wait["value"] = str(inputText)
-            wait["timeframe"] = "s"
+        elif (type == "9"):
+            wait["value"] = str(soundEffect)
             wait["type"] = "soundEffect"
-            wait["description"] = "Snapping sound"
+            wait["description"] = "A sound effect"
         elif (type == "#"):
             substeps["substep" + str(i)] = segment
         else:
