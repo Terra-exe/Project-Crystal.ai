@@ -104,6 +104,11 @@ def processText(inputText, comma, period, newLine): #time values
             wait["timeframe"] = "s"
             wait["type"] = "soundEffect"
             wait["description"] = "Snapping sound"
+        elif (type == "123"):
+            wait["value"] = str(inputText)
+            wait["timeframe"] = "s"
+            wait["type"] = "soundEffect"
+            wait["description"] = "Snapping sound"
         elif (type == "#"):
             substeps["substep" + str(i)] = segment
         else:
