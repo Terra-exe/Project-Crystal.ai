@@ -257,7 +257,7 @@ def api_create_audio_file():
                     elif (isinstance(value, dict) and \
                         (value['type'] == "soundEffect")):
                         
-                        soundEffect_name = 'SOUNDEFFECT'
+                        soundEffect_name = value['value']
                         segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
                         segment_filename_local = generate_silent_file(int(float(9) * 1000), "/tmp/silence.wav")
                         upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
