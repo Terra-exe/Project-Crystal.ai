@@ -89,6 +89,7 @@ class AudioGenerator:
                 arr = entrainment_generator(
                     sound_freq, beat_freq, sample_rate, duration, sound_generator
                 )
+                print("Creating binaural audio - 8.3.1")
             except Exception as e:
                 print(f"Error encountered: {e}")
 

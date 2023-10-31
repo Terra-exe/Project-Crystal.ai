@@ -23,7 +23,7 @@ def segmentTextForTime(inputText):
     #print(newLineReplacedText)
     #print("NEWLINE REPLACED TEXT")
     
-    
+     
     #segments = re.split(r'[,:;\?!]+|\n', inputText)  # split into segments at periods, question marks, exclamation marks, colons, and newlines
     result = []
 
