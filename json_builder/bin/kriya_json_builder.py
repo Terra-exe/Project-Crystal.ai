@@ -106,8 +106,8 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["timeframe"] = "s"
             wait["type"] = "waitLong"
             wait["description"] = "New Line"
-        elif (type == "9"):
-            wait["value"] = "9"
+        elif (type == "SNAP"):
+            wait["value"] = "SNAP"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
         elif (type == "#"):
