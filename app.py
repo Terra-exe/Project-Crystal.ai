@@ -258,20 +258,9 @@ def api_create_audio_file():
                         (value['type'] == "soundEffect")):
                         
                         soundEffect_name = 'SOUNDEFFECT'
-                        segment_filename = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
-                        # Using Amazon Polly for text-to-speech, value = text
-                        tts_and_save_to_s3(bucket_name, s3_gen_file_key + segment_filename, value + " Success!")
-                        created_files += 1
-                        file_counter += 1 
-
-                        # Print progress every 100 files
-                        if created_files % 10 == 0:
-                            print(f"Segment Creation Progress: {created_files / total_files * 100:.2f}%")
-
-                        # This might be removable
-                        if file_counter % 500 == 0:
-                            checkpoint_counter += 1
-                            file_counter = 0
+                        segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
+                        segment_filename_local = generate_silent_file(int(float(9) * 1000), "/tmp/silence.wav")
+                        upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                         i+=1
             
             if hasattr(e_array, 'wait'):
