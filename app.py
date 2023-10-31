@@ -290,14 +290,7 @@ def api_create_audio_file():
         with closing(response["AudioStream"]) as stream:
             pcm_data = stream.read()
             # Convert PCM to WAV using pydub
-
-                # Check if pcm_data length is divisible by the frame width (2 bytes)
-            if len(pcm_data) % 2 != 0:
-                pcm_data = pcm_data[:-1]
-
-            sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=2, frame_rate=22050)
-                # Resample the audio to 44.1 kHz
-            sound = sound.set_frame_rate(44100)
+            sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=1, frame_rate=16000)
             # Convert the WAV data to bytes
             buffer = io.BytesIO()
             sound.export(buffer, format="wav")
@@ -351,13 +344,9 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     # The response's 'AudioStream' body contains the audio data in the specified format
     pcm_data = response['AudioStream'].read()
 
-    # Check if pcm_data length is divisible by the frame width (2 bytes)
-    if len(pcm_data) % 2 != 0:
-        pcm_data = pcm_data[:-1]
-
 
     # Convert PCM to WAV using pydub
-    sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=2, frame_rate=22050) #was 16000
+    sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=1, frame_rate=16000)
     # Resample the audio to 44.1 kHz
     sound = sound.set_frame_rate(44100)
 
@@ -727,6 +716,13 @@ def merge_s3_genfiles():
         print('we will now download the audio files following the title: ' + TITLE)
         download_files_from_s3(BUCKET_NAME, s3_gen_file_key, TITLE, download_dir=audio_file_path)
         files = [f for f in os.listdir(audio_file_path) if os.path.isfile(os.path.join(audio_file_path, f))]
+
+        # Check if audio files are mono and convert them to stereo
+        for file in files:
+            convert_mono_to_stereo(os.path.join(audio_file_path, file))
+
+
+
         print(files)
 
 
@@ -759,6 +755,12 @@ def merge_s3_genfiles():
         return jsonify({"status": "error", "message": str(e)}), 500 
 
     
+def convert_mono_to_stereo(filepath): 
+    sound = AudioSegment.from_file(filepath)
+    if sound.channels == 1:
+        stereo_sound = AudioSegment.from_mono_audiosegments(sound, sound)
+        stereo_sound.export(filepath, format="wav")
+        print(f"Converted file '{filepath}' from mono to stereo")
 
 
 
