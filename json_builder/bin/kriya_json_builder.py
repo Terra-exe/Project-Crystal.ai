@@ -99,12 +99,7 @@ def processText(inputText, comma, period, newLine): #time values
             wait["timeframe"] = "s"
             wait["type"] = "waitLong"
             wait["description"] = "New Line"
-        elif (type == "SNAP"):
-            wait["value"] = str(inputText)
-            wait["timeframe"] = "s"
-            wait["type"] = "soundEffect"
-            wait["description"] = "Snapping sound"
-        elif (type == "123"):
+        elif (type == "1"):
             wait["value"] = str(inputText)
             wait["timeframe"] = "s"
             wait["type"] = "soundEffect"
