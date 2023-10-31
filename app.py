@@ -423,6 +423,8 @@ def merge_audio_files(directory, title, output_directory):
     for file in files:
         audio_path = os.path.join(directory, file)
         audio = AudioSegment.from_wav(audio_path)
+        print(f'File: {file} has {audio.channels} channel(s)')  # print channel number for each file
+
         merged_audio += audio
 
     # Export the merged audio to a new file
