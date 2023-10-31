@@ -258,7 +258,7 @@ def api_create_audio_file():
                         (value['type'] == "soundEffect")):
                         
                         soundEffect_name = 'SOUNDEFFECT'
-                        segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
+                        segment_filename = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
                         # Using Amazon Polly for text-to-speech, value = text
                         tts_and_save_to_s3(bucket_name, s3_gen_file_key + segment_filename, value + " Success!")
                         created_files += 1
