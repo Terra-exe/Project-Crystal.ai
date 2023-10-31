@@ -9,7 +9,7 @@ def kriya_webformat_to_json(obj):
     defaultPeriod = obj["period_pause"]
     defaultNewLine = obj["newline_pause"]
     defaultNewSectionPause = obj["newsection_pause"]
-    defaultSoundEffect = obj["sound_effect"]
+    #defaultSoundEffect = obj["sound_effect"]
 
     title = obj["title"] + ".json"
     json_dict = {}
@@ -35,7 +35,7 @@ def kriya_webformat_to_json(obj):
        
                 #substeps
                     #substep
-        substeps = processText(obj["step" + str(i)], defaultComma, defaultPeriod, defaultNewLine, defaultSoundEffect)
+        substeps = processText(obj["step" + str(i)], defaultComma, defaultPeriod, defaultNewLine)
       
                     #substepwait
         substepwait = {}
@@ -81,7 +81,7 @@ def kriya_webformat_to_json(obj):
     return json_dict
     #return json_str
 
-def processText(inputText, comma, period, newLine, soundEffect): # values from the main setting of webpage
+def processText(inputText, comma, period, newLine): # values from the main setting of webpage
     string_parts = stringCleanup.segmentTextForTime(inputText)
 
     result = []
@@ -107,7 +107,7 @@ def processText(inputText, comma, period, newLine, soundEffect): # values from t
             wait["type"] = "waitLong"
             wait["description"] = "New Line"
         elif (type == "9"):
-            wait["value"] = str(soundEffect)
+            wait["value"] = "9"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
         elif (type == "#"):
