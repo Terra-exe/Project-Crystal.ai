@@ -74,7 +74,7 @@ def kriya_webformat_to_json(obj):
     return json_dict
     #return json_str
 
-def processText(inputText, comma, period, newLine):
+def processText(inputText, comma, period, newLine): #time values
     string_parts = stringCleanup.segmentTextForTime(inputText)
 
     result = []
@@ -82,7 +82,6 @@ def processText(inputText, comma, period, newLine):
     substeps = {}
 
     i = 1
-    print("Here's an idea why don't I make it so that Side by side tuples that are exactly the same if they are a wait object")
     for segment, type in string_parts:
         wait = {}
         if (type == ","):
@@ -102,6 +101,10 @@ def processText(inputText, comma, period, newLine):
             wait["description"] = "New Line"
         elif (type == "#"):
             substeps["substep" + str(i)] = segment
+        elif (type == "SNAP"):
+            wait["value"] = str(inputText)
+            wait["type"] = "soundEffect"
+            wait["description"] = "Snapping sound"
         else:
             wait["value"] = "null"
         
