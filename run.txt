@@ -1,3 +1,7 @@
+ yum install awscli -y
+aws configure
+
+
 virtualenv venv
 
 
