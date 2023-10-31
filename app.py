@@ -290,6 +290,11 @@ def api_create_audio_file():
         with closing(response["AudioStream"]) as stream:
             pcm_data = stream.read()
             # Convert PCM to WAV using pydub
+
+                # Check if pcm_data length is divisible by the frame width (2 bytes)
+            if len(pcm_data) % 2 != 0:
+                pcm_data = pcm_data[:-1]
+
             sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=2, frame_rate=22050)
                 # Resample the audio to 44.1 kHz
             sound = sound.set_frame_rate(44100)
@@ -345,6 +350,10 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
                 )
     # The response's 'AudioStream' body contains the audio data in the specified format
     pcm_data = response['AudioStream'].read()
+
+    # Check if pcm_data length is divisible by the frame width (2 bytes)
+    if len(pcm_data) % 2 != 0:
+        pcm_data = pcm_data[:-1]
 
 
     # Convert PCM to WAV using pydub
