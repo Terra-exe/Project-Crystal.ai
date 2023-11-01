@@ -409,7 +409,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
             break
 
         # Filter files based on the title and naming pattern
-        for obj in objects['Contents']:
+        for obj in objects['Contents']: 
             if obj['Key'].endswith(".wav"):
                 # Download the file
                 local_filename = obj['Key'].split('/')[-1]  # Assuming the file is not inside a subdirectory in the bucket
