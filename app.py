@@ -418,12 +418,16 @@ def merge_audio_files(directory, title, output_directory):
 
     # Create an empty audio segment to concatenate files to
     merged_audio = AudioSegment.empty()
+  # Output file name
+    output_file = os.path.join(output_directory, f"{title}_combined.wav")
 
     # Concatenate the audio files one by one
     for file in files:
         audio_path = os.path.join(directory, file)
         audio = AudioSegment.from_wav(audio_path)
-        print(f'File: {file} has {audio.channels} channel(s)')  # print channel number for each file
+       #print(f'File: {file} has {audio.channels} channel(s)')  # print channel number for each file
+        print(f'File: {file} is merging into: {output_file} and it has {audio.channels} channel(s)')  # print channel number for each file
+
 
         merged_audio += audio
 
