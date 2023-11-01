@@ -382,7 +382,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
     # Initialize the S3 client
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
-
+    print("\nKey is: ", key, "\n")
     # List objects in the bucket with a specific prefix
     prefix = ""
     if (default_prefix==None):
