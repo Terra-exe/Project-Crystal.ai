@@ -382,6 +382,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
     # Initialize the S3 client
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
+
     # List objects in the bucket with a specific prefix
     prefix = ""
     if (default_prefix==None):
@@ -392,20 +393,46 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
 
     print(f"Searching in bucket: {bucket_name} for files with prefix: {prefix}")  # Print bucket and prefix info
 
+
+
+    # List objects in the bucket with the defined prefix
     objects = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
 
     # Check if the objects key is in the returned items
     if 'Contents' not in objects:
         print("No files in bucket.")
         return
+                
+    # Check if the specific file is in the objects list
+    specific_file = 'genfile_Ep 3_1_#_Welcome back bambi.wav'
+    file_found = False
+
+
+
+    for obj in objects['Contents']:
+        if obj['Key'] == (key + specific_file):
+            file_found = True
+            break
+
+    if not file_found:
+        print(f"File '{specific_file}' not found in objects list.")
+        return
+    else:
+        print(f"File '{specific_file}' was found in the objects list.")      
+
+
 
     # Filter files based on the title and naming pattern
     for obj in objects['Contents']:
         if obj['Key'].endswith(".wav"):
             # Download the file
             local_filename = obj['Key'].split('/')[-1]  # Assuming the file is not inside a subdirectory in the bucket
-            s3.download_file(bucket_name, obj['Key'], os.path.join(download_dir, local_filename))
-            print(f"Downloaded {local_filename}")
+
+            try:
+                s3.download_file(bucket_name, obj['Key'], os.path.join(download_dir, local_filename))
+                print(f"Downloaded {local_filename}")
+            except Exception as e:
+                print(f"Failed to download {local_filename}. Error: {e}")
 
 
 
