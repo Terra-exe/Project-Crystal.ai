@@ -393,28 +393,36 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
 
     print(f"Searching in bucket: {bucket_name} for files with prefix: {prefix}")  # Print bucket and prefix info
 
+    continuation_token = None
+    while True:
+        list_kwargs = {
+            'Bucket': bucket_name,
+            'Prefix': prefix,
+        }
+        if continuation_token:
+            list_kwargs['ContinuationToken'] = continuation_token
 
+        objects = s3.list_objects_v2(**list_kwargs)
 
-    # List objects in the bucket with the defined prefix
-    objects = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
+        if 'Contents' not in objects:
+            print("No files in bucket.")
+            break
 
-    # Check if the objects key is in the returned items
-    if 'Contents' not in objects:
-        print("No files in bucket.")
-        return
+        # Filter files based on the title and naming pattern
+        for obj in objects['Contents']:
+            if obj['Key'].endswith(".wav"):
+                # Download the file
+                local_filename = obj['Key'].split('/')[-1]  # Assuming the file is not inside a subdirectory in the bucket
 
-
-    # Filter files based on the title and naming pattern
-    for obj in objects['Contents']:
-        if obj['Key'].endswith(".wav"):
-            # Download the file
-            local_filename = obj['Key'].split('/')[-1]  # Assuming the file is not inside a subdirectory in the bucket
-
-            try:
-                s3.download_file(bucket_name, obj['Key'], os.path.join(download_dir, local_filename))
-                print(f"Downloaded {local_filename}")
-            except Exception as e:
-                print(f"Failed to download {local_filename}. Error: {e}")
+                try:
+                    s3.download_file(bucket_name, obj['Key'], os.path.join(download_dir, local_filename))
+                    print(f"Downloaded {local_filename}")
+                except Exception as e:
+                    print(f"Failed to download {local_filename}. Error: {e}")
+        
+        continuation_token = objects.get('NextContinuationToken')
+        if not continuation_token:
+            break
 
 
 
