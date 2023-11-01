@@ -386,7 +386,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
     # List objects in the bucket with a specific prefix
     prefix = ""
     if (default_prefix==None):
-        prefix = key + f"genfile_{title}_1_"
+        prefix = key + f"genfile_{title}_1_" 
     else:
         prefix = key + title
     
