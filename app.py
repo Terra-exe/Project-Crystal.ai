@@ -386,7 +386,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
     # List objects in the bucket with a specific prefix
     prefix = ""
     if (default_prefix==None):
-        prefix = key + f"genfile_{title}_"
+        prefix = key + f"genfile_{title}"
     else:
         prefix = key + title
     
@@ -402,24 +402,6 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
     if 'Contents' not in objects:
         print("No files in bucket.")
         return
-                
-    # Check if the specific file is in the objects list
-    specific_file = prefix + '1_#_Welcome back bambi.wav'
-    file_found = False
-
-
-
-    for obj in objects['Contents']:
-        if obj['Key'] == (key + specific_file):
-            file_found = True
-            break
-
-    if not file_found:
-        print(f"File '{specific_file}' not found in objects list.")
-        return
-    else:
-        print(f"File '{specific_file}' was found in the objects list.")      
-
 
 
     # Filter files based on the title and naming pattern
