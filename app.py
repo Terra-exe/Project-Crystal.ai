@@ -404,7 +404,7 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
         return
                 
     # Check if the specific file is in the objects list
-    specific_file = 'genfile_Ep 3_1_#_Welcome back bambi.wav'
+    specific_file = prefix + '1_#_Welcome back bambi.wav'
     file_found = False
 
 
