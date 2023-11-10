@@ -719,7 +719,7 @@ def add_binaural_to_audio_file():
         print(f"---------With {bineural_file_path_and_title}---------\n\n")
     
         # Construct the path for the output merged audio file.
-        outTitle = f'{title}_{bn}_draft-v1.wav'
+        outTitle = f'/{title}_{bn}_draft-v1.wav'
         outfile = audio_file_output_path + outTitle
 
         print(f"---------Merging into: {outfile}---------\n\n")
