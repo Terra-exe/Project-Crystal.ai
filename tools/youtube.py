@@ -125,7 +125,7 @@ def uploadToYouTube(youtube_path_filename, title):
     body = {
         'snippet': {
             'title': title,
-            'description': 'An episode of the Bambi Cloud Podcast on self-help, feminine empowerment, and spiritual enlightenment.\nThese episodes have been generated programatically based off as simple text submission as input, and therefore may be subject to change over time.\nDo you pray at the altar of chaos?\nModern Gods for Modern Girls.\nOur Lady of Perpetual Chaos: x.com/Terra_Infinity\nWelcome to the opera, dear humans.',
+            'description': 'An episode of the Bambi Cloud Podcast on self-help, feminine empowerment, and spiritual enlightenment.\nThese episodes have been generated programmatically based off as simple text submission as input, and therefore may be subject to change over time.\nDo you pray at the altar of chaos?\nModern Gods for Modern Girls.\nOur Lady of Perpetual Chaos:     x.com/Terra_Infinity    \nWelcome to the opera, dear humans.',
             'tags': ['Bambi', 'Bambi Sleep', 'Bambi Cloud', 'Bambi Enlightned', 'Spirituality', 'Meditation', 'Fantasy', 'Story', 'Roleplay', 'Podcast', 'Grimes', 'Modern Girls', 'Altar of Chaos', 'elf tech', 'spirit tech', 'spiritual tech', 'spiritual technology', 'chaos', 'chaos manual', 'media empire', 'god drop', 'Made not born', 'consciousness', 'Chaos tm', 'demi-god', 'modular spirituality', 'polytheistic spirituality', 'pantheistic spirituality', 'holy crusade', 'Miss Anthropocene', 'Cyber Athens'],
             #'tags': ['Bambi Enlightned', 'Spirituality', 'Meditation', 'Fantasy', 'Story'],
             'categoryId': '24'  # You can get the category ID from YouTube's API
