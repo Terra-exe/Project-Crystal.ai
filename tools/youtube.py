@@ -20,6 +20,52 @@ SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
 
 
 
+
+def create_mp4_audio(source_wav, save_path, youtube_image_path_filename):
+    try:
+        print("Source wav: ", source_wav)
+
+        # Check if audio file exists
+        if not os.path.exists(source_wav):
+            print("Audio source file does not exist")
+            return None
+
+        print("Save mp4 Path: ", save_path)
+
+        # Check if path for saving exists
+        save_dir = os.path.dirname(save_path)
+        if not os.path.exists(save_dir):
+            print("Save directory does not exist")
+            return None
+
+        # Load your audio file
+        audio_clip = AudioFileClip(source_wav)
+
+        # Check if image file exists
+        if not os.path.exists(youtube_image_path_filename):
+            print("Image file does not exist")
+            return None
+
+        # Load an image or create a color clip
+        image_clip = ImageClip(youtube_image_path_filename, duration=audio_clip.duration)
+
+        # Set the audio of the image clip as your audio file
+        video_clip = image_clip.set_audio(audio_clip)
+
+        # Write the result to a file
+        video_clip.write_videofile(save_path, fps=24)
+
+        print(f"save_path = {save_path}")
+
+        return save_path
+
+    except Exception as e:
+        print("An error occurred: ", str(e))
+        return None
+    
+    
+'''
+
 def create_mp4_audio(source_wav, save_path, youtube_image_path_filename):
         
     print("Source wav: ", source_wav)    
@@ -45,6 +91,8 @@ def create_mp4_audio(source_wav, save_path, youtube_image_path_filename):
    
 
     return save_path
+
+'''
 
 def uploadToYouTube(youtube_image_path_filename, title):
 
