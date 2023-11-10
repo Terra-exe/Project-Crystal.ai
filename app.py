@@ -730,6 +730,10 @@ def add_binaural_to_audio_file():
 
         # Upload the merged audio to S3.
         print(f"---------Saving new file to S3---------\n\n")
+        print(f"---------Bucket: {bucket_name}---------\n\n")
+        print(f"---------S3_key_combined {s3_key_combined}---------\n\n")
+        print(f"---------outfile {outfile}---------\n\n")
+        
         s3_key_combined = s3_output_file_key + outTitle
         upload_to_s3(bucket_name, s3_key_combined, outfile)
 
