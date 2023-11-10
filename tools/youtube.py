@@ -24,7 +24,7 @@ SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
 def create_mp4_audio(source_wav, save_path, youtube_image_path_filename):
     try:
         print("Source wav: ", source_wav)
-
+        print("Save mp4 Path: ", save_path)
         # Check if audio file exists
         if not os.path.exists(source_wav):
             print("Audio source file does not exist")
@@ -35,9 +35,10 @@ def create_mp4_audio(source_wav, save_path, youtube_image_path_filename):
         # Check if path for saving exists
         save_dir = os.path.dirname(save_path)
         if not os.path.exists(save_dir):
-            print("Save directory does not exist")
+            print("Save directory does not exist, creating.")
+            os.makedirs(save_dir, exist_ok=True)
             return None
-
+        
         # Load your audio file
         audio_clip = AudioFileClip(source_wav)
 
