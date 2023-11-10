@@ -719,8 +719,8 @@ def add_binaural_to_audio_file():
         print(f"---------With {bineural_file_path_and_title}---------\n\n")
     
         # Construct the path for the output merged audio file.
-        outTitle = f'/{title}_{bn}_draft-v1.wav'
-        outfile = audio_file_output_path + outTitle
+        outTitle = f'{title}_{bn}_draft-v1.wav'
+        outfile = audio_file_output_path + '/' + outTitle
 
         print(f"---------Merging into: {outfile}---------\n\n")
             
@@ -735,7 +735,7 @@ def add_binaural_to_audio_file():
         
         s3_key_combined = s3_output_file_key + outTitle
         print(f"---------S3_key_combined: {s3_key_combined}---------\n\n")
-        
+
         upload_to_s3(bucket_name, s3_key_combined, outfile)
 
         # Remove the local temporary files.
