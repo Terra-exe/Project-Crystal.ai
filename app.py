@@ -833,7 +833,7 @@ def upload_to_youtube():
     # Initialize clients for  and S3
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     bucket_name = 'crystal-audio-processing'
-    s3_input_file_key = 'audio-draft-v1/' + preset + '/'
+    
     s3_input_file_key_youtube_image = 'images/'
     
     s3_output_file_key = '' # Changes based off of preset
@@ -845,7 +845,7 @@ def upload_to_youtube():
         preset = request.form.get('preset')  # Get preset from form data
         print(preset)
         s3_output_file_key = 'audios-youtube-mp4-v1/'
-
+    s3_input_file_key = 'audio-draft-v1/' + preset + '/'
 
       ###
 
