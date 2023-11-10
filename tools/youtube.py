@@ -95,29 +95,31 @@ def create_mp4_audio(source_wav, save_path, youtube_image_path_filename):
 
 '''
 
-def uploadToYouTube(youtube_image_path_filename, title):
+def uploadToYouTube(youtube_path_filename, title):
+
+    print("Starting the YouTube upload process...")
 
     # Load credentials and create an OAuth flow
     creds = None
     # The file token.json stores the user's access and refresh tokens.
-    if os.path.exists(r"tools\token.json"):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    if os.path.exists('tools/token.json'):
+        print("Credential file found, loading credentials...")
+        creds = Credentials.from_authorized_user_file('tools/token.json', SCOPES)
+    else:
+        print("Credential file not found.")
 
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
+            print("Credentials have expired, refreshing...")
             creds.refresh(Request())
         else:
             raise FileNotFoundError("No credentials available for YouTube API access.")
-    
-    youtube = build('youtube', 'v3', credentials=creds)
+    else:
+        print("Credentials are valid.")
 
-    # Call the YouTube API to upload the file
-    request = youtube.videos().insert(
-        part=",".join(body.keys()),
-        body=body,
-        media_body=MediaFileUpload(youtube_image_path_filename, chunksize=-1, resumable=True)
-    )
+    youtube = build('youtube', 'v3', credentials=creds)
+    print("YouTube service built successfully.")
 
     # Prepare the video request body
     body = {
@@ -136,18 +138,32 @@ def uploadToYouTube(youtube_image_path_filename, title):
         }
     }
 
+    print(f"Body for the video request prepared: {body}")
+
     # Call the YouTube API to upload the file
+    print("Calling the YouTube API to upload the file...")
     request = youtube.videos().insert(
         part=",".join(body.keys()),
         body=body,
-        media_body=MediaFileUpload(youtube_image_path_filename, chunksize=-1, resumable=True)
+        media_body=MediaFileUpload(youtube_path_filename, chunksize=-1, resumable=True)
     )
+
 
     response = None
     while response is None:
-        status, response = request.next_chunk()
-        if status:
-            print("Uploaded %d%%." % int(status.progress() * 100))
+        try:
+            print("Uploading the video...")
+            status, response = request.next_chunk()
+            if status:
+                print("Uploaded %d%%." % int(status.progress() * 100))
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            break
 
-    print("Upload Complete!")            
+    
+    if response is not None:
+        print("Upload Complete!")
+        print(f"Video ID: {response.get('id')}")
+    else:
+        print("Upload failed.")       
 

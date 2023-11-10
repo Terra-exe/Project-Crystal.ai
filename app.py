@@ -719,7 +719,7 @@ def add_binaural_to_audio_file():
         print(f"---------With {bineural_file_path_and_title}---------\n\n")
     
         # Construct the path for the output merged audio file.
-        outTitle = f'/{title}_{bn}_draft-v1.wav'
+        outTitle = f'{title}_{bn}_draft-v1.wav'
         outfile = audio_file_output_path + outTitle
 
         print(f"---------Merging into: {outfile}---------\n\n")
@@ -994,6 +994,14 @@ def upload_to_youtube():
         print(f"---------Saving new file to S3---------\n\n")
         s3_key_combined = s3_output_file_key + outTitle
         upload_to_s3(bucket_name, s3_key_combined, outfile)
+
+
+        print(f"---------Uploading new MP4 file to Youtube---------\n\n")
+
+        youtube.uploadToYouTube(output_path, title)
+  
+        print(f"\n\n---------Uploaded new MP4 file to Youtube COMPLETE---------\n\n")
+
 
         # Remove the local temporary files.
         print(f"---------Removing local tmp files---------\n\n")
