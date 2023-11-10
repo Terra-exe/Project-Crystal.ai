@@ -953,7 +953,7 @@ def upload_to_youtube():
         
 
 
-        download_files_from_s3_for_app7(BUCKET_NAME, s3_input_file_key, download_dir=audio_file_path, default_prefix="")
+        download_files_from_s3(BUCKET_NAME, s3_input_file_key, TITLE, download_dir=audio_file_path, default_prefix="")
         files = [f for f in os.listdir(audio_file_path) if os.path.isfile(os.path.join(audio_file_path, f))]
         print(files)
 
