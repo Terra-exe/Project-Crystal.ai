@@ -37,7 +37,7 @@ def create_mp4_audio(source_wav, save_path, youtube_image_path_filename):
         if not os.path.exists(save_dir):
             print("Save directory does not exist, creating.")
             os.makedirs(save_dir, exist_ok=True)
-            return None
+            
         
         # Load your audio file
         audio_clip = AudioFileClip(source_wav)

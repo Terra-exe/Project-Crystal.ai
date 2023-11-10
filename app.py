@@ -966,8 +966,8 @@ def upload_to_youtube():
         print("\n\n---------Convert to mp4---------\n\n")
 
         # Obtain the duration of the combined wav file.
-        audio_file_path_filename = audio_file_path + '/' + TITLE + '_' + preset + '_draft-v1.wav'
-        audio_length = get_audio_length(audio_file_path + '/' + TITLE + '_' + preset + '_draft-v1.wav')
+        audio_file_path_filename = audio_file_path  + TITLE + '_' + preset + '_draft-v1.wav'
+        audio_length = get_audio_length(audio_file_path + TITLE + '_' + preset + '_draft-v1.wav')
         print(f"Duration = {audio_length}")
 
         # Construct the path for the output mp4 file.
