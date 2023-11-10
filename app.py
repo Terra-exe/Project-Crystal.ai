@@ -427,6 +427,69 @@ def download_files_from_s3(bucket_name, key, title, download_dir='.', default_pr
         if not continuation_token:
             break
 
+def download_files_from_s3_for_app7(bucket_name, key, download_dir='.', default_prefix=None):
+
+    """
+    Downloads audio files from an S3 bucket based on the provided title.
+
+    :param bucket_name: Name of the S3 bucket
+    :param title: Title used in the audio file naming
+    :param download_dir: Directory to download files to (default is current directory)
+    """
+    print("download_files_from_s3_for_app7()")
+    
+
+    # Check if the directory exists and create it if necessary
+    print(f"2 Checking directory: {download_dir}")
+    if not os.path.isdir(download_dir):
+        print(f"Directory '{download_dir}' not found. Creating it now...")
+        os.makedirs(download_dir)
+    else:
+        print(f"Directory '{download_dir}' already exists.")
+
+
+    # Initialize the S3 client
+    s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
+
+    print("\nKey is: ", key, "\n")
+    # List objects in the bucket with a specific prefix
+
+    prefix = key
+
+    
+
+    print(f"Searching in bucket: {bucket_name} for files with prefix: {prefix}")  # Print bucket and prefix info
+
+    continuation_token = None
+    while True:
+        list_kwargs = {
+            'Bucket': bucket_name,
+            'Prefix': prefix,
+        }
+        if continuation_token:
+            list_kwargs['ContinuationToken'] = continuation_token
+
+        objects = s3.list_objects_v2(**list_kwargs)
+
+        if 'Contents' not in objects:
+            print("No files in bucket.")
+            break
+
+        # Filter files based on the title and naming pattern
+        for obj in objects['Contents']: 
+            if obj['Key'].endswith(".wav"):
+                # Download the file
+                local_filename = obj['Key'].split('/')[-1]  # Assuming the file is not inside a subdirectory in the bucket
+
+                try:
+                    s3.download_file(bucket_name, obj['Key'], os.path.join(download_dir, local_filename))
+                    print(f"Downloaded {local_filename}")
+                except Exception as e:
+                    print(f"Failed to download {local_filename}. Error: {e}")
+        
+        continuation_token = objects.get('NextContinuationToken')
+        if not continuation_token:
+            break
 
 
 def merge_audio_files(directory, title, output_directory):
@@ -890,7 +953,7 @@ def upload_to_youtube():
         
 
 
-        download_files_from_s3(BUCKET_NAME, s3_input_file_key, TITLE, download_dir=audio_file_path, default_prefix="")
+        download_files_from_s3_for_app7(BUCKET_NAME, s3_input_file_key, download_dir=audio_file_path, default_prefix="")
         files = [f for f in os.listdir(audio_file_path) if os.path.isfile(os.path.join(audio_file_path, f))]
         print(files)
 
