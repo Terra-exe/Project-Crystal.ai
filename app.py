@@ -884,7 +884,7 @@ def upload_to_youtube():
         BUCKET_NAME = bucket_name
         TITLE = title
         print('we will now download the audio files following the title: ' + TITLE)
-        download_files_from_s3(BUCKET_NAME, s3_input_file_key, TITLE, download_dir=audio_file_path, default_prefix=TITLE)
+        download_files_from_s3(BUCKET_NAME, s3_input_file_key, TITLE, download_dir=audio_file_path, default_prefix="")
         files = [f for f in os.listdir(audio_file_path) if os.path.isfile(os.path.join(audio_file_path, f))]
         print(files)
 
