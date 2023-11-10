@@ -845,7 +845,7 @@ def upload_to_youtube():
         preset = request.form.get('preset')  # Get preset from form data
         print(preset)
         s3_output_file_key = 'audios-youtube-mp4-v1/'
-        s3_input_file_key = 'audio-draft-v1/' + preset 
+        s3_input_file_key = 'audio-draft-v1/' + preset + '/'
 
       ###
 
