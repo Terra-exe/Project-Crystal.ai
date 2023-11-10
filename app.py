@@ -31,6 +31,7 @@ from flask import Flask, request, jsonify, render_template, send_file, send_from
 import json_builder.bin.kriya_json_builder as kriya_json_builder
 import json_builder.bin.kriya_object as kriya_object
 import tools.bineural as bineural
+import tools.youtube as youtube
 
 
 ##################
@@ -40,12 +41,14 @@ import tools.bineural as bineural
 HOME_TITLE = r"Home"
 APP5_TITLE = r"App5"
 APP6_TITLE = r"App6"
+APP7_TITLE = r"App7"
 APP51_TITLE = r"App51"
 
 
 APP5_DESCRIPTION = r"API Audio gen"
 APP6_DESCRIPTION = r"Audio / Bineural Merge"
-APP51_DESCRIPTION = r"GenFileMerge"
+APP7_DESCRIPTION = r"Audio / to MP4 - Youtube Submit"
+APP51_DESCRIPTION = r"Audio / Merge files, save to S3"
 
 
 #from flask import Flask
@@ -813,6 +816,128 @@ def get_audio_length(audio_file_path):
 
 
 
+@app.route("/" + APP7_TITLE.lower())
+def app7():    
+    context = {
+            'app_title': APP7_TITLE + ' ' + APP7_DESCRIPTION,
+            'app_header': APP7_TITLE + ' ' + APP7_DESCRIPTION,
+            'form_action': '/submit_' + APP7_TITLE,
+            'form_label': 'Enter text for ' + APP7_TITLE
+        }
+    return render_template(APP7_TITLE.lower() + ".php", context=context)
+
+
+
+@app.route('/' + APP7_TITLE.lower() + '/upload_to_youtube', methods=['POST'])
+def upload_to_youtube():
+    # Initialize clients for  and S3
+    s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
+    bucket_name = 'crystal-audio-processing'
+    s3_input_file_key = 'audio-draft-v1/' + preset + '/'
+    s3_input_file_key_youtube_image = 'images/'
+    
+    s3_output_file_key = '' # Changes based off of preset
+
+    try:
+        print("Success!!!")
+        title = request.form.get('title')
+        print(title)
+        preset = request.form.get('preset')  # Get preset from form data
+        print(preset)
+        s3_output_file_key = 'audios-youtube-mp4-v1/'
+
+
+      ###
+
+        # Save the audio folder locally
+        audio_file_path = '/tmp/' + s3_input_file_key + title
+        audio_file_output_path = '/tmp/' + s3_output_file_key + title
+        youtubeImageTitle = "CrystalAI.png"
+        youtube_image_path_filename = '/tmp/' + youtubeImageTitle
+        dir_path = os.path.dirname(audio_file_path)
+        dir_path_output = os.path.dirname(audio_file_output_path)
+
+
+        # Check if the input directory exists and create it if necessary
+        print(f"Checking directory: {dir_path}")
+        if not os.path.isdir(dir_path):
+            print(f"Directory '{dir_path}' not found. Creating it now...")
+            os.makedirs(dir_path)
+        else:
+            print(f"Directory '{dir_path}' already exists.")
+        
+        # Check if the output directory exists and create it if necessary
+        print(f"Checking directory: {dir_path_output}")
+        if not os.path.isdir(dir_path_output):
+            print(f"Directory '{dir_path_output}' not found. Creating it now...")
+            os.makedirs(dir_path_output)
+        else:
+            print(f"Directory '{dir_path_output}' already exists.")
+        
+
+        print("audio input file path: " + audio_file_path)
+        print("audio output file path: " + dir_path_output)
+        print("youtube image file path: " + youtube_image_path_filename)
+
+
+        print("\n\n---------Time to download the audio from S3 ---------\n\n")
+        BUCKET_NAME = bucket_name
+        TITLE = title
+        print('we will now download the audio files following the title: ' + TITLE)
+        download_files_from_s3(BUCKET_NAME, s3_input_file_key, TITLE, download_dir=audio_file_path, default_prefix=TITLE)
+        files = [f for f in os.listdir(audio_file_path) if os.path.isfile(os.path.join(audio_file_path, f))]
+        print(files)
+
+        s3.download_file(BUCKET_NAME, s3_input_file_key_youtube_image + youtubeImageTitle, youtube_image_path_filename)
+
+
+
+###
+        
+        print("\n\n---------Convert to mp4---------\n\n")
+
+        # Obtain the duration of the combined wav file.
+        audio_file_path_filename = audio_file_path + '/' + TITLE + '_' + preset + '_draft-v1.wav'
+        audio_length = get_audio_length(audio_file_path + '/' + TITLE + '_' + preset + '_draft-v1.wav')
+        print(f"Duration = {audio_length}")
+
+        # Construct the path for the output mp4 file.
+        
+        mp4_file_path = audio_file_output_path
+        mp4_file_title = f'/{title}.mp4'
+        mp4_file_path_and_title = audio_file_output_path + f'/{title}.mp4'
+        # Create binaural audio using the preset and the duration of the input audio.
+        print("\n\n---------Creating mp4 function youtube.create_mp4_audio()---------\n\n")
+        output_path = youtube.create_mp4_audio(audio_file_path_filename, mp4_file_path_and_title, youtube_image_path_filename)
+        print("\n\n---------mp4 Created---------\n\n")
+
+        # Provide feedback on which audio files are being merged.
+        print("\n\n---------Converted Audio to MP4---------\n\n")
+        print(f"\n\n---------Converted {audio_file_path_filename}---------")
+        print(f"---------With {mp4_file_path_and_title}---------\n\n")
+    
+        # Construct the path for the output merged audio file.
+        outTitle = f'/{title}.mp4'
+        outfile = audio_file_output_path + outTitle
+
+
+        # Upload the merged audio to S3.
+        print(f"---------Saving new file to S3---------\n\n")
+        s3_key_combined = s3_output_file_key + outTitle
+        upload_to_s3(bucket_name, s3_key_combined, outfile)
+
+        # Remove the local temporary files.
+        print(f"---------Removing local tmp files---------\n\n")
+        remove_local_files(audio_file_path)
+
+        # Generate a presigned S3 URL and send it as a success response.
+        full_s3_url = generate_presigned_url(bucket_name, s3_key_combined)
+        return jsonify({"status": "success", "message": full_s3_url}), 200
+
+        
+    except Exception as e:
+        print(e)
+        return jsonify({"status": "error", "message": str(e)}), 500 
 
 
 
