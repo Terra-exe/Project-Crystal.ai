@@ -1,3 +1,4 @@
+
 import pythoncom
 import wave
 import os
@@ -91,7 +92,7 @@ Maybe I should define the format and then ask chat GPT to convert it into a new 
 ##########
 ##########
 '''
-def json_to_audio(jsondata):
+def json_to_audio(jsondata): 
     #jdata = json.load(jsondata)
 
     print("running")
@@ -131,18 +132,18 @@ def json_to_audio(jsondata):
         for e_counter, exercise in enumerate(e_array.steps, start=1):
             #print(f"\tExercise:")
             for s_counter, substep in enumerate(exercise.substeps, start=1):
-                for ss_counter, (key, value) in enumerate(substep.__dict__.items(), start=1):
+                for ss_counter, (key, value) in enumerate(substep.__dict__.items(), start=1): 
                     if (type(value) == str):
                         #print(f"\t\t\t{key}: {value} this is substep{ss_counter} text")
                         try:
                             #print(AUDIO_FOLDER_PATH)
-                            #print("value = " + value)
+                            print("value = " + value)
 
                             segment_filename = f"genfile_{filename}_{i}.wav"
                             
                             engine.save_to_file(value, os.path.join(AUDIO_FOLDER_PATH, segment_filename))
                             engine.runAndWait()
-                            time.sleep(0.1)
+                            time.sleep(0.1) # this might be worth removing
                             spoken_segment = AudioSegment.from_wav(os.path.join(AUDIO_FOLDER_PATH, segment_filename))
                             #print(AUDIO_FOLDER_PATH)
                             #print("value = " + value)

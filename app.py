@@ -233,7 +233,7 @@ def api_create_audio_file():
                             file_counter += 1 
 
                             # Print progress every 100 files
-                            if created_files % 10 == 0:
+                            if created_files % 100 == 0:  #modified this to 100 from 10, Dec 5th, 2023
                                 print(f"Segment Creation Progress: {created_files / total_files * 100:.2f}%")
 
                             # This might be removable
@@ -257,12 +257,80 @@ def api_create_audio_file():
                         upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                         i+=1
                     
+
+                    #place holder for the sound effect audio generation
                     elif (isinstance(value, dict) and \
                         (value['type'] == "soundEffect")):
                         
                         soundEffect_name = value['value']
+                        if (soundEffect_name == "SNAP"):
+                            # Set the local file path to the existing sound effect file
+                            segment_filename_local = f"sound_effects\\SNAP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "POP"):
+                            segment_filename_local = f"sound_effects\\POP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "BALLOONPOP"):
+                            segment_filename_local = f"sound_effects\\BALLOONPOP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "BALLOONINFLATE"):
+                            segment_filename_local = f"sound_effects\\BALLOONINFLATE.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "BLOWJOB1"):
+                            segment_filename_local = f"sound_effects\\BLOWJOB1.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "COCKSUCKING"):
+                            segment_filename_local = f"sound_effects\\COCKSUCKING.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "FORCESWALLOW1"):
+                            segment_filename_local = f"sound_effects\\FORCESWALLOW1.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "FORCESWALLOW2"):
+                            segment_filename_local = f"sound_effects\\FORCESfWALLOW2.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GASP1"):
+                            segment_filename_local = f"sound_effects\\GASP1.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GASP2"):
+                            segment_filename_local = f"sound_effects\\GASP2.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GASP3"):
+                            segment_filename_local = f"sound_effects\\GASP3.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GIGGLETIME"):
+                            segment_filename_local = f"sound_effects\\GIGGLETIME.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GULPING"):
+                            segment_filename_local = f"sound_effects\\GULPING.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "FORCESWALLOW2"):
+                            segment_filename_local = f"sound_effects\\FORCESWALLOW2.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "LOCK"):
+                            segment_filename_local = f"sound_effects\\LOCK.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "MOANING"):
+                            segment_filename_local = f"sound_effects\\MOANING.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "ROBOTHEART"):
+                            segment_filename_local = f"sound_effects\\ROBOTHEART.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "COCKSUCKING"):
+                            segment_filename_local = f"sound_effects\\COCKSUCKING.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "FORCESWALLOW1"):
+                            segment_filename_local = f"sound_effects\\FORCESWALLOW1.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "FORCESWALLOW2"):
+                            segment_filename_local = f"sound_effects\\FORCESWALLOW2.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "SUCTION_MACHINE"):
+                            segment_filename_local = f"sound_effects\\SUCTION_MACHINE.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "SWALLOW"):
+                            segment_filename_local = f"sound_effects\\SWALLOW.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "SYNTHPULSE1"):
+                            segment_filename_local = f"sound_effects\\SYNTHPULSE1.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "SYNTHPULSE2"):
+                            segment_filename_local = f"sound_effects\\SYNTHPULSE2.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        
+                        elif (soundEffect_name == "GRIMES_ANY_SUFFICIENTLY_ADVANCED"):
+                            segment_filename_local = f"sound_effects\\GRIMES_ANY_SUFFICIENTLY_ADVANCED.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GRIMES_MADE NOT BORN"):
+                            segment_filename_local = f"sound_effects\\GRIMES_MADE NOT BORN.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GRIMES_MODERN_GODS_FOR_MODERN_GIRLS"):
+                            segment_filename_local = f"sound_effects\\GRIMES_MODERN_GODS_FOR_MODERN_GIRLS.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GRIMES_OUR_LADY_OF_PERPETUAL_CHAOS_TM"):
+                            segment_filename_local = f"sound_effects\\GRIMES_OUR_LADY_OF_PERPETUAL_CHAOS_TM.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GRIMES1_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS"):
+                            segment_filename_local = f"sound_effects\\GRIMES1_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GRIMES2_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS"):
+                            segment_filename_local = f"sound_effects\\GRIMES2_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                        elif (soundEffect_name == "GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS"):
+                            segment_filename_local = f"sound_effects\\GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+              
+
                         segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
-                        segment_filename_local = generate_silent_file(int(float(9) * 1000), "/tmp/silence.wav")
+                        #segment_filename_local = generate_silent_file(int(float(9) * 1000), "/tmp/silence.wav")
                         upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                         i+=1
             
