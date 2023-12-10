@@ -1,6 +1,7 @@
 import numpy as np
 import wave
 import struct
+import os
 from .audio_generator import AudioGenerator
 
 # Frequency definitions
@@ -84,11 +85,7 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
     else:
         print("Preset error")
         return False
-        
-
-
-    ### Tell me something That's not been said before That is paradoxical but true
-
+    
     print("Creating binaural audio - 0")
     print(f"Chosen preset equals {chosen_preset}")
     freq_default = presets[chosen_preset]["freq_default"]
@@ -117,7 +114,62 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
         volume=volume
     )
     print("Creating binaural audio - 3")
-    return save_path
+    return save_path        
+
+'''
+In this function:
+We use linear interpolation to calculate the frequency at each point in time.
+The duration is assumed to be in a unit that matches the time increment used in the loop (e.g., seconds).
+The actual generation of binaural beats (generate_binaural_beat) will depend on your existing setup and is represented here as a placeholder.
+'''
+
+def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq, duration, save_path, title, gradual_freq_change=True, volume=1.0):
+    # Linear interpolation function
+    def interpolate(freq_start, freq_end, time_start, time_end, current_time):
+        return freq_start + (current_time - time_start) * ((freq_end - freq_start) / (time_end - time_start))
+
+    # Calculate mid-point of the duration
+    mid_point = duration / 2
+
+    # Initialize AudioGenerator
+    audio_gen = AudioGenerator()
+
+
+
+    # Process each segment of the audio
+    for current_time in range(0, duration, 1):  # Assuming duration is in seconds
+    
+        if current_time <= mid_point:
+            current_freq = interpolate(start_freq, mid_freq, 0, mid_point, current_time)
+
+        else:
+            current_freq = interpolate(mid_freq, end_freq, mid_point, duration, current_time)
+
+
+        # Use the current_freq to generate a segment of binaural audio
+        # Modify the generate_audio method call as needed based on your implementation
+        audio_gen.generate_audio(
+            save_path,
+            f"{title}_{current_time}",
+            1,  # Duration of 1 second for each segment
+            False,  # Fade in/out
+            "sine",  # Sound type
+            current_freq,
+            preset,  # Assuming the binaural offset is determined by the preset
+            "binaural",  # Entrainment type
+            None,  # Volume generator
+            gradual_freq_change,
+            volume
+        )
+
+    # Assuming you have a function in AudioGenerator to combine audio segments
+        combined_file_title = f"{title}_ONLY_{preset}_{start_freq}_{mid_freq}_{end_freq}.wav"
+        combined_file_path = os.path.join(save_path, combined_file_title)
+        audio_gen.combine_audio_segments(save_path, title, combined_file_path)
+
+    return combined_file_path      
+
+
 
 def create_background_audio(preset, duration, save_path, volume=1.0):
     freq_default = preset["freq_default"]

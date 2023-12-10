@@ -720,6 +720,20 @@ def add_binaural_to_audio_file():
         print(title)
         preset = request.form.get('preset')  # Get preset from form data
         print(preset)
+        # Check if the preset is 'variable_frequency'
+        if preset == 'variable_frequency':
+            start_freq = request.form.get('start_freq')
+            mid_freq = request.form.get('mid_freq')
+            end_freq = request.form.get('end_freq')
+            # Check if start, mid, and end frequencies exist
+            if start_freq and mid_freq and end_freq:
+                print(f"Start Frequency: {start_freq}")
+                print(f"Mid Frequency: {mid_freq}")
+                print(f"End Frequency: {end_freq}")
+            else:
+                print("One or more frequency values are missing.")
+
+        
         s3_output_file_key = 'audios-draft-v1/' + preset + '/'
 
 
@@ -774,12 +788,20 @@ def add_binaural_to_audio_file():
         # Construct the path for the output binaural file.
         bn = preset
         bineural_file_path = audio_file_output_path
-        bineural_file_title = f'/{title}_ONLY_{bn}.wav'
-        bineural_file_path_and_title = audio_file_output_path + f'/{title}_ONLY_{bn}.wav'
-        # Create binaural audio using the preset and the duration of the input audio.
-        print("\n\n---------Creating Binaural function bineural.create_binaural_audio()---------\n\n")
-        output_path = bineural.create_binaural_audio(preset, audio_length, bineural_file_path, bineural_file_title, None, volume=0.1)
-        print("\n\n---------Bineural Created---------\n\n")
+        
+        if bn == 'variable_frequency':
+            bineural_file_title = f'/{title}_ONLY_{bn}_{start_freq}_{mid_freq}_{end_freq}.wav'
+            bineural_file_path_and_title = audio_file_output_path + f'/{title}_ONLY_{bn}_{start_freq}_{mid_freq}_{end_freq}.wav'
+            print("\n\n---------Creating Binaural function bineural.generate_variable_frequency_binaural()---------\n\n")
+            output_path = bineural.generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq, audio_length, bineural_file_path, bineural_file_title, True, volume=0.1)
+            print("\n\n---------Bineural Created---------\n\n")
+        else:
+            bineural_file_title = f'/{title}_ONLY_{bn}.wav'
+            bineural_file_path_and_title = audio_file_output_path + f'/{title}_ONLY_{bn}.wav'
+            # Create binaural audio using the preset and the duration of the input audio.
+            print("\n\n---------Creating Binaural function bineural.create_binaural_audio()---------\n\n")
+            output_path = bineural.create_binaural_audio(preset, audio_length, bineural_file_path, bineural_file_title, None, volume=0.1)
+            print("\n\n---------Bineural Created---------\n\n")
 
         # Provide feedback on which audio files are being merged.
         print("\n\n---------Merging Audio with Bineural---------\n\n")

@@ -42,7 +42,28 @@
                         <option value="gamma">Gamma</option>
                         <option value="pink">Pink</option>
                         <option value="custom">Custom</option>
+                        <option value="variable_frequency">Variable Frequency</option>
                     </select>
+
+                    <!-- Variable Frequency Specific Dropdowns (hidden initially) -->
+                    <div id="variable-frequency-fields" style="display: none;">
+                        <label for="start_freq">Start Frequency:</label>
+                        <select id="start_freq" name="start_freq">
+                            <option value="delta">Delta</option>
+                            <!-- Other frequency options -->
+                        </select>
+
+                        <label for="mid_freq">Mid Frequency:</label>
+                        <select id="mid_freq" name="mid_freq">
+                            <!-- Similar options as start_freq -->
+                        </select>
+
+                        <label for="end_freq">End Frequency:</label>
+                        <select id="end_freq" name="end_freq">
+                            <!-- Similar options as start_freq -->
+                        </select>
+                    </div>
+
                 </div>
                 <div id="custom-fields" style="display: none;">
                     <label for="base-frequency">Base Frequency:</label>
@@ -78,6 +99,20 @@
     <script>
         
         function checkCustom(value) {
+            var customFields = document.getElementById('custom-fields');
+            var variableFrequencyFields = document.getElementById('variable-frequency-fields');
+
+            if (value === 'custom') {
+                customFields.style.display = 'block';
+                variableFrequencyFields.style.display = 'none';
+            } else if (value === 'variable_frequency') {
+                variableFrequencyFields.style.display = 'block';
+                customFields.style.display = 'none';
+            } else {
+                customFields.style.display = 'none';
+                variableFrequencyFields.style.display = 'none';
+            }
+
             if (value === 'custom') {
                 document.getElementById('custom-fields').style.display = 'block';
             } else {
@@ -94,6 +129,7 @@
         var downloadLink = document.getElementById('download-link');
         var downloadButton = document.getElementById('download-button');
         var submitButton = document.getElementById('submit-button');
+
 
         
         function downloadButtonClickHandler(event) {
