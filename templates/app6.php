@@ -177,7 +177,14 @@
             var formData = new FormData(); // change this to FormData to handle file upload
             formData.append("title", document.getElementById('title').value);
             formData.append("preset", document.getElementById('preset').value); // add the preset parameter
-
+           
+            // Append start, mid, and end frequency values to formData
+            if (document.getElementById('preset').value === 'variable_frequency') {
+                formData.append("start_freq", document.getElementById('start_freq').value);
+                formData.append("mid_freq", document.getElementById('mid_freq').value);
+                formData.append("end_freq", document.getElementById('end_freq').value);
+            }
+            
             if (!formData.get("title")) {
                 formData.set("title", "ttsFileTitle");
             }
