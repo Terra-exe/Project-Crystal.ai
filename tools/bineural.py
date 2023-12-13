@@ -117,16 +117,16 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
     return save_path        
 
 
-def map_frequency_to_preset(freq):
-    # Mapping from frequency name to preset key
-    frequency_preset_map = {
+def get_preset_from_frequency_name(freq_name):
+    # Map the frequency name to the corresponding preset key
+    preset_map = {
         "delta": "0_delta",
         "theta": "1_theta",
         "alpha": "2_alpha",
         "beta": "3_beta",
         "gamma": "4_gamma"
     }
-    return frequency_preset_map.get(freq, None)  # Returns None if the freq is not found
+    return presets.get(preset_map.get(freq_name, None), None)
 
     # Inside your route or function
 
@@ -149,24 +149,14 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
     print(f"Volume: {volume}")
         
     # Inside your route or function where you call generate_variable_frequency_binaural
-    start_preset = map_frequency_to_preset(start_freq)
-    mid_preset = map_frequency_to_preset(mid_freq)
-    end_preset = map_frequency_to_preset(end_freq)
-    # Now you have the preset keys, you can retrieve the preset data
-    start_preset_data = presets[start_preset] if start_preset else None
-    mid_preset_data = presets[mid_preset] if mid_preset else None
-    end_preset_data = presets[end_preset] if end_preset else None
+    start_preset = get_preset_from_frequency_name(start_freq)
+    mid_preset = get_preset_from_frequency_name(mid_freq)
+    end_preset = get_preset_from_frequency_name(end_freq)
    
-
-    # Check if all presets data are available
-    if not all([start_preset_data, mid_preset_data, end_preset_data]):
-        print("One of the presets is not available.")
-        # Handle the error
-    
     # Linear interpolation function
     def interpolate(freq_start, freq_end, time_start, time_end, current_time):
         print(f"Interpolating from {freq_start} to {freq_end} between times {time_start} and {time_end} at current time {current_time}")
-        return freq_start + (current_time - time_start) * ((freq_end - freq_start) / (time_end - time_start))
+        return freq_start + (freq_end - freq_start) * (current_time - time_start) / (time_end - time_start)
 
     # Calculate mid-point of the duration
     mid_point = duration / 2
@@ -178,32 +168,27 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
 
 
     # Process each segment of the audio
-    for current_time in range(0, int(round(duration)), 1):  # Assuming duration is in seconds
+    for current_time in range(0, int(duration)):
+        # Interpolate for base frequency
         print(f"Current time: {current_time}")
 
         if current_time <= mid_point:
-            current_freq = interpolate(start_freq, mid_freq, 0, mid_point, current_time)
-
+            base_freq = interpolate(start_preset["freq_default"], mid_preset["freq_default"], 0, mid_point, current_time)
         else:
-            current_freq = interpolate(mid_freq, end_freq, mid_point, duration, current_time)
-        print(f"Current frequency: {current_freq}")
+            base_freq = interpolate(mid_preset["freq_default"], end_preset["freq_default"], mid_point, duration, current_time)
+        
+        # Interpolate for binaural frequency
+        if current_time <= mid_point:
+            binaural_freq = interpolate(start_preset["freq_default"] + start_preset["binaural_default"], 
+                                        mid_preset["freq_default"] + mid_preset["binaural_default"], 
+                                        0, mid_point, current_time)
+        else:
+            binaural_freq = interpolate(mid_preset["freq_default"] + mid_preset["binaural_default"], 
+                                        end_preset["freq_default"] + end_preset["binaural_default"], 
+                                        mid_point, duration, current_time)
 
-
-        # Use the current_freq to generate a segment of binaural audio
-        # Modify the generate_audio method call as needed based on your implementation
-        audio_gen.generate_audio(
-            save_path,
-            f"{title}_{current_time}",
-            1,  # Duration of 1 second for each segment
-            False,  # Fade in/out
-            "sine",  # Sound type
-            current_freq,
-            preset,  # Assuming the binaural offset is determined by the preset
-            "binaural",  # Entrainment type
-            None,  # Volume generator
-            gradual_freq_change,
-            volume
-        )
+        # Generate audio for this segment
+        audio_gen.generate_audio(save_path, f"{title}_{current_time}", 1, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
 
     # Assuming you have a function in AudioGenerator to combine audio segments
         combined_file_title = f"{title}_ONLY_{preset}_{start_freq}_{mid_freq}_{end_freq}.wav"
