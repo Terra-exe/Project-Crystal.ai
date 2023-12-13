@@ -137,7 +137,7 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
 
 
     # Process each segment of the audio
-    for current_time in range(0, duration, 1):  # Assuming duration is in seconds
+    for current_time in range(0, int(round(duration)), 1):  # Assuming duration is in seconds
     
         if current_time <= mid_point:
             current_freq = interpolate(start_freq, mid_freq, 0, mid_point, current_time)
