@@ -124,12 +124,25 @@ The actual generation of binaural beats (generate_binaural_beat) will depend on 
 '''
 
 def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq, duration, save_path, title, gradual_freq_change=True, volume=1.0):
+    print(f"Received preset: {preset}")
+    print(f"Start frequency: {start_freq}")
+    print(f"Mid frequency: {mid_freq}")
+    print(f"End frequency: {end_freq}")
+    print(f"Duration: {duration}")
+    print(f"Save path: {save_path}")
+    print(f"Title: {title}")
+    print(f"Gradual freq change: {gradual_freq_change}")
+    print(f"Volume: {volume}")
+
+    
     # Linear interpolation function
     def interpolate(freq_start, freq_end, time_start, time_end, current_time):
+        print(f"Interpolating from {freq_start} to {freq_end} between times {time_start} and {time_end} at current time {current_time}")
         return freq_start + (current_time - time_start) * ((freq_end - freq_start) / (time_end - time_start))
 
     # Calculate mid-point of the duration
     mid_point = duration / 2
+    print(f"Mid point: {mid_point}")
 
     # Initialize AudioGenerator
     audio_gen = AudioGenerator()
@@ -138,12 +151,14 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
 
     # Process each segment of the audio
     for current_time in range(0, int(round(duration)), 1):  # Assuming duration is in seconds
-    
+        print(f"Current time: {current_time}")
+
         if current_time <= mid_point:
             current_freq = interpolate(start_freq, mid_freq, 0, mid_point, current_time)
 
         else:
             current_freq = interpolate(mid_freq, end_freq, mid_point, duration, current_time)
+        print(f"Current frequency: {current_freq}")
 
 
         # Use the current_freq to generate a segment of binaural audio
