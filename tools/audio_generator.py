@@ -165,7 +165,23 @@ class AudioGenerator:
 
         return audio_data
 
+    def save_audio_data(self, audio_data, file_path):
+        """
+        Saves the given audio data to a file specified by file_path.
 
+        :param audio_data: The audio data to save.
+        :param file_path: The file path to save the audio data to.
+        """
+
+        # Assuming audio_data is a numpy array. Modify as needed based on how audio_data is structured.
+        # The following parameters also need to be adjusted according to your audio format:
+        # nchannels, sampwidth, framerate, nframes, comptype, compname
+        params = (1, 2, 44100, len(audio_data), 'NONE', 'not compressed')
+
+        with wave.open(file_path, 'wb') as wf:
+            wf.setparams(params)
+            wf.writeframes(audio_data.tobytes())
+            
     def combine_audio_segments2(input_data, combined_file_path):
         # Initialize variables for combined audio data
         combined_audio_data = bytearray()
