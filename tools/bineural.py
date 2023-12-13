@@ -204,7 +204,7 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
 
     # Combine all segments and save as a single file
     combined_file_title = f"{title}_ONLY_{preset}_{start_freq}_{mid_freq}_{end_freq}.wav"
-    combined_file_path = os.path.join(save_path, combined_file_title)
+    combined_file_path = str(os.path.join(save_path, combined_file_title))
     
     # Ensure that combined_audio_data is a list and combined_file_path is a string
     assert isinstance(combined_audio_data, list), "combined_audio_data should be a list"
