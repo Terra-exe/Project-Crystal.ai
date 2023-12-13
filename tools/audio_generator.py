@@ -166,7 +166,8 @@ class AudioGenerator:
         return audio_data
 
 
-    def combine_audio_segments(input_data, combined_file_path):
+    def combine_audio_segments(x, y):
+        '''
     # Initialize variables for combined audio data
         combined_audio_data = bytearray()
         params = None
@@ -197,8 +198,9 @@ class AudioGenerator:
         # Save combined audio data to combined_file_path
         with wave.open(combined_file_path, 'wb') as output_file:
             output_file.setparams(params)
-            output_file.writeframes(combined_audio_data)
+            output_file.writeframes(combined_audio_data)'''
 
+        pass
     # Example usage
     # For directory input: combine_audio_segments('/path/to/segments', '/path/to/output/combined_file.wav')
     # For array input: combine_audio_segments([segment1_data, segment2_data, ...], '/path/to/output/combined_file.wav')
