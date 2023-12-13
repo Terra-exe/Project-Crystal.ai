@@ -208,7 +208,7 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
     print(f"Combined File Title: {combined_file_title}")
     print(f"Combined File Path: {combined_file_path}")
 
-    audio_gen.combine_audio_segments (combined_audio_data, combined_file_path)
+    audio_gen.combine_audio_segments(combined_audio_data, combined_file_path)
 
 
     return combined_file_path      
