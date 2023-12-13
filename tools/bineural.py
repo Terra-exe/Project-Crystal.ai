@@ -195,20 +195,29 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
                                         end_preset["freq_default"] + end_preset["binaural_default"], 
                                         mid_point, duration, current_time)
 
-         # Generate audio data for this segment
+     
         segment_data = audio_gen.generate_audio_data(1, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
         
-        # Append this segment's audio data to the list
+        # If segment_data is a bytearray or similar, append it directly
         combined_audio_data.append(segment_data)
+     
 
     # Combine all segments and save as a single file
     combined_file_title = f"{title}_ONLY_{preset}_{start_freq}_{mid_freq}_{end_freq}.wav"
     combined_file_path = os.path.join(save_path, combined_file_title)
     
+    # Ensure that combined_audio_data is a list and combined_file_path is a string
+    assert isinstance(combined_audio_data, list), "combined_audio_data should be a list"
+    assert isinstance(combined_file_path, str), "combined_file_path should be a string"
+
+    
     print(f"Combined File Title: {combined_file_title}")
     print(f"Combined File Path: {combined_file_path}")
 
+    # Since combined_audio_data is a list of audio data segments, it should be passed directly to combine_audio_segments
     audio_gen.combine_audio_segments(combined_audio_data, combined_file_path)
+
+
 
 
     return combined_file_path      
