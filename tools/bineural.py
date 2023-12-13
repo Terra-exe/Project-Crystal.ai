@@ -172,6 +172,8 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
     audio_gen = AudioGenerator()
 
 
+    # Initialize a list to hold audio data of each segment
+    combined_audio_data = []
 
     # Process each segment of the audio
     for current_time in range(0, int(duration)):
@@ -193,13 +195,17 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
                                         end_preset["freq_default"] + end_preset["binaural_default"], 
                                         mid_point, duration, current_time)
 
-        segment_title = f"{title}_{current_time}.wav"
-        audio_gen.generate_audio(segment_dir, segment_title, 1, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
+         # Generate audio data for this segment
+        segment_data = audio_gen.generate_audio_data(1, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
+        
+        # Append this segment's audio data to the list
+        combined_audio_data.append(segment_data)
 
-    # Combine all segments into the final audio file
+    # Combine all segments and save as a single file
     combined_file_title = f"{title}_ONLY_{preset}_{start_freq}_{mid_freq}_{end_freq}.wav"
     combined_file_path = os.path.join(save_path, combined_file_title)
-    audio_gen.combine_audio_segments(segment_dir, combined_file_path)
+    audio_gen.save_combined_audio_data(combined_audio_data, combined_file_path)
+
 
     return combined_file_path      
 

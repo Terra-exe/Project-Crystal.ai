@@ -117,17 +117,24 @@ class AudioGenerator:
         print("Saved here: " + save_path + title)
 
 
+    def combine_audio_segments(self, segment_dir, combined_file_path):
+        # List all segment files in segment_dir and sort them
+        segment_files = sorted(os.listdir(segment_dir))
 
-    def combine_audio_segments(self, input_folder, output_file):
-        files = [f for f in os.listdir(input_folder) if f.endswith('.wav')]
-        files.sort()  # Ensuring files are in the correct order
+        # Initialize variables for combined audio data
+        combined_audio_data = []
 
-        with wave.open(output_file, 'wb') as outfile:
-            for i, file in enumerate(files):
-                with wave.open(os.path.join(input_folder, file), 'rb') as infile:
-                    if i == 0:  # For the first file, set output parameters
-                        outfile.setparams(infile.getparams())
-                    outfile.writeframes(infile.readframes(infile.getnframes()))
+        # Iterate over and combine each segment file
+        for file in segment_files:
+            with wave.open(os.path.join(segment_dir, file), 'rb') as segment:
+                # Read and append audio data
+                combined_audio_data.append(segment.readframes(segment.getnframes()))
+
+        # Save combined audio data to combined_file_path
+        with wave.open(combined_file_path, 'wb') as output_file:
+            # Configure output file parameters (channels, sampwidth, framerate)
+            # Write combined_audio_data to output_file
+
 
 
     def gen_x(self, duration, sample_rate, freq):
