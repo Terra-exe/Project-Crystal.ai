@@ -167,6 +167,14 @@ class AudioGenerator:
 
 
     def combine_audio_segments(self, segment_dir, combined_file_path):
+        # Check if segment_dir is a valid path
+        if not isinstance(segment_dir, (str, bytes, os.PathLike)):
+            raise ValueError(f"Invalid path: {segment_dir}. Path should be a string, bytes, or os.PathLike.")
+        
+        # Check if the directory exists
+        if not os.path.isdir(segment_dir):
+            raise FileNotFoundError(f"Directory not found: {segment_dir}")
+
         # List all segment files in segment_dir and sort them
         segment_files = sorted(os.listdir(segment_dir))
 
