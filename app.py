@@ -265,11 +265,11 @@ def api_create_audio_file():
                         soundEffect_name = value['value']
                         if (soundEffect_name == "SNAP"):
                             # Set the local file path to the existing sound effect file
-                            segment_filename_local = f"sound_effects\SNAP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                            segment_filename_local = r"sound_effects/SNAP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
                         elif (soundEffect_name == "POP"):
-                            segment_filename_local = f"sound_effects\POP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                            segment_filename_local = r"sound_effects/POP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
                         elif (soundEffect_name == "BALLOONPOP"):
-                            segment_filename_local = f"sound_effects\BALLOONPOP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
+                            segment_filename_local = r"sound_effects/BALLOONPOP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
                         elif (soundEffect_name == "BALLOONINFLATE"):
                             segment_filename_local = f"sound_effects\\BALLOONINFLATE.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
                         elif (soundEffect_name == "BLOWJOB1"):
