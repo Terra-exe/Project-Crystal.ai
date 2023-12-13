@@ -165,24 +165,11 @@ class AudioGenerator:
 
         return audio_data
 
-    def save_audio_data(self, audio_data, file_path):
-        """
-        Saves the given audio data to a file specified by file_path.
 
-        :param audio_data: The audio data to save.
-        :param file_path: The file path to save the audio data to.
-        """
-
-        # Assuming audio_data is a numpy array. Modify as needed based on how audio_data is structured.
-        # The following parameters also need to be adjusted according to your audio format:
-        # nchannels, sampwidth, framerate, nframes, comptype, compname
-        params = (1, 2, 44100, len(audio_data), 'NONE', 'not compressed')
-
-        with wave.open(file_path, 'wb') as wf:
-            wf.setparams(params)
-            wf.writeframes(audio_data.tobytes())
-            
     def combine_audio_segments2(input_data, combined_file_path):
+    
+        print(f"Arguments received: input_data={input_data}, combined_file_path={combined_file_path}")
+
         # Initialize variables for combined audio data
         combined_audio_data = bytearray()
         params = None
@@ -196,12 +183,9 @@ class AudioGenerator:
             for file in segment_files:
                 with wave.open(os.path.join(input_data, file), 'rb') as segment:
                     # Read and append audio data
-                    segment_data = segment.readframes(segment.getnframes())
-                    combined_audio_data.extend(segment_data)
+                    combined_audio_data.extend(segment.readframes(segment.getnframes()))
                     if not params:
-                        # Set the parameters based on the first audio segment
                         params = segment.getparams()
-
         elif isinstance(input_data, list) and input_data:
             # Assuming input_data is a list of audio data segments
             for data in input_data:
@@ -210,7 +194,6 @@ class AudioGenerator:
             # Use the parameters of the first segment
             with wave.open(io.BytesIO(input_data[0]), 'rb') as first_segment:
                 params = first_segment.getparams()
-
         else:
             raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
 
@@ -218,6 +201,12 @@ class AudioGenerator:
         with wave.open(combined_file_path, 'wb') as output_file:
             output_file.setparams(params)
             output_file.writeframes(combined_audio_data)
+
+    # Example usage
+    # For directory input: combine_audio_segments('/path/to/segments', '/path/to/output/combined_file.wav')
+    # For array input: combine_audio_segments([segment1_data, segment2_data, ...], '/path/to/output/combined_file.wav')
+
+
 
 
     def gen_x(self, duration, sample_rate, freq):
