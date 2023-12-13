@@ -172,8 +172,8 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
     audio_gen = AudioGenerator()
 
 
-    # Initialize a list to hold audio data of each segment
-    combined_audio_data = []
+    #Initialize a list to hold file paths of each audio segment
+    audio_file_paths = []
 
     # Process each segment of the audio
     for current_time in range(0, int(duration)):
@@ -195,27 +195,29 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
                                         end_preset["freq_default"] + end_preset["binaural_default"], 
                                         mid_point, duration, current_time)
 
-     
+        # Generate audio segment
         segment_data = audio_gen.generate_audio_data(1, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
-        
-        # If segment_data is a bytearray or similar, append it directly
-        combined_audio_data.append(segment_data)
-     
 
-    # Combine all segments and save as a single file
+        # Save each segment as a file
+        segment_file_name = f"segment_{current_time}.wav"
+        segment_file_path = os.path.join(segment_dir, segment_file_name)
+        audio_gen.save_audio_data(segment_data, segment_file_path)
+
+        # Append file path to the list
+        audio_file_paths.append(segment_file_path)
+
+    # Create the path for the combined file
     combined_file_title = f"{title}_ONLY_{preset}_{start_freq}_{mid_freq}_{end_freq}.wav"
-    combined_file_path = str(os.path.join(save_path, combined_file_title))
+    combined_file_path = os.path.join(save_path, combined_file_title)
     
-    # Ensure that combined_audio_data is a list and combined_file_path is a string
-    assert isinstance(combined_audio_data, list), "combined_audio_data should be a list"
-    assert isinstance(combined_file_path, str), "combined_file_path should be a string"
-
+    
     
     print(f"Combined File Title: {combined_file_title}")
     print(f"Combined File Path: {combined_file_path}")
 
-    # Since combined_audio_data is a list of audio data segments, it should be passed directly to combine_audio_segments
-    audio_gen.combine_audio_segments2(combined_audio_data, combined_file_path)
+    # Since combine_audio_segments2 is a list of audio data segments, it should be passed directly to combine_audio_segments2
+    audio_gen.combine_audio_segments2(segment_dir, combined_file_path)
+
 
 
 
