@@ -166,7 +166,7 @@ class AudioGenerator:
         return audio_data
 
 
-    def combine_audio_segments(input_data, combined_file_path):
+    def combine_audio_segments(x, input_data, combined_file_path):
     # Initialize variables for combined audio data
         combined_audio_data = bytearray()
         params = None
