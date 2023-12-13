@@ -110,6 +110,113 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["value"] = "<SNAP>"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
+        elif (type == "<POP>"):
+            wait["value"] = "<POP>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<BALLOONPOP>"):
+            wait["value"] = "<BALLOONPOP>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<BALLOONINFLATE>"):
+            wait["value"] = "<BALLOONINFLATE>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<BLOWJOB1>"):
+            wait["value"] = "<BLOWJOB1>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<COCKSUCKING>"):
+            wait["value"] = "<COCKSUCKING>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<FORCESWALLOW1>"):
+            wait["value"] = "<FORCESWALLOW1>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<FORCESWALLOW2>"):
+            wait["value"] = "<FORCESWALLOW2>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GASP1>"):
+            wait["value"] = "<GASP1>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GASP2>"):
+            wait["value"] = "<GASP2>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GASP3>"):
+            wait["value"] = "<GASP3>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GIGGLETIME>"):
+            wait["value"] = "<GIGGLETIME>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GULPING>"):
+            wait["value"] = "<GULPING>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<LOCK>"):
+            wait["value"] = "<LOCK>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<MOANING>"):
+            wait["value"] = "<MOANING>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<ROBOTHEART>"):
+            wait["value"] = "<ROBOTHEART>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<SUCTION_MACHINE>"):
+            wait["value"] = "<SUCTION_MACHINE>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<SWALLOW>"):
+            wait["value"] = "<SWALLOW>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<SYNTHPULSE1>"):
+            wait["value"] = "<SYNTHPULSE1>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<SYNTHPULSE2>"):
+            wait["value"] = "<SYNTHPULSE2>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GRIMES_ANY_SUFFICIENTLY_ADVANCED>"):
+            wait["value"] = "<GRIMES_ANY_SUFFICIENTLY_ADVANCED>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GRIMES_MADE NOT BORN>"):
+            wait["value"] = "<GRIMES_MADE NOT BORN>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GRIMES_MODERN_GODS_FOR_MODERN_GIRLS>"):
+            wait["value"] = "<GRIMES_MODERN_GODS_FOR_MODERN_GIRLS>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GRIMES_OUR_LADY_OF_PERPETUAL_CHAOS_TM>"):
+            wait["value"] = "<GRIMES_OUR_LADY_OF_PERPETUAL_CHAOS_TM>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GRIMES1_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>"):
+            wait["value"] = "<GRIMES1_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GRIMES2_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>"):
+            wait["value"] = "<GRIMES2_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>"):
+            wait["value"] = "<GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+
+
+
         elif (type == "#"):
             substeps["substep" + str(i)] = segment
         else:
