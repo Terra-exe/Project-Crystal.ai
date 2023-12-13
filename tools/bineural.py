@@ -116,6 +116,20 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
     print("Creating binaural audio - 3")
     return save_path        
 
+
+def map_frequency_to_preset(freq):
+    # Mapping from frequency name to preset key
+    frequency_preset_map = {
+        "delta": "0_delta",
+        "theta": "1_theta",
+        "alpha": "2_alpha",
+        "beta": "3_beta",
+        "gamma": "4_gamma"
+    }
+    return frequency_preset_map.get(freq, None)  # Returns None if the freq is not found
+
+    # Inside your route or function
+
 '''
 In this function:
 We use linear interpolation to calculate the frequency at each point in time.
@@ -133,7 +147,21 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
     print(f"Title: {title}")
     print(f"Gradual freq change: {gradual_freq_change}")
     print(f"Volume: {volume}")
+        
+    # Inside your route or function where you call generate_variable_frequency_binaural
+    start_preset = map_frequency_to_preset(start_freq)
+    mid_preset = map_frequency_to_preset(mid_freq)
+    end_preset = map_frequency_to_preset(end_freq)
+    # Now you have the preset keys, you can retrieve the preset data
+    start_preset_data = presets[start_preset] if start_preset else None
+    mid_preset_data = presets[mid_preset] if mid_preset else None
+    end_preset_data = presets[end_preset] if end_preset else None
+   
 
+    # Check if all presets data are available
+    if not all([start_preset_data, mid_preset_data, end_preset_data]):
+        print("One of the presets is not available.")
+        # Handle the error
     
     # Linear interpolation function
     def interpolate(freq_start, freq_end, time_start, time_end, current_time):
