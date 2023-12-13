@@ -118,6 +118,18 @@ class AudioGenerator:
 
 
 
+    def combine_audio_segments(self, input_folder, output_file):
+        files = [f for f in os.listdir(input_folder) if f.endswith('.wav')]
+        files.sort()  # Ensuring files are in the correct order
+
+        with wave.open(output_file, 'wb') as outfile:
+            for i, file in enumerate(files):
+                with wave.open(os.path.join(input_folder, file), 'rb') as infile:
+                    if i == 0:  # For the first file, set output parameters
+                        outfile.setparams(infile.getparams())
+                    outfile.writeframes(infile.readframes(infile.getnframes()))
+
+
     def gen_x(self, duration, sample_rate, freq):
         return np.linspace(0, duration * freq - freq / sample_rate, int(duration * sample_rate))
 
