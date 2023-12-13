@@ -50,17 +50,32 @@
                         <label for="start_freq">Start Frequency:</label>
                         <select id="start_freq" name="start_freq">
                             <option value="delta">Delta</option>
+                            <option value="theta">Theta</option>
+                            <option value="alpha">Alpha</option>
+                            <option value="beta">Beta</option>
+                            <option value="gamma">Gamma</option>            
+                            <option value="custom">Custom</option>
                             <!-- Other frequency options -->
                         </select>
 
                         <label for="mid_freq">Mid Frequency:</label>
                         <select id="mid_freq" name="mid_freq">
-                            <!-- Similar options as start_freq -->
+                            <option value="delta">Delta</option>
+                            <option value="theta">Theta</option>
+                            <option value="alpha">Alpha</option>
+                            <option value="beta">Beta</option>
+                            <option value="gamma">Gamma</option>            
+                            <option value="custom">Custom</option>
                         </select>
 
                         <label for="end_freq">End Frequency:</label>
                         <select id="end_freq" name="end_freq">
-                            <!-- Similar options as start_freq -->
+                            <option value="delta">Delta</option>
+                            <option value="theta">Theta</option>
+                            <option value="alpha">Alpha</option>
+                            <option value="beta">Beta</option>
+                            <option value="gamma">Gamma</option>            
+                            <option value="custom">Custom</option>
                         </select>
                     </div>
 
@@ -101,6 +116,8 @@
         function checkCustom(value) {
             var customFields = document.getElementById('custom-fields');
             var variableFrequencyFields = document.getElementById('variable-frequency-fields');
+            customFields.style.display = 'none';
+            variableFrequencyFields.style.display = 'none';
 
             if (value === 'custom') {
                 customFields.style.display = 'block';
