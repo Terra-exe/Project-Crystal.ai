@@ -204,6 +204,10 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
     # Combine all segments and save as a single file
     combined_file_title = f"{title}_ONLY_{preset}_{start_freq}_{mid_freq}_{end_freq}.wav"
     combined_file_path = os.path.join(save_path, combined_file_title)
+    
+    print(f"Combined File Title: {combined_file_title}")
+    print(f"Combined File Path: {combined_file_path}")
+
     audio_gen.combine_audio_segments (combined_audio_data, combined_file_path)
 
 
