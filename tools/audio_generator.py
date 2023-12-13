@@ -166,46 +166,47 @@ class AudioGenerator:
 
         return audio_data
 
-
     def combine_audio_segments(self, input_data, combined_file_path):
-    
-        print(f"Arguments received: input_data={input_data}, combined_file_path={combined_file_path}")
+            print(f"Arguments received: input_data={input_data}, combined_file_path={combined_file_path}")
 
-        # Initialize variables for combined audio data
-        combined_audio_data = bytearray()
-        params = None
+            # Initialize variables for combined audio data
+            combined_audio_data = bytearray()
+            params = None
 
-        # Check if input_data is a directory path
-        if isinstance(input_data, (str, bytes, os.PathLike)) and os.path.isdir(input_data):
-            # List all segment files in the directory and sort them
-            segment_files = sorted(os.listdir(input_data))
+            # Check if input_data is a directory path
+            if isinstance(input_data, (str, bytes, os.PathLike)) and os.path.isdir(input_data):
+                # List all segment files in the directory and sort them
+                segment_files = sorted(os.listdir(input_data))
 
-            # Iterate over and combine each segment file
-            for file in segment_files:
-                with wave.open(os.path.join(input_data, file), 'rb') as segment:
-                    # Read and append audio data
-                    combined_audio_data.extend(segment.readframes(segment.getnframes()))
-                    if not params:
-                        params = segment.getparams()
-        elif isinstance(input_data, list) and input_data:
-            # Assuming input_data is a list of audio data segments
-            for data in input_data:
-                combined_audio_data.extend(data)
-            
-            # Use the parameters of the first segment
-            with wave.open(io.BytesIO(input_data[0]), 'rb') as first_segment:
-                params = first_segment.getparams()
-        else:
-            raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
+                # Iterate over and combine each segment file
+                for file in segment_files:
+                    with wave.open(os.path.join(input_data, file), 'rb') as segment:
+                        # Read and append audio data
+                        combined_audio_data.extend(segment.readframes(segment.getnframes()))
+                        if not params:
+                            params = segment.getparams()
+            elif isinstance(input_data, list) and input_data:
+                # Assuming input_data is a list of audio data segments
+                for data in input_data:
+                    # Ensure each segment is a byte array. If not, convert it.
+                    if not isinstance(data, bytearray):
+                        data = bytearray(data)
+                    combined_audio_data.extend(data)
 
-        # Save combined audio data to combined_file_path
-        with wave.open(combined_file_path, 'wb') as output_file:
-            output_file.setparams(params)
-            output_file.writeframes(combined_audio_data)
+                # Use the parameters of the first segment, ensuring it's a byte array
+                first_segment_data = input_data[0] if isinstance(input_data[0], bytearray) else bytearray(input_data[0])
+                with wave.open(io.BytesIO(first_segment_data), 'rb') as first_segment:
+                    params = first_segment.getparams()
+            else:
+                raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
 
-    # Example usage
-    # For directory input: combine_audio_segments('/path/to/segments', '/path/to/output/combined_file.wav')
-    # For array input: combine_audio_segments([segment1_data, segment2_data, ...], '/path/to/output/combined_file.wav')
+            # Save combined audio data to combined_file_path
+            if not params:
+                raise ValueError("Audio parameters could not be determined. Please check input data.")
+
+            with wave.open(combined_file_path, 'wb') as output_file:
+                output_file.setparams(params)
+                output_file.writeframes(combined_audio_data)
 
 
 
