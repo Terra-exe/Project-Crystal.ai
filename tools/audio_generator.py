@@ -166,7 +166,7 @@ class AudioGenerator:
         return audio_data
 
 
-    def combine_audio_segments2(input_data, combined_file_path):
+    def combine_audio_segments(input_data, combined_file_path):
     
         print(f"Arguments received: input_data={input_data}, combined_file_path={combined_file_path}")
 
