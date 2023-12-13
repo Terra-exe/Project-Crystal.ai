@@ -140,7 +140,7 @@ class AudioGenerator:
             output_file.setparams(params)
             # Write combined audio data to the output file
             for data in combined_audio_data:
-            output_file.writeframes(data)
+                output_file.writeframes(data)
 
 
 
