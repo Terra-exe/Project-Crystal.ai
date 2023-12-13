@@ -153,6 +153,12 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
     mid_preset = get_preset_from_frequency_name(mid_freq)
     end_preset = get_preset_from_frequency_name(end_freq)
    
+
+    # Make sure the directory exists
+    segment_dir = os.path.join(save_path, title)
+    if not os.path.exists(segment_dir):
+        os.makedirs(segment_dir)
+
     # Linear interpolation function
     def interpolate(freq_start, freq_end, time_start, time_end, current_time):
         print(f"Interpolating from {freq_start} to {freq_end} between times {time_start} and {time_end} at current time {current_time}")
@@ -187,13 +193,13 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
                                         end_preset["freq_default"] + end_preset["binaural_default"], 
                                         mid_point, duration, current_time)
 
-        # Generate audio for this segment
-        audio_gen.generate_audio(save_path, f"{title}_{current_time}", 1, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
+        segment_title = f"{title}_{current_time}.wav"
+        audio_gen.generate_audio(segment_dir, segment_title, 1, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
 
-    # Assuming you have a function in AudioGenerator to combine audio segments
-        combined_file_title = f"{title}_ONLY_{preset}_{start_freq}_{mid_freq}_{end_freq}.wav"
-        combined_file_path = os.path.join(save_path, combined_file_title)
-        audio_gen.combine_audio_segments(save_path, title, combined_file_path)
+    # Combine all segments into the final audio file
+    combined_file_title = f"{title}_ONLY_{preset}_{start_freq}_{mid_freq}_{end_freq}.wav"
+    combined_file_path = os.path.join(save_path, combined_file_title)
+    audio_gen.combine_audio_segments(segment_dir, combined_file_path)
 
     return combined_file_path      
 
