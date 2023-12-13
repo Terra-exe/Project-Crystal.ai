@@ -106,12 +106,12 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["timeframe"] = "s"
             wait["type"] = "waitLong"
             wait["description"] = "New Line"
-        elif (type == "#SNAP"):
-            wait["value"] = "#SNAP"
+        elif (type == "<SNAP>"):
+            wait["value"] = "<SNAP>"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
-        #elif (type == "#"):
-        #    substeps["substep" + str(i)] = segment
+        elif (type == "#"):
+            substeps["substep" + str(i)] = segment
         else:
             wait["value"] = "null"
         

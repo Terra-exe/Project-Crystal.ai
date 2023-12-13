@@ -263,7 +263,7 @@ def api_create_audio_file():
                         (value['type'] == "soundEffect")):
                         
                         soundEffect_name = value['value']
-                        if (soundEffect_name == "#SNAP"):
+                        if (soundEffect_name == "<SNAP>"):
                             # Set the local file path to the existing sound effect file
                             segment_filename_local = r"sound_effects/SNAP.wav"  # Use the correct path to your sound effect file  #Added this Dec 2023
                         elif (soundEffect_name == "POP"):
