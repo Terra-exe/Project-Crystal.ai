@@ -25,6 +25,7 @@ class AudioGenerator:
             "none": self.gen_none,
         }
 
+
     def generate_audio(
         self,
         save_path,
@@ -116,6 +117,53 @@ class AudioGenerator:
         print("Creating binaural audio - 10")
         print("Saved here: " + save_path + title)
 
+
+
+    def generate_audio_data(self, duration, fade, sound_type, base_freq, binaural_freq_diff, entrainment_type, volume_generator, gradual_freq_change, volume):
+        print("Generating audio data")
+
+        sample_rate = 44100
+        noise_generators = {"white", "pink", "brown"}
+        audio_data = []
+
+        try:
+            if sound_type in noise_generators:
+                sound_freq = 1
+                beat_freq = None
+                if entrainment_type is None:
+                    entrainment_type = "none"
+                else:
+                    entrainment_type = "isochronic"
+                    beat_freq = base_freq
+                    volume_generator = self.sound_generators[volume_generator]
+            else:
+                sound_freq = base_freq
+                beat_freq = base_freq + binaural_freq_diff
+                if entrainment_type != "isochronic":
+                    entrainment_type = "none"
+
+            sound_generator = self.sound_generators[sound_type]
+            entrainment_generator = self.entrainment_generators[entrainment_type]
+        except:
+            traceback.print_exc()
+
+        if entrainment_type == "isochronic":
+            audio_data = entrainment_generator(
+                sound_freq, beat_freq, sample_rate, duration, sound_generator, volume_generator
+            )
+        else:
+            audio_data = entrainment_generator(
+                sound_freq, beat_freq, sample_rate, duration, sound_generator
+            )
+
+        if fade:
+            ramp_length = int(sample_rate * 0.5)
+            self.fade_in_out(audio_data, ramp_length)
+
+        # Scale the audio array by the given volume
+        audio_data *= volume
+
+        return audio_data
 
 
     def combine_audio_segments(self, segment_dir, combined_file_path):
