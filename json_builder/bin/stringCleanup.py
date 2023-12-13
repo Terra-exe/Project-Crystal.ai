@@ -33,7 +33,17 @@ def segmentTextForTime(inputText):
     #input_string = "This is a sample, input string^with some special characters."
 
     # List of strings to use as segment delimiters
-    delimiters = [",", ".", "^", "<SNAP>"]
+    delimiters = [
+    ",", ".", "^", "<SNAP>", "<POP>", "<BALLOONPOP>", "<BALLOONINFLATE>", 
+    "<BLOWJOB1>", "<COCKSUCKING>", "<FORCESWALLOW1>", "<FORCESWALLOW2>", 
+    "<GASP1>", "<GASP2>", "<GASP3>", "<GIGGLETIME>", "<GULPING>", "<LOCK>", 
+    "<MOANING>", "<ROBOTHEART>", "<SUCTION_MACHINE>", "<SWALLOW>", "<SYNTHPULSE1>", 
+    "<SYNTHPULSE2>", "<GRIMES_ANY_SUFFICIENTLY_ADVANCED>", "<GRIMES_MADE NOT BORN>", 
+    "<GRIMES_MODERN_GODS_FOR_MODERN_GIRLS>", "<GRIMES_OUR_LADY_OF_PERPETUAL_CHAOS_TM>", 
+    "<GRIMES1_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>", "<GRIMES2_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>", 
+    "<GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>"
+    ]
+
 
     # Create a regular expression pattern from the delimiters
     pattern = '|'.join(map(re.escape, delimiters))
