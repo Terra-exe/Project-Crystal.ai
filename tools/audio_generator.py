@@ -176,12 +176,15 @@ class AudioGenerator:
         wav_file_paths = []
         temp_dir = tempfile.mkdtemp()  # Create a temporary directory
         
+            
         # Determine the total number of frames in all segments
         
         for i, segment in enumerate(input_data):
             # Convert segment to bytearray if it's not already
+            print(f"Segment {i}: Original frames1: {num_frames}")
             if not isinstance(segment, bytearray):
                 segment = bytearray(segment)
+            print(f"Segment {i}: Original frames2: {num_frames}")
 
             # Define the file path
             file_path = os.path.join(temp_dir, f"segment_{i}.wav")
@@ -189,13 +192,12 @@ class AudioGenerator:
         
             # Calculate the number of frames for this segment
             num_frames = len(segment) // (2 * 2)  # Assuming 16-bit stereo audio
-            print(f"Segment {i}: Original frames: {num_frames}")
+            print(f"Segment {i}: len // 2 * 2 frames: {num_frames}")
             
             # Set parameters for the WAV file
             num_channels = 2  # Mono=1, Stereo=2
             sample_width = 2  # 2 bytes (16 bits) per sample
             sample_rate = 44100  # Sampling frequency in Hz
-            num_frames = len(segment) // (num_channels * sample_width)
             num_frames = len(segment) // (num_channels * sample_width)
             num_frames //= 2
             print("XXXX FRAMES XXX :" + str(num_frames))
