@@ -194,6 +194,8 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
                                         mid_point, duration, current_time)
 
         segment_data = audio_gen.generate_audio_data(1, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
+        print(f"!!!XXX!!!Number of frames in segment_data!!!XXX!!!: {len(segment_data) // (2 * 2)}")
+
         combined_audio_data.append(segment_data)
 
     # Handle fractional part if present
