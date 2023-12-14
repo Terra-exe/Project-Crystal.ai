@@ -173,73 +173,48 @@ class AudioGenerator:
             # Initialize variables for combined audio data
             combined_audio_data = bytearray()
             params = None
-            print("params = none")
+            print("test1")
+
             # Check if input_data is a directory path
             if isinstance(input_data, (str, bytes, os.PathLike)) and os.path.isdir(input_data):
-                print("is instance")
                 # List all segment files in the directory and sort them
                 segment_files = sorted(os.listdir(input_data))
-                print("is instance2")
-                
+                print("test2")
                 # Iterate over and combine each segment file
                 for file in segment_files:
-                    print("is instance3")
-
                     with wave.open(os.path.join(input_data, file), 'rb') as segment:
-                        print("is instance4")
                         # Read and append audio data
                         combined_audio_data.extend(segment.readframes(segment.getnframes()))
-                        print("is instance5")
                         if not params:
-                            print("is instance6")
                             params = segment.getparams()
-                            print("is instance7")
-
-            
-
+                print("test3")
             elif isinstance(input_data, list) and input_data:
-                print(f"Processing a list of segments. Number of segments: {len(input_data)}")
-        
-                for i, data in enumerate(input_data):
-                    print(f"Segment {i} type: {type(data)}")
-                    
-                    # Convert NumPy array to bytearray
-                    if isinstance(data, np.ndarray):
-                        print(f"Segment {i} is a NumPy array. Converting to bytearray.")
-                        # Normalize and convert to 16-bit PCM format
-                        max_val = np.iinfo(np.int16).max
-                        data = (data * max_val).astype(np.int16).tobytes()
-                    elif not isinstance(data, bytearray):
-                        print(f"Segment {i} is not a bytearray. Converting.")
+                # Assuming input_data is a list of audio data segments
+                for data in input_data:
+                    # Ensure each segment is a byte array. If not, convert it.
+                    if not isinstance(data, bytearray):
                         data = bytearray(data)
-                    
-                    print("combine1")
-
                     combined_audio_data.extend(data)
-                    print("combine2")
-
-                # Manually set the parameters for the WAV file, as the raw audio data lacks headers
-                num_channels = 2  # Mono=1, Stereo=2
-                sample_width = 2  # Bytes per sample, 2 for 16-bit audio
-                sample_rate = 44100  # Hz, standard sampling frequency for audio
-                num_frames = len(combined_audio_data) // (num_channels * sample_width)
-                params = (num_channels, sample_width, sample_rate, num_frames, 'NONE', 'not compressed')
-                print("combine3")
-
+            
+                print("test4")
                 # Use the parameters of the first segment, ensuring it's a byte array
                 first_segment_data = input_data[0] if isinstance(input_data[0], bytearray) else bytearray(input_data[0])
+                print("test5")
                 with wave.open(io.BytesIO(first_segment_data), 'rb') as first_segment:
+                    print("test6")
                     params = first_segment.getparams()
+                    print("test7")
             else:
                 raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
 
             # Save combined audio data to combined_file_path
             if not params:
                 raise ValueError("Audio parameters could not be determined. Please check input data.")
-
+            print("test8")
             with wave.open(combined_file_path, 'wb') as output_file:
                 output_file.setparams(params)
                 output_file.writeframes(combined_audio_data)
+            print("test9")
 
 
 
