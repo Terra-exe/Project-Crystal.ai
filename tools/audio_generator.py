@@ -197,7 +197,7 @@ class AudioGenerator:
             num_frames = len(segment) // (num_channels * sample_width)
             num_frames = len(segment) // (num_channels * sample_width)
             num_frames //= 2
-
+            print("XXXX FRAMES XXX :" + num_frames)
             # Save the segment as a WAV file
             with wave.open(file_path, 'wb') as wav_file:
                 wav_file.setnchannels(num_channels)
