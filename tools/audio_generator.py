@@ -173,6 +173,11 @@ class AudioGenerator:
         return audio_data
 
     def convert_segments_to_wav_files(self, input_data):
+         # Print the number of frames for each segment in input_data
+        for i, segment in enumerate(input_data):
+            num_frames = len(segment)  # Assuming segment is a NumPy array or similar
+            print(f"Initial Segment {i}: Number of frames: {num_frames}")
+
         wav_file_paths = []
         temp_dir = tempfile.mkdtemp()  # Create a temporary directory
         
