@@ -174,6 +174,14 @@ class AudioGenerator:
         wav_file_paths = []
         temp_dir = tempfile.mkdtemp()  # Create a temporary directory
 
+        # Determine the total number of frames in all segments
+        total_frames = sum(len(segment) // (2 * 2) for segment in input_data)  # Assuming 16-bit stereo audio
+        print(f"Total frames in all segments: {total_frames}")
+
+        # Calculate the required number of frames for each segment
+        required_frames_per_segment = total_frames // len(input_data)
+        print(f"Required frames per segment: {required_frames_per_segment}")
+
         for i, segment in enumerate(input_data):
             # Convert segment to bytearray if it's not already
             if not isinstance(segment, bytearray):
@@ -183,18 +191,35 @@ class AudioGenerator:
             file_path = os.path.join(temp_dir, f"segment_{i}.wav")
             wav_file_paths.append(file_path)
 
+        
+            # Calculate the number of frames for this segment
+            num_frames = len(segment) // (2 * 2)  # Assuming 16-bit stereo audio
+            print(f"Segment {i}: Original frames: {num_frames}")
+
+            # Pad or trim the segment to match the required number of frames
+            if num_frames < required_frames_per_segment:
+                # Pad the segment with zeros
+                padding_frames = required_frames_per_segment - num_frames
+                segment.extend(b'\x00' * (padding_frames * 2 * 2))
+                print(f"Segment {i}: Padded frames: {num_frames}")
+
+            elif num_frames > required_frames_per_segment:
+                # Trim the segment to the required number of frames
+                segment = segment[:required_frames_per_segment * 2 * 2]
+                print(f"Segment {i}: Trimmed frames: {num_frames}")
+
             # Set parameters for the WAV file
             num_channels = 2  # Mono=1, Stereo=2
             sample_width = 2  # 2 bytes (16 bits) per sample
             sample_rate = 44100  # Sampling frequency in Hz
-            num_frames = len(segment) // (num_channels * sample_width)
+            #num_frames = len(segment) // (num_channels * sample_width)
 
             # Save the segment as a WAV file
             with wave.open(file_path, 'wb') as wav_file:
                 wav_file.setnchannels(num_channels)
                 wav_file.setsampwidth(sample_width)
                 wav_file.setframerate(sample_rate)
-                wav_file.setnframes(num_frames)
+                #wav_file.setnframes(num_frames)
                 wav_file.writeframes(segment)
 
         return wav_file_paths
