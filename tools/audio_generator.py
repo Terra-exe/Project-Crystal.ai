@@ -41,6 +41,7 @@ class AudioGenerator:
         volume_generator=None,
         gradual_freq_change=None,
         volume=1.0):
+        duration =  7.20687074829932
 
         print("Creating binaural audio - 4")
 
