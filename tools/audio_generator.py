@@ -126,7 +126,7 @@ class AudioGenerator:
 
     def generate_audio_data(self, duration, fade, sound_type, base_freq, binaural_freq_diff, entrainment_type, volume_generator, gradual_freq_change, volume):
         print("Generating audio data")
-        print("duration: " + duration)
+        print("duration: " + str(duration))
   
         sample_rate = 44100
         noise_generators = {"white", "pink", "brown"}
