@@ -184,9 +184,15 @@ class AudioGenerator:
         # Determine the total number of frames in all segments
         
         for i, segment in enumerate(input_data):
+            # Print length before conversion to bytearray
+            print(f"Segment {i} length before bytearray conversion: {len(segment)}")
+
             # Convert segment to bytearray if it's not already
             if not isinstance(segment, bytearray):
                 segment = bytearray(segment)
+            
+            # Print length after conversion to bytearray
+            print(f"Segment {i} length after bytearray conversion: {len(segment)}")
 
             # Define the file path
             file_path = os.path.join(temp_dir, f"segment_{i}.wav")
