@@ -187,7 +187,7 @@ class AudioGenerator:
             wav_file_paths.append(file_path)
         
             # Calculate the number of frames for this segment
-            num_frames = len(segment) // 2   # Assuming 16-bit stereo audio
+            num_frames = len(segment) // (2 * 2)  # Assuming 16-bit stereo audio
             print(f"Segment {i}: Original frames: {num_frames}")
             
             # Set parameters for the WAV file
@@ -201,7 +201,7 @@ class AudioGenerator:
                 wav_file.setnchannels(num_channels)
                 wav_file.setsampwidth(sample_width)
                 wav_file.setframerate(sample_rate)
-                wav_file.setnframes(num_frames)
+                wav_file.setnframes(num_frames / 2)
                 wav_file.writeframes(segment)
 
         return wav_file_paths
