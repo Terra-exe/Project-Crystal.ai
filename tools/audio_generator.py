@@ -126,7 +126,8 @@ class AudioGenerator:
 
     def generate_audio_data(self, duration, fade, sound_type, base_freq, binaural_freq_diff, entrainment_type, volume_generator, gradual_freq_change, volume):
         print("Generating audio data")
-
+        print("duration: " + duration)
+  
         sample_rate = 44100
         noise_generators = {"white", "pink", "brown"}
         audio_data = []
@@ -175,9 +176,7 @@ class AudioGenerator:
         temp_dir = tempfile.mkdtemp()  # Create a temporary directory
         
         # Determine the total number of frames in all segments
-        total_frames = sum(len(segment) // (2 * 2) for segment in input_data)  # Assuming 16-bit stereo audio
-        print(f"Total frames in all segments: {total_frames}")
-
+        
         for i, segment in enumerate(input_data):
             # Convert segment to bytearray if it's not already
             if not isinstance(segment, bytearray):
