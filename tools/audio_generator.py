@@ -265,7 +265,9 @@ class AudioGenerator:
             for file in segment_files:
                 with wave.open(os.path.join(input_data, file), 'rb') as segment:
                     # Read and append audio data
+                    print(" Try GetFrames of Segment!!!!" + segment.getnframes())
                     combined_audio_data.extend(segment.readframes(segment.getnframes()))
+                    print(" combined_audio_data Try GetFrames of Segment!!!!" + combined_audio_data.getnframes())
                     if not params:
                         params = segment.getparams()
             print("test3")
