@@ -168,6 +168,7 @@ class AudioGenerator:
 
         # Scale the audio array by the given volume
         audio_data *= volume
+        print("YYYXXX!!!Number of frames in audio data:YYYXXX!!!", len(audio_data))
 
         return audio_data
 
