@@ -174,38 +174,53 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
 
     # Initialize a list to hold audio data of each segment
     combined_audio_data = []
+    
+    # Number of full second segments
+    num_full_segments = int(duration)
 
-    # Process each segment of the audio
-    for current_time in range(0, int(duration)):
-        # Interpolate for base frequency
-        print(f"Current time: {current_time}")
 
+
+    # Process each full second segment
+    for current_time in range(num_full_segments):
         if current_time <= mid_point:
             base_freq = interpolate(start_preset["freq_default"], mid_preset["freq_default"], 0, mid_point, current_time)
-        else:
-            base_freq = interpolate(mid_preset["freq_default"], end_preset["freq_default"], mid_point, duration, current_time)
-        
-        # Interpolate for binaural frequency
-        if current_time <= mid_point:
             binaural_freq = interpolate(start_preset["freq_default"] + start_preset["binaural_default"], 
                                         mid_preset["freq_default"] + mid_preset["binaural_default"], 
                                         0, mid_point, current_time)
         else:
+            base_freq = interpolate(mid_preset["freq_default"], end_preset["freq_default"], mid_point, duration, current_time)
             binaural_freq = interpolate(mid_preset["freq_default"] + mid_preset["binaural_default"], 
                                         end_preset["freq_default"] + end_preset["binaural_default"], 
                                         mid_point, duration, current_time)
 
-     
         segment_data = audio_gen.generate_audio_data(1, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
-        
-        # If segment_data is a bytearray or similar, append it directly
         combined_audio_data.append(segment_data)
-     
+
+    # Handle fractional part if present
+    fractional_part = duration - num_full_segments
+    if fractional_part > 0:
+        final_time = duration
+        if final_time <= mid_point:
+            base_freq = interpolate(start_preset["freq_default"], mid_preset["freq_default"], 0, mid_point, final_time)
+            binaural_freq = interpolate(start_preset["freq_default"] + start_preset["binaural_default"], 
+                                        mid_preset["freq_default"] + mid_preset["binaural_default"], 
+                                        0, mid_point, final_time)
+        else:
+            base_freq = interpolate(mid_preset["freq_default"], end_preset["freq_default"], mid_point, duration, final_time)
+            binaural_freq = interpolate(mid_preset["freq_default"] + mid_preset["binaural_default"], 
+                                        end_preset["freq_default"] + end_preset["binaural_default"], 
+                                        mid_point, duration, final_time)
+
+        final_segment_data = audio_gen.generate_audio_data(fractional_part, False, "sine", base_freq, binaural_freq - base_freq, "binaural", None, False, volume)
+        combined_audio_data.append(final_segment_data)
+
+    # Combine all segments and save as a single file
+    combined_file_path = os.path.join(segment_dir, title)
+    audio_gen.combine_audio_segments(combined_audio_data, combined_file_path)
+
 
     # Combine all segments and save as a single file
     combined_file_path = title
-    
-
     
     print(f"Combined File Path: {combined_file_path}")
 
