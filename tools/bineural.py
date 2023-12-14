@@ -211,7 +211,7 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
 
 # Since combined_audio_data is a list of audio data segments, it should be passed directly to combine_audio_segments
 
-    audio_gen.combine_audio_segments(combined_audio_data, combined_file_path)
+    audio_gen.combine_audio_segments(combined_audio_data, combined_file_path, save_path)
 
 
 

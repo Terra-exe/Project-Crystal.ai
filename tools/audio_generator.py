@@ -199,11 +199,12 @@ class AudioGenerator:
 
         return wav_file_paths
 
-    def combine_audio_segments(self, input_data, combined_file_path):
+    def combine_audio_segments(self, input_data, combined_file_path, save_path):
+            print("~~~~save_path: " + save_path)
             # Remove leading '/' if it exists
             if combined_file_path.startswith('/'):
                 combined_file_path = combined_file_path[1:]
-                
+
             print(f"Arguments received: input_data={input_data}, combined_file_path={combined_file_path}")
             
             if not combined_file_path.endswith('.wav'):
@@ -256,7 +257,7 @@ class AudioGenerator:
             with wave.open(combined_file_path, 'wb') as output_file:
                 output_file.setparams(params)
                 output_file.writeframes(combined_audio_data)
-            print("test9")
+            print("test10")
 
 
 
