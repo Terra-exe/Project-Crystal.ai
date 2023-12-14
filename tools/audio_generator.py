@@ -265,9 +265,9 @@ class AudioGenerator:
             for file in segment_files:
                 with wave.open(os.path.join(input_data, file), 'rb') as segment:
                     # Read and append audio data
-                    print(" Try GetFrames of Segment!!!!" + segment.getnframes())
+                    print("0 Try GetFrames of Segment!!!!" + segment.getnframes())
                     combined_audio_data.extend(segment.readframes(segment.getnframes()))
-                    print(" combined_audio_data Try GetFrames of Segment!!!!" + combined_audio_data.getnframes())
+                    print(" 0combined_audio_data Try GetFrames of Segment!!!!" + combined_audio_data.getnframes())
                     if not params:
                         params = segment.getparams()
             print("test3")
@@ -284,7 +284,10 @@ class AudioGenerator:
                     if not params:
                         params = wav_file.getparams()
                         print("test7")
+                    print(" Try GetFrames of Segment!!!!" + wav_file.getnframes())
                     combined_audio_data.extend(wav_file.readframes(wav_file.getnframes()))
+                    print(" combined_audio_data Try GetFrames of Segment!!!!" + wav_file.getnframes())
+
                     print("test8")
         else:
             raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
