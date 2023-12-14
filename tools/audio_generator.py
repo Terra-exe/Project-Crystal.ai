@@ -176,15 +176,12 @@ class AudioGenerator:
         wav_file_paths = []
         temp_dir = tempfile.mkdtemp()  # Create a temporary directory
         
-            
         # Determine the total number of frames in all segments
         
         for i, segment in enumerate(input_data):
             # Convert segment to bytearray if it's not already
-            print(f"Segment {i}: Original frames1: {num_frames}")
             if not isinstance(segment, bytearray):
                 segment = bytearray(segment)
-            print(f"Segment {i}: Original frames2: {num_frames}")
 
             # Define the file path
             file_path = os.path.join(temp_dir, f"segment_{i}.wav")
@@ -209,6 +206,20 @@ class AudioGenerator:
                 wav_file.setnframes(num_frames)
                 wav_file.writeframes(segment)
 
+            with wave.open(file_path, "rb") as f1:
+                print("~~~Opened Files")
+                samp_width1 = f1.getsampwidth()
+                print(f"~~~Sample Widths: {samp_width1} ")
+                
+
+                framerate1 = f1.getframerate()
+                print(f"~~~Frame Rates: {framerate1} ")
+
+
+                n_frames1 = f1.getnframes()
+                print(f"~~~Number of Frames: {n_frames1} ")
+
+                
         return wav_file_paths
 
     def combine_audio_segments(self, input_data, combined_file_path, save_path):
