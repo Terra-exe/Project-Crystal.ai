@@ -188,15 +188,6 @@ class AudioGenerator:
             print(f"Segment {i} length before bytearray conversion: {len(segment)}")
 
         
-            if not isinstance(segment, bytearray):
-            # Check if the segment is in the expected format (e.g., 16-bit stereo)
-                expected_format = 2 * 2  # 2 bytes per sample * 2 channels
-                if len(segment) % expected_format == 0:
-                    print(f"Segment  oops {i} ")
-                    segment = bytearray(segment)
-                else:
-                    # Handle the case where the segment is already in the expected format
-                    pass
 
             # Print length after conversion to bytearray
             print(f"Segment {i} length after bytearray conversion: {len(segment)}")
