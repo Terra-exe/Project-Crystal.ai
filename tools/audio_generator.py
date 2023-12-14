@@ -200,64 +200,66 @@ class AudioGenerator:
         return wav_file_paths
 
     def combine_audio_segments(self, input_data, combined_file_path, save_path):
-            print("~~~~save_path: " + save_path)
-            # Remove leading '/' if it exists
-            if combined_file_path.startswith('/'):
-                combined_file_path = combined_file_path[1:]
+        print("~~~~save_path: " + save_path)
+    
+        # Construct the full file path
+        full_file_path = os.path.join(save_path, combined_file_path.lstrip('/'))
+        # Create the directory if it does not exist
+        os.makedirs(os.path.dirname(full_file_path), exist_ok=True)
 
-            print(f"Arguments received: input_data={input_data}, combined_file_path={save_path}/{combined_file_path}")
-            
-            if not combined_file_path.endswith('.wav'):
-                raise ValueError("The combined_file_path should be a .wav file path, not a directory.")
+        print(f"Arguments received: input_data={input_data}, full_file_path={full_file_path}")
+        
+        if not full_file_path.endswith('.wav'):
+            raise ValueError("The full_file_path should be a .wav file path, not a directory.")
 
-            # Check if a directory with the same name exists
-            if os.path.isdir(save_path + "/" + combined_file_path):
-                raise ValueError(f"A directory with the name {save_path}/{combined_file_path} already exists.")
+        # Check if a directory with the same name exists
+        if os.path.isdir(full_file_path):
+            raise ValueError(f"A directory with the name {full_file_path} already exists.")
 
-            # Initialize variables for combined audio data
-            combined_audio_data = bytearray()
-            params = None
-            print("test1")
+        # Initialize variables for combined audio data
+        combined_audio_data = bytearray()
+        params = None
+        print("test1")
 
-            # Check if input_data is a directory path
-            if isinstance(input_data, (str, bytes, os.PathLike)) and os.path.isdir(input_data):
-                # List all segment files in the directory and sort them
-                segment_files = sorted(os.listdir(input_data))
-                print("test2")
-                # Iterate over and combine each segment file
-                for file in segment_files:
-                    with wave.open(os.path.join(input_data, file), 'rb') as segment:
-                        # Read and append audio data
-                        combined_audio_data.extend(segment.readframes(segment.getnframes()))
-                        if not params:
-                            params = segment.getparams()
-                print("test3")
-            
-            elif isinstance(input_data, list) and input_data:
-                print("test4")
-                wav_file_paths = self.convert_segments_to_wav_files(input_data)
-                print("test5")
+        # Check if input_data is a directory path
+        if isinstance(input_data, (str, bytes, os.PathLike)) and os.path.isdir(input_data):
+            # List all segment files in the directory and sort them
+            segment_files = sorted(os.listdir(input_data))
+            print("test2")
+            # Iterate over and combine each segment file
+            for file in segment_files:
+                with wave.open(os.path.join(input_data, file), 'rb') as segment:
+                    # Read and append audio data
+                    combined_audio_data.extend(segment.readframes(segment.getnframes()))
+                    if not params:
+                        params = segment.getparams()
+            print("test3")
+        
+        elif isinstance(input_data, list) and input_data:
+            print("test4")
+            wav_file_paths = self.convert_segments_to_wav_files(input_data)
+            print("test5")
 
-                # Process each WAV file
-                for file_path in wav_file_paths:
-                    with wave.open(file_path, 'rb') as wav_file:
-                        print("test6")
-                        if not params:
-                            params = wav_file.getparams()
-                            print("test7")
-                        combined_audio_data.extend(wav_file.readframes(wav_file.getnframes()))
-                        print("test8")
-            else:
-                raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
+            # Process each WAV file
+            for file_path in wav_file_paths:
+                with wave.open(file_path, 'rb') as wav_file:
+                    print("test6")
+                    if not params:
+                        params = wav_file.getparams()
+                        print("test7")
+                    combined_audio_data.extend(wav_file.readframes(wav_file.getnframes()))
+                    print("test8")
+        else:
+            raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
 
-            # Save combined audio data to combined_file_path
-            if not params:
-                raise ValueError("Audio parameters could not be determined. Please check input data.")
-            print("test9")
-            with wave.open(save_path + "/" + combined_file_path, 'wb') as output_file:
-                output_file.setparams(params)
-                output_file.writeframes(combined_audio_data)
-            print("test10")
+        # Save combined audio data to combined_file_path
+        if not params:
+            raise ValueError("Audio parameters could not be determined. Please check input data.")
+        print("test9")
+        with wave.open(full_file_path, 'wb') as output_file:
+            output_file.setparams(params)
+            output_file.writeframes(combined_audio_data)
+        print("test10")
 
 
 
