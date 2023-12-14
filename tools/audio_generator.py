@@ -191,7 +191,7 @@ class AudioGenerator:
             print(f"Segment {i}: Original frames: {num_frames}")
             
             # Set parameters for the WAV file
-            num_channels = 1  # Mono=1, Stereo=2
+            num_channels = 2  # Mono=1, Stereo=2
             sample_width = 2  # 2 bytes (16 bits) per sample
             sample_rate = 44100  # Sampling frequency in Hz
             num_frames = len(segment) // (num_channels * sample_width)
@@ -200,7 +200,7 @@ class AudioGenerator:
             print("XXXX FRAMES XXX :" + str(num_frames))
             # Save the segment as a WAV file
             with wave.open(file_path, 'wb') as wav_file:
-                wav_file.setnchannels(num_channels)
+                wav_file.setnchannels(1)
                 wav_file.setsampwidth(sample_width)
                 wav_file.setframerate(sample_rate)
                 wav_file.setnframes(num_frames)
