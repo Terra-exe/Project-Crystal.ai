@@ -274,13 +274,15 @@ def merge_audio_files(input_file1, input_file2, output_file):
         print(f"Number of Frames: {n_frames1} {n_frames2}")
 
 
-
+        print("frames1")
         assert abs(n_frames1 - n_frames2) <= 1
 
         #assert n_frames1 == n_frames2
-
+        print("frames2")
         n_channels1 = f1.getnchannels()
+        print("frames3")        
         n_channels2 = f2.getnchannels()
+        print("frames4")        
         print(f"Number of Channels: {n_channels1} {n_channels2}")
         n_channels = max(n_channels1, n_channels2)
 
