@@ -272,6 +272,12 @@ class AudioGenerator:
         
         elif isinstance(input_data, list) and input_data:
             print("test4")
+             # Print the number of frames for each raw audio data in input_data
+            for i, segment in enumerate(input_data):
+                num_frames = len(segment)  # Assuming segment is a NumPy array or similar
+                print(f"Raw Segment {i}: Number of frames: {num_frames}")
+
+
             wav_file_paths = self.convert_segments_to_wav_files(input_data)
             print("test5")
 
