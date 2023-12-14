@@ -120,6 +120,7 @@ class AudioGenerator:
 
 
 
+
     def generate_audio_data(self, duration, fade, sound_type, base_freq, binaural_freq_diff, entrainment_type, volume_generator, gradual_freq_change, volume):
         print("Generating audio data")
 
@@ -185,6 +186,9 @@ class AudioGenerator:
                         combined_audio_data.extend(segment.readframes(segment.getnframes()))
                         if not params:
                             params = segment.getparams()
+
+            
+
             elif isinstance(input_data, list) and input_data:
                 # Assuming input_data is a list of audio data segments
                 for data in input_data:
@@ -192,6 +196,14 @@ class AudioGenerator:
                     if not isinstance(data, bytearray):
                         data = bytearray(data)
                     combined_audio_data.extend(data)
+
+                # Manually set the parameters for the WAV file, as the raw audio data lacks headers
+                num_channels = 2  # Mono=1, Stereo=2
+                sample_width = 2  # Bytes per sample, 2 for 16-bit audio
+                sample_rate = 44100  # Hz, standard sampling frequency for audio
+                num_frames = len(combined_audio_data) // (num_channels * sample_width)
+                params = (num_channels, sample_width, sample_rate, num_frames, 'NONE', 'not compressed')
+    
 
                 # Use the parameters of the first segment, ensuring it's a byte array
                 first_segment_data = input_data[0] if isinstance(input_data[0], bytearray) else bytearray(input_data[0])
