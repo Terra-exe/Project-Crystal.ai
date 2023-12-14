@@ -209,7 +209,7 @@ class AudioGenerator:
             sample_rate = 44100  # Sampling frequency in Hz
             #num_frames = len(segment) // (num_channels * sample_width)
 
-            num_frames = len(segment) // (num_channels * sample_width)  # Calculate the number of frames
+            num_frames = len(segment)  # Calculate the number of frames
             print(f"ZZZZZZNumber of frames in segment {i}: {num_frames}")
 
             print("XXXX FRAMES XXX :" + str(num_frames))
