@@ -5,6 +5,7 @@ import wave
 import numpy as np
 import sys
 import io
+import tempfile
 import traceback
 
 
@@ -120,6 +121,8 @@ class AudioGenerator:
 
 
 
+   
+
 
     def generate_audio_data(self, duration, fade, sound_type, base_freq, binaural_freq_diff, entrainment_type, volume_generator, gradual_freq_change, volume):
         print("Generating audio data")
@@ -167,6 +170,35 @@ class AudioGenerator:
 
         return audio_data
 
+    def convert_segments_to_wav_files(self, input_data):
+        wav_file_paths = []
+        temp_dir = tempfile.mkdtemp()  # Create a temporary directory
+
+        for i, segment in enumerate(input_data):
+            # Convert segment to bytearray if it's not already
+            if not isinstance(segment, bytearray):
+                segment = bytearray(segment)
+
+            # Define the file path
+            file_path = os.path.join(temp_dir, f"segment_{i}.wav")
+            wav_file_paths.append(file_path)
+
+            # Set parameters for the WAV file
+            num_channels = 1  # Mono=1, Stereo=2
+            sample_width = 2  # 2 bytes (16 bits) per sample
+            sample_rate = 44100  # Sampling frequency in Hz
+            num_frames = len(segment) // (num_channels * sample_width)
+
+            # Save the segment as a WAV file
+            with wave.open(file_path, 'wb') as wav_file:
+                wav_file.setnchannels(num_channels)
+                wav_file.setsampwidth(sample_width)
+                wav_file.setframerate(sample_rate)
+                wav_file.setnframes(num_frames)
+                wav_file.writeframes(segment)
+
+        return wav_file_paths
+
     def combine_audio_segments(self, input_data, combined_file_path):
             print(f"Arguments received: input_data={input_data}, combined_file_path={combined_file_path}")
 
@@ -188,22 +220,16 @@ class AudioGenerator:
                         if not params:
                             params = segment.getparams()
                 print("test3")
-            elif isinstance(input_data, list) and input_data:
-                # Assuming input_data is a list of audio data segments
-                for data in input_data:
-                    # Ensure each segment is a byte array. If not, convert it.
-                    if not isinstance(data, bytearray):
-                        data = bytearray(data)
-                    combined_audio_data.extend(data)
             
-                print("test4")
-                # Use the parameters of the first segment, ensuring it's a byte array
-                first_segment_data = input_data[0] if isinstance(input_data[0], bytearray) else bytearray(input_data[0])
-                print("test5")
-                with wave.open(io.BytesIO(first_segment_data), 'rb') as first_segment:
-                    print("test6")
-                    params = first_segment.getparams()
-                    print("test7")
+            elif isinstance(input_data, list) and input_data:
+
+                wav_file_paths = self.convert_segments_to_wav_files(input_data)
+                # Process each WAV file
+                for file_path in wav_file_paths:
+                    with wave.open(file_path, 'rb') as wav_file:
+                        if not params:
+                            params = wav_file.getparams()
+                        combined_audio_data.extend(wav_file.readframes(wav_file.getnframes()))
             else:
                 raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
 
