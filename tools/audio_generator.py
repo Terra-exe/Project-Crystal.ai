@@ -222,21 +222,26 @@ class AudioGenerator:
                 print("test3")
             
             elif isinstance(input_data, list) and input_data:
-
+                print("test4")
                 wav_file_paths = self.convert_segments_to_wav_files(input_data)
+                print("test5")
+
                 # Process each WAV file
                 for file_path in wav_file_paths:
                     with wave.open(file_path, 'rb') as wav_file:
+                        print("test6")
                         if not params:
                             params = wav_file.getparams()
+                            print("test7")
                         combined_audio_data.extend(wav_file.readframes(wav_file.getnframes()))
+                        print("test8")
             else:
                 raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
 
             # Save combined audio data to combined_file_path
             if not params:
                 raise ValueError("Audio parameters could not be determined. Please check input data.")
-            print("test8")
+            print("test9")
             with wave.open(combined_file_path, 'wb') as output_file:
                 output_file.setparams(params)
                 output_file.writeframes(combined_audio_data)
