@@ -201,7 +201,7 @@ class AudioGenerator:
                 wav_file.setnchannels(num_channels)
                 wav_file.setsampwidth(sample_width)
                 wav_file.setframerate(sample_rate)
-                wav_file.setnframes(num_frames)
+                wav_file.setnframes(num_frames / 2.0)
                 wav_file.writeframes(segment)
 
         return wav_file_paths
