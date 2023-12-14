@@ -303,7 +303,7 @@ def api_create_audio_file():
                             segment_filename_local = r"sound_effects/SYNTHPULSE1.wav"  
                         elif (soundEffect_name == "<SYNTHPULSE2>"):
                             segment_filename_local = r"sound_effects/SYNTHPULSE2.wav"  
-                            
+
                         elif (soundEffect_name == "<GRIMES_ANY_SUFFICIENTLY_ADVANCED>"):
                             segment_filename_local = r"sound_effects/GRIMES_ANY_SUFFICIENTLY_ADVANCED.wav"  
                         elif (soundEffect_name == "<GRIMES_MADE NOT BORN>"):
@@ -795,8 +795,8 @@ def add_binaural_to_audio_file():
 
         # Provide feedback on which audio files are being merged.
         print("\n\n---------Merging Audio with Bineural---------\n\n")
-        print(f"\n\n---------Merging {audio_file_path_filename}---------")
-        print(f"---------With {bineural_file_path_and_title}---------\n\n")
+        print(f"\n\n---------Merging Input 1 - {audio_file_path_filename}---------")
+        print(f"---------With Input 2 - {bineural_file_path_and_title}---------\n\n")
     
         # Construct the path for the output merged audio file.
         outTitle = f'{title}_{bn}_draft-v1.wav'

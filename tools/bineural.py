@@ -250,9 +250,9 @@ def print_wav_properties(filepath):
 
 def merge_audio_files(input_file1, input_file2, output_file):
     print("Start")
-    print("Input 1: ")
+    print("Input 1 - input_file1: \n")
     print_wav_properties(input_file1)
-    print("Input 2: ")
+    print("Input 2 - input_file2: \n")
     print_wav_properties(input_file2)
 
 
