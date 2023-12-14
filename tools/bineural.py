@@ -300,9 +300,9 @@ def merge_audio_files(input_file1, input_file2, output_file):
             
             print("Read Framess??? " + str(f2.readframes(n_frames2 - n_frames1)))
         
-        print("Uhh:  " + n_frames1 )
+        print("Uhh:  " + str(n_frames1 ))
 
-        print("Uhh:  " + n_frames2 )
+        print("Uhh:  " + str(n_frames2 ))
 
         assert abs(n_frames1 - n_frames2) <= 1
 
