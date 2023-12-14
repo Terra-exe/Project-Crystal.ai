@@ -212,6 +212,12 @@ class AudioGenerator:
     def combine_audio_segments(self, input_data, combined_file_path, save_path):
         print("~~~~save_path: " + save_path)
     
+        # Iterate through each segment in input_data and print the number of frames
+        for i, segment in enumerate(input_data):
+            num_frames = len(segment)  # Get the number of frames in the segment
+            print(f"-X-X-X-X-Segment {i}: Number of frames: {num_frames}")
+
+
         # Construct the full file path
         full_file_path = os.path.join(save_path, combined_file_path.lstrip('/'))
         # Create the directory if it does not exist
