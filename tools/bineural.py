@@ -294,7 +294,7 @@ def merge_audio_files(input_file1, input_file2, output_file):
             # If n_frames2 is not equal to n_frames1 and not exactly double, handle it as needed
             # You can choose how to handle this situation, such as skipping frames or truncating.
             # Here, we skip the extra frames in n_frames2 to match n_frames1.
-            print("Read Framess??? " + str(f2.readframes(n_frames2 - n_frames1))
+            print("Read Framess??? " + str(f2.readframes(n_frames2 - n_frames1)))
 
 
         assert abs(n_frames1 - n_frames2) <= 1
