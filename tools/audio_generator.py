@@ -41,8 +41,7 @@ class AudioGenerator:
         volume_generator=None,
         gradual_freq_change=None,
         volume=1.0):
-        duration =  7.20687074829932
-
+    
         print("Creating binaural audio - 4")
 
         sample_rate = 44100
@@ -192,7 +191,7 @@ class AudioGenerator:
             print(f"Segment {i}: Original frames: {num_frames}")
             
             # Set parameters for the WAV file
-            num_channels = 2  # Mono=1, Stereo=2
+            num_channels = 1  # Mono=1, Stereo=2
             sample_width = 2  # 2 bytes (16 bits) per sample
             sample_rate = 44100  # Sampling frequency in Hz
             num_frames = len(segment) // (num_channels * sample_width)
