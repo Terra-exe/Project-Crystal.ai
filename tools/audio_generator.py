@@ -205,14 +205,14 @@ class AudioGenerator:
             if combined_file_path.startswith('/'):
                 combined_file_path = combined_file_path[1:]
 
-            print(f"Arguments received: input_data={input_data}, combined_file_path={combined_file_path}")
+            print(f"Arguments received: input_data={input_data}, combined_file_path={save_path}/{combined_file_path}")
             
             if not combined_file_path.endswith('.wav'):
                 raise ValueError("The combined_file_path should be a .wav file path, not a directory.")
 
             # Check if a directory with the same name exists
-            if os.path.isdir(combined_file_path):
-                raise ValueError(f"A directory with the name {combined_file_path} already exists.")
+            if os.path.isdir(save_path + "/" + combined_file_path):
+                raise ValueError(f"A directory with the name {save_path}/{combined_file_path} already exists.")
 
             # Initialize variables for combined audio data
             combined_audio_data = bytearray()
@@ -254,7 +254,7 @@ class AudioGenerator:
             if not params:
                 raise ValueError("Audio parameters could not be determined. Please check input data.")
             print("test9")
-            with wave.open(combined_file_path, 'wb') as output_file:
+            with wave.open(save_path + "/" + combined_file_path, 'wb') as output_file:
                 output_file.setparams(params)
                 output_file.writeframes(combined_audio_data)
             print("test10")
