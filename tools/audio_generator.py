@@ -151,8 +151,7 @@ class AudioGenerator:
             print("Volume is too high, reducing to 1.0")
             volume = 1.0
 
-        # Scale the volume to the expected range
-        scaled_volume = volume * 100
+        
 
         # Convert duration from seconds to milliseconds
         duration_ms = duration * 1000
@@ -161,7 +160,7 @@ class AudioGenerator:
         print("Generating sine wave for left ear...")
         print(f"Base frequency: {base_freq}")
         print(f"Duration: {duration_ms} ms")
-        print(f"Scaled volume: {scaled_volume}")
+        print(f"Scaled volume: {volume}")
 
         left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=volume)
 
