@@ -84,7 +84,9 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
         print("preset changed")
     elif (preset == "variable_frequency"):
         print("Preset variable_frequency")
-        chosen_preset = "variable_frequency"       
+        chosen_preset = "variable_frequency" 
+        freq_default = None 
+        binaural_default = None
     else:
         print("Preset error")
         return False
@@ -95,8 +97,9 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
         freq_default = presets[chosen_preset]["freq_default"]
         freq_default = presets[chosen_preset]["freq_default"]
         binaural_default = presets[chosen_preset]["binaural_default"]
-        entrainment_type = "binaural"
-        sound_type = "sine"
+    
+    entrainment_type = "binaural"
+    sound_type = "sine"
 
     print("Creating binaural audio - 1")
     audio_gen = AudioGenerator()
@@ -108,7 +111,22 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
         # Call generate_gradual_audio if gradual_freq_change is True
         # You need to provide start_preset, mid_preset, and end_preset
         print(" audio_gen.generate_gradual_audio(start_preset, mid_preset, end_preset, duration, save_path, title")
-        audio_gen.generate_gradual_audio(start_preset, mid_preset, end_preset, duration, save_path, title)
+        audio_gen.generate_gradual_audio(
+            start_preset,
+            mid_preset,
+            end_preset,
+            duration,
+            save_path,
+            title,
+            False, #fade in/out
+            sound_type,
+            freq_default,
+            binaural_default,
+            entrainment_type,
+            volume_generator=None,
+            gradual_freq_change=True,
+            volume=volume
+        )
     else:
         audio_gen.generate_audio(
             save_path,

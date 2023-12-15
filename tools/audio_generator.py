@@ -123,8 +123,8 @@ class AudioGenerator:
         print("Creating binaural audio - 10")
         print("Saved here: " + save_path + title)
 
-
-    def generate_gradual_audio(self, start_preset, mid_preset, end_preset, duration, save_path, title):
+    def generate_gradual_audio(self, start_preset, mid_preset, end_preset, duration, save_path, title, do_fade_in_out, sound_type, freq=None, binaural=None, entrainment_type=None, volume_generator=None, gradual_freq_change=None, volume=1.0):
+    #def generate_gradual_audio(self, start_preset, mid_preset, end_preset, duration, save_path, title):
         print("Starting generate_gradual_audio function...")
 
         sample_rate = 44100  # standard sample rate for audio files
@@ -151,6 +151,7 @@ class AudioGenerator:
                 "binaural_default": 30, # (30, 100),
             }
         }
+        noise_generators = set({"white", "pink", "brown"})
 
         preset_mapping = {
             'delta': '0_delta',
@@ -175,21 +176,61 @@ class AudioGenerator:
         
         print("Preset frequencies and binaural values loaded...")
 
+        try:
+            if sound_type in noise_generators:
+                sound_freq = 1
+                beat_freq = None
+                print("Creating binaural audio - 6")
+                if entrainment_type is None:
+                    entrainment_type = "none"
+                else:
+                    entrainment_type = "isochronic"
+                    beat_freq = freq
+                    volume_generator = self.sound_generators[volume_generator]
+            else:
+                print("Creating binaural audio - 7")
+                sound_freq = freq
+
+                if entrainment_type is None:
+                    entrainment_type = "none"
+                    beat_freq = None
+                else:
+                    beat_freq = binaural
+
+                    if entrainment_type == "isochronic":
+                        volume_generator = self.sound_generators[volume_generator]
+
+
+            sound_generator = self.sound_generators[sound_type]
+            entrainment_generator = self.entrainment_generators[entrainment_type]
+        except:
+            traceback.print_exc()
+
+
         total_samples = int(duration * sample_rate)
         arr = np.zeros((2, total_samples))
 
         print("Initialized audio array...")
 
+        
         for sample in range(total_samples):
             current_time = sample / sample_rate
 
+            # Interpolate frequency for the right ear
             if current_time < duration / 2:
                 current_freq = np.interp(current_time, [0, duration / 2], [start_freq + start_binaural, mid_freq + mid_binaural])
             else:
                 current_freq = np.interp(current_time, [duration / 2, duration], [mid_freq + mid_binaural, end_freq + end_binaural])
 
-            arr[0, sample] = np.sin(2 * np.pi * current_time * start_freq)  # left ear
-            arr[1, sample] = np.sin(2 * np.pi * current_time * current_freq)  # right ear
+            # Generate audio
+            arr[0, sample] = sound_generator.generate(sample_rate, sound_freq, current_time)  # left ear
+            arr[1, sample] = sound_generator.generate(sample_rate, current_freq, current_time)  # right ear
+
+            # Apply entrainment
+            arr[:, sample] *= entrainment_generator.generate(sample_rate, beat_freq, current_time)
+
+
+
             if sample % 10000 == 0:  # print progress every 10000 samples
                 print(f"Processed {sample} samples...")
         
