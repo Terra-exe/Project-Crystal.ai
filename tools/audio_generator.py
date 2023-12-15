@@ -162,9 +162,9 @@ class AudioGenerator:
                 sound_freq, beat_freq, sample_rate, duration, sound_generator
             )
 
-        if fade:
-            ramp_length = int(sample_rate * 0.5)
-            self.fade_in_out(audio_data, ramp_length)
+        #if fade:
+        #    ramp_length = int(sample_rate * 0.5)
+        #    self.fade_in_out(audio_data, ramp_length)
 
         # Scale the audio array by the given volume
         audio_data *= volume

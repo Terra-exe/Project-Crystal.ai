@@ -310,7 +310,7 @@ def merge_audio_files(input_file1, input_file2, output_file):
         print(f"Duration of Input 1: {duration1:.2f} seconds")
         print(f"Duration of Input 2: {duration2:.2f} seconds")
 
-        #assert abs(n_frames1 - n_frames2) <= 1
+        assert abs(n_frames1 - n_frames2) <= 1
 
         #assert n_frames1 == n_frames2
         print("frames4")        
