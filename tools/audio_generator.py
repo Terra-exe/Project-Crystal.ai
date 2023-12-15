@@ -163,11 +163,11 @@ class AudioGenerator:
         print(f"Duration: {duration_ms} ms")
         print(f"Scaled volume: {scaled_volume}")
 
-        left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=scaled_volume)
+        left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=volume)
 
         # Generate sine wave for right ear with the binaural frequency
         print("Generating sine wave for right ear...")
-        right_channel = Sine(binaural_freq).to_audio_segment(duration=duration_ms, volume=scaled_volume)
+        right_channel = Sine(binaural_freq).to_audio_segment(duration=duration_ms, volume=volume)
 
         # Combine into a stereo audio segment
         print("Combining left and right channels into stereo audio...")
