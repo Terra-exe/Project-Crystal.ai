@@ -273,7 +273,8 @@ class AudioGenerator:
             print("test4")
             # Combine raw audio data segments
             for i, segment in enumerate(input_data):
-                combined_audio_data.extend(segment)
+                segment_array = np.array(segment, dtype=np.int16)
+                combined_audio_data.extend(segment_array)                
                 if not params:
                     # Here, set your audio parameters based on how you handle the audio data
                     # For example, if all segments are 44100 Hz, 16-bit, stereo:
@@ -289,8 +290,10 @@ class AudioGenerator:
         else:
             raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
 
+        
         # Convert combined_audio_data to a bytearray if it's not already
         if not isinstance(combined_audio_data, bytearray):
+            print("test5.1")
             combined_audio_data = bytearray(np.array(combined_audio_data, dtype=np.int16).tobytes())
 
         # Save combined audio data to combined_file_path
