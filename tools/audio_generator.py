@@ -146,16 +146,20 @@ class AudioGenerator:
             print("Volume is too high, reducing to 1.0")
             volume = 1.0
 
+        # Scale the volume to the expected range
+        scaled_volume = volume * 100
+
         # Convert duration from seconds to milliseconds
         duration_ms = duration * 1000
 
         # Generate sine wave for left ear
         print("Generating sine wave for left ear...")
-        left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=volume)
+
+        left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=scaled_volume)
 
         # Generate sine wave for right ear with the binaural frequency
         print("Generating sine wave for right ear...")
-        right_channel = Sine(binaural_freq).to_audio_segment(duration=duration_ms, volume=volume)
+        right_channel = Sine(binaural_freq).to_audio_segment(duration=duration_ms, volume=scaled_volume)
 
         # Combine into a stereo audio segment
         print("Combining left and right channels into stereo audio...")
