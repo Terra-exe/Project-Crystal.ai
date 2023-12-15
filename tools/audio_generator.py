@@ -194,6 +194,8 @@ class AudioGenerator:
                 print(f"Processed {sample} samples...")
         
         print("Audio generation complete...")
+        print("save_path : " + save_path)
+        print("title : " + title)
         
         # Ensure the directory exists
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
