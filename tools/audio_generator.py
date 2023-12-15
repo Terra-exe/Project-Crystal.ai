@@ -284,9 +284,10 @@ class AudioGenerator:
                     params = (num_channels, sample_width, sample_rate, 0, 'NONE', 'not compressed')
                
                 # Calculate and print the duration for each segment
-                num_frames = len(segment_array)
+                num_frames = len(segment_array) // (num_channels * sample_width)  # Correct frame count for stereo
                 segment_duration = num_frames / sample_rate  # Duration in seconds
                 print(f"Raw Segment {i}: Number of frames: {num_frames}, Duration: {segment_duration:.2f} seconds")
+
 
             print("test5")
 
