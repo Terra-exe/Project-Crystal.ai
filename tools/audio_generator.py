@@ -7,6 +7,8 @@ import sys
 import io
 import tempfile
 import traceback
+from pydub import AudioSegment
+from pydub.generators import Sine
 
 
 class AudioGenerator:
@@ -26,6 +28,8 @@ class AudioGenerator:
             "isochronic": self.gen_isochronic,
             "none": self.gen_none,
         }
+        self.sample_rate = 44100  # Sample rate in Hz
+
 
 
     def generate_audio(
@@ -121,9 +125,43 @@ class AudioGenerator:
 
 
 
-   
+    def generate_audio_data(self, duration, base_freq, binaural_freq, volume):
+        """
+        Generate a segment of binaural audio.
+
+        :param duration: Duration of the audio segment in seconds
+        :param base_freq: Frequency for the left ear in Hz
+        :param binaural_freq: Frequency for the right ear in Hz
+        :param volume: Volume of the audio, range from 0.0 to 1.0
+        :return: AudioSegment object representing the binaural audio
+        """
+        print("Generating binaural audio segment...")
+        print(f"Duration: {duration} seconds")
+        print(f"Base frequency (left ear): {base_freq} Hz")
+        print(f"Binaural frequency (right ear): {binaural_freq} Hz")
+        print(f"Volume: {volume}")
+
+        # Convert duration from seconds to milliseconds
+        duration_ms = duration * 1000
+
+        # Generate sine wave for left ear
+        print("Generating sine wave for left ear...")
+        left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=volume)
+
+        # Generate sine wave for right ear with the binaural frequency
+        print("Generating sine wave for right ear...")
+        right_channel = Sine(binaural_freq).to_audio_segment(duration=duration_ms, volume=volume)
+
+        # Combine into a stereo audio segment
+        print("Combining left and right channels into stereo audio...")
+        stereo_audio = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
+
+        print(f"Generated audio data with base frequency {base_freq} Hz and binaural frequency {binaural_freq} Hz")
+        return stereo_audio
 
 
+
+    '''
     def generate_audio_data(self, duration, fade, sound_type, base_freq, binaural_freq_diff, entrainment_type, volume_generator, gradual_freq_change, volume):
         print("Generating audio data")
         print("duration: " + str(duration))
@@ -170,7 +208,7 @@ class AudioGenerator:
         audio_data *= volume
         #print("YYYXXX!!!Number of frames in audio data:YYYXXX!!!", len(audio_data))
 
-        return audio_data
+        return audio_data'''
     '''
     def convert_segments_to_wav_files(self, input_data):
          # Print the number of frames for each segment in input_data
@@ -237,7 +275,43 @@ class AudioGenerator:
         return wav_file_paths
         '''
 
-    def combine_audio_segments(self, input_data, combined_file_path, save_path):
+
+
+    def combine_audio_segments(self, segments, output_path):
+        """
+        Combine a list of audio segments into a single audio file.
+
+        :param segments: List of AudioSegment objects
+        :param output_path: Path to save the combined audio file
+        """
+        print("Combining audio segments...")
+
+        # Check if there are segments to combine
+        if not segments:
+            print("No audio segments provided.")
+            return
+
+        # Initialize a new audio segment for combining
+        combined_segment = AudioSegment.silent(duration=0)
+
+        # Iterate and combine each segment
+        for i, segment in enumerate(segments):
+            print(f"Adding segment {i + 1}/{len(segments)} to the combined audio...")
+            combined_segment += segment
+
+        print(f"Total duration of combined audio: {len(combined_segment) / 1000.0} seconds")
+
+        # Export combined audio to the specified file path
+        print(f"Exporting combined audio to {output_path}...")
+        combined_segment.export(output_path, format="wav")
+
+        print(f"Combined audio file saved at: {output_path}")
+
+# Example usage
+# audio_gen = AudioGenerator()
+# combined_audio = audio_gen.combine_audio_segments(audio_segments, "path/to/output.wav")
+
+    '''def combine_audio_segments(self, input_data, combined_file_path, save_path):
         print("~~~~save_path: " + save_path)
 
         # Construct the full file path
@@ -287,7 +361,7 @@ class AudioGenerator:
                 # Calculate and print the duration for each segment
                 num_frames = len(segment_array) // (num_channels * sample_width)  # Correct frame count for stereo
                 segment_duration = num_frames / sample_rate  # Duration in seconds
-                print(f"Raw Segment {i}: Number of frames: {num_frames}, Duration: {segment_duration:.2f} seconds")
+                #print(f"Raw Segment {i}: Number of frames: {num_frames}, Duration: {segment_duration:.2f} seconds")
 
 
             print("test5")
@@ -313,7 +387,7 @@ class AudioGenerator:
             frame_count = read_file.getnframes()
             print(f"...........Number of frames in the combined file:.......... {frame_count}")
 
-        print("test10")
+        print("test10")'''
 
 
 
