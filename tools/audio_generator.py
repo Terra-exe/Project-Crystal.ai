@@ -197,8 +197,7 @@ class AudioGenerator:
         print("save_path : " + save_path)
         print("title : " + title)
         
-        # Ensure the directory exists
-        #os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        #Ensure the directory exists
         print("save_path created... :  " + save_path)
         if not os.path.exists(save_path):
             os.makedirs(save_path)
@@ -206,8 +205,8 @@ class AudioGenerator:
         else:
             print(f"Folder '{save_path}' already exists.")
         
-        self.save_wav(r"/tmp/audios-draft-v1/variable_frequency/aa_ONLY_variable_frequency_delta_alpha_theta.wav", arr, sample_rate)   
-        #self.save_wav(save_path + title, arr, sample_rate)
+        #self.save_wav(r"/tmp/audios-draft-v1/variable_frequency/aa_ONLY_variable_frequency_delta_alpha_theta.wav", arr, sample_rate)   
+        self.save_wav(save_path + title, arr, sample_rate)
         print("Audio saved.")
 
 
