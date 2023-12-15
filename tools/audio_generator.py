@@ -125,7 +125,8 @@ class AudioGenerator:
 
 
     def generate_gradual_audio(self, start_preset, mid_preset, end_preset, duration, save_path, title):
-        gradual_freq_change = True
+        print("Starting generate_gradual_audio function...")
+
         sample_rate = 44100  # standard sample rate for audio files
 
         presets = {
@@ -150,6 +151,7 @@ class AudioGenerator:
                 "binaural_default": 30, # (30, 100),
             }
         }
+        print("Presets loaded...")
 
         start_freq = presets[start_preset]["freq_default"]
         mid_freq = presets[mid_preset]["freq_default"]
@@ -158,9 +160,13 @@ class AudioGenerator:
         start_binaural = presets[start_preset]["binaural_default"]
         mid_binaural = presets[mid_preset]["binaural_default"]
         end_binaural = presets[end_preset]["binaural_default"]
+        
+        print("Preset frequencies and binaural values loaded...")
 
         total_samples = int(duration * sample_rate)
         arr = np.zeros((2, total_samples))
+
+        print("Initialized audio array...")
 
         for sample in range(total_samples):
             current_time = sample / sample_rate
@@ -172,9 +178,13 @@ class AudioGenerator:
 
             arr[0, sample] = np.sin(2 * np.pi * current_time * start_freq)  # left ear
             arr[1, sample] = np.sin(2 * np.pi * current_time * current_freq)  # right ear
+            if sample % 10000 == 0:  # print progress every 10000 samples
+                print(f"Processed {sample} samples...")
+        
+        print("Audio generation complete...")
 
         self.save_wav(save_path + title, arr, sample_rate)
-
+        print("Audio saved.")
 
 
     def gen_x(self, duration, sample_rate, freq):
