@@ -282,9 +282,12 @@ class AudioGenerator:
                     sample_width = 2  # 2 bytes per sample (16 bit)
                     sample_rate = 44100
                     params = (num_channels, sample_width, sample_rate, 0, 'NONE', 'not compressed')
-                # Print the number of frames for each raw audio data in input_data
-                num_frames = len(segment)  # Assuming segment is a NumPy array or similar
-                print(f"Raw Segment {i}: Number of frames: {num_frames}")
+               
+                # Calculate and print the duration for each segment
+                num_frames = len(segment_array)
+                segment_duration = num_frames / sample_rate  # Duration in seconds
+                print(f"Raw Segment {i}: Number of frames: {num_frames}, Duration: {segment_duration:.2f} seconds")
+
             print("test5")
 
         else:
