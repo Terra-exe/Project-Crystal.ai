@@ -145,13 +145,7 @@ class AudioGenerator:
             print("Base frequency is too high, reducing to 32767 Hz")
             base_freq = 32767
 
-
-        # Check if volume is too high
-        if volume > 1.0:
-            print("Volume is too high, reducing to 1.0")
-            volume = 1.0
-
-        volume = 1.0
+        volume = 0.9999
 
         # Convert duration from seconds to milliseconds
         duration_ms = duration * 1000
