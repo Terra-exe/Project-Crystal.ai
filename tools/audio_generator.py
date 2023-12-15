@@ -199,7 +199,8 @@ class AudioGenerator:
         
         # Ensure the directory exists
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
-
+        print("save_path created... :  " + save_path)
+              
         self.save_wav(save_path + title, arr, sample_rate)
         print("Audio saved.")
 
