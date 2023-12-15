@@ -49,7 +49,7 @@ presets_background = {
     },
 }
 
-def create_binaural_audio(preset, duration, save_path, title, gradual_freq_change=None, volume=1.0):
+def create_binaural_audio(preset, duration, save_path, title, gradual_freq_change=None, volume=1.0, start_preset=None, mid_preset=None, end_preset=None):
     chosen_preset = {}
     
     print("Creating binaural audio")
@@ -99,20 +99,24 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
     print(f"save_path = {save_path}{title}")
 
    
-
-    audio_gen.generate_audio(
-        save_path,
-        title,
-        duration,
-        False, #fade in/out
-        sound_type,
-        freq_default,
-        binaural_default,
-        entrainment_type,
-        volume_generator=None,
-        gradual_freq_change=None,
-        volume=volume
-    )
+    if gradual_freq_change:
+        # Call generate_gradual_audio if gradual_freq_change is True
+        # You need to provide start_preset, mid_preset, and end_preset
+        audio_gen.generate_gradual_audio(start_preset, mid_preset, end_preset, duration, save_path, title)
+    else:
+        audio_gen.generate_audio(
+            save_path,
+            title,
+            duration,
+            False, #fade in/out
+            sound_type,
+            freq_default,
+            binaural_default,
+            entrainment_type,
+            volume_generator=None,
+            gradual_freq_change=None,
+            volume=volume
+        )
     print("Creating binaural audio - 3")
     return save_path        
 
@@ -128,83 +132,11 @@ def get_preset_from_frequency_name(freq_name):
     }
     return presets.get(preset_map.get(freq_name, None), None)
 
-    
-
-def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq, duration, save_path, title, gradual_freq_change=True, volume=1.0):
-    print(f"Received preset: {preset}")
-    print(f"Start frequency: {start_freq}")
-    print(f"Mid frequency: {mid_freq}")
-    print(f"End frequency: {end_freq}")
-    print(f"Duration: {duration}")
-    print(f"Save path: {save_path}")
-    print(f"Title: {title}")
-    print(f"Gradual freq change: {gradual_freq_change}")
-    print(f"Volume: {volume}")
-    # Get presets
-    start_preset = get_preset_from_frequency_name(start_freq)
-    mid_preset = get_preset_from_frequency_name(mid_freq)
-    end_preset = get_preset_from_frequency_name(end_freq)
-
-    print(f"Start preset: {start_preset}")
-    print(f"Mid preset: {mid_preset}")
-    print(f"End preset: {end_preset}")
-
-    # Ensure the save directory exists
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
-        print(f"Created directory: {save_path}")
-
-    # Calculate mid-point of the duration
-    mid_point = duration / 2
-    print(f"Mid point of duration: {mid_point} seconds")
-
-    # Initialize AudioGenerator (you need to define this class)
-    audio_gen = AudioGenerator()
-    print("Initialized AudioGenerator")
-
-    # Initialize a list to hold audio data of each segment
-    combined_audio_data = []
-
-    # Process each segment
-    for current_time in range(int(duration)):
-        # Left ear frequency remains constant
-        base_freq = start_preset["freq_default"]  # 300 Hz in your example
-        base_freq = start_preset["freq_default"]
-
-        # Interpolate binaural frequency difference
-        if current_time <= mid_point:
-            binaural_diff = interpolate(start_preset["binaural_default"], mid_preset["binaural_default"], 0, mid_point, current_time)
-        else:
-            binaural_diff = interpolate(mid_preset["binaural_default"], end_preset["binaural_default"], mid_point, duration, current_time)
-
-        # Right ear frequency = base_freq + binaural_diff
-        right_ear_freq = base_freq + binaural_diff
-        
-        print(f"Generating segment for second {current_time}:")
-        print(f" - Left ear frequency: {base_freq} Hz")
-        print(f" - Right ear frequency: {right_ear_freq} Hz")
-        print(f" - Binaural frequency difference: {binaural_diff} Hz")
-
-
-        # Generate the audio data for the current segment
-        segment_data = audio_gen.generate_audio_data(1, base_freq, right_ear_freq, volume)
-        combined_audio_data.append(segment_data)
-        print(f"Generated audio segment for second {current_time}")
-
-    # Combine all segments into a single audio file
-    final_audio_path = os.path.join(save_path, title)
-    print(f"Combining all segments into the file: {final_audio_path}")
-
-    audio_gen.combine_audio_segments(combined_audio_data, final_audio_path)
-    print(f"Combined audio file saved at: {final_audio_path}")
-
-    return final_audio_path
 
 
 
 
-def interpolate(freq_start, freq_end, time_start, time_end, current_time):
-    return freq_start + (freq_end - freq_start) * (current_time - time_start) / (time_end - time_start)
+
 
 
 
