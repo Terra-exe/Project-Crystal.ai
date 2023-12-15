@@ -140,6 +140,15 @@ class AudioGenerator:
         print(f"Base frequency (left ear): {base_freq} Hz")
         print(f"Binaural frequency (right ear): {binaural_freq} Hz")
         print(f"Volume: {volume}")
+        # Check if base_freq is too high
+        if base_freq > 32767:
+            print("Base frequency is too high, reducing to 32767 Hz")
+            base_freq = 32767
+
+        # Check if duration_ms is too high
+        if duration_ms > 32767:
+            print("Duration is too high, reducing to 32767 ms")
+            duration_ms = 32767
 
         # Check if volume is too high
         if volume > 1.0:
@@ -154,6 +163,9 @@ class AudioGenerator:
 
         # Generate sine wave for left ear
         print("Generating sine wave for left ear...")
+        print(f"Base frequency: {base_freq}")
+        print(f"Duration: {duration_ms} ms")
+        print(f"Scaled volume: {scaled_volume}")
 
         left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=scaled_volume)
 
