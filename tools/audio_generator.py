@@ -304,7 +304,7 @@ class AudioGenerator:
 
 
 
-"""
+    """
     def combine_audio_segments(self, input_data, combined_file_path, save_path):
         print("~~~~save_path: " + save_path)
     
@@ -383,7 +383,7 @@ class AudioGenerator:
         print("test10")
 
 
-"""
+    """
 
     def gen_x(self, duration, sample_rate, freq):
         return np.linspace(0, duration * freq - freq / sample_rate, int(duration * sample_rate))
