@@ -162,16 +162,16 @@ class AudioGenerator:
                 sound_freq, beat_freq, sample_rate, duration, sound_generator
             )
 
-        """if fade:
+        if fade:
             ramp_length = int(sample_rate * 0.5)
-            self.fade_in_out(audio_data, ramp_length)"""
+            self.fade_in_out(audio_data, ramp_length)
 
         # Scale the audio array by the given volume
         audio_data *= volume
-        print("YYYXXX!!!Number of frames in audio data:YYYXXX!!!", len(audio_data))
+        #print("YYYXXX!!!Number of frames in audio data:YYYXXX!!!", len(audio_data))
 
         return audio_data
-
+    '''
     def convert_segments_to_wav_files(self, input_data):
          # Print the number of frames for each segment in input_data
         for i, segment in enumerate(input_data):
@@ -235,7 +235,8 @@ class AudioGenerator:
 
                 
         return wav_file_paths
-        
+        '''
+
     def combine_audio_segments(self, input_data, combined_file_path, save_path):
         print("~~~~save_path: " + save_path)
 
