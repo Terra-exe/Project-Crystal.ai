@@ -151,6 +151,18 @@ class AudioGenerator:
                 "binaural_default": 30, # (30, 100),
             }
         }
+
+        preset_mapping = {
+            'delta': '0_delta',
+            'theta': '1_theta',
+            'alpha': '2_alpha',
+            'beta': '3_beta',
+            'gamma': '4_gamma'
+        }
+
+        start_preset = preset_mapping[start_preset]
+        mid_preset = preset_mapping[mid_preset]
+        end_preset = preset_mapping[end_preset]
         print("Presets loaded...")
 
         start_freq = presets[start_preset]["freq_default"]
