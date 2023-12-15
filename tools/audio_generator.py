@@ -300,6 +300,11 @@ class AudioGenerator:
         with wave.open(full_file_path, 'wb') as output_file:
             output_file.setparams(params)
             output_file.writeframes(combined_audio_data)
+                # Reopen the file in read mode to get the number of frames
+        with wave.open(full_file_path, 'rb') as read_file:
+            frame_count = read_file.getnframes()
+            print(f"...........Number of frames in the combined file:.......... {frame_count}")
+
         print("test10")
 
 
