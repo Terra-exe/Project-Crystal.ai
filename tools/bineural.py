@@ -273,23 +273,23 @@ def merge_audio_files(input_file1, input_file2, output_file):
         n_channels1 = f1.getnchannels()
         n_channels2 = f2.getnchannels()
 
-        print("Opened Files")
+        #print("Opened Files")
         samp_width1 = f1.getsampwidth()
         samp_width2 = f2.getsampwidth()
-        print(f"Sample Widths: {samp_width1} {samp_width2}")
+        #print(f"Sample Widths: {samp_width1} {samp_width2}")
         assert samp_width1 == samp_width2
 
         framerate1 = f1.getframerate()
         framerate2 = f2.getframerate()
-        print(f"Frame Rates: {framerate1} {framerate2}")
+        #print(f"Frame Rates: {framerate1} {framerate2}")
         assert framerate1 == framerate2
 
         n_frames1 = f1.getnframes()
         n_frames2 = f2.getnframes()
-        print(f"Number of Frames: {n_frames1} {n_frames2}")
+        #print(f"Number of Frames: {n_frames1} {n_frames2}")
 
 
-        print("frames1")
+        #print("frames1")
         if n_frames2 >= 2 * n_frames1:
             # Read and process the second audio file to be half the number of frames as the first one
             audio_data2 = np.frombuffer(f2.readframes(n_frames2 // 2), dtype=np.int16).reshape(-1, n_channels2)
@@ -297,8 +297,8 @@ def merge_audio_files(input_file1, input_file2, output_file):
             # If n_frames2 is not equal to n_frames1 and not exactly double, handle it as needed
             # You can choose how to handle this situation, such as skipping frames or truncating.
             # Here, we skip the extra frames in n_frames2 to match n_frames1.
-            
-            print("Read Framess??? " + str(f2.readframes(n_frames2 - n_frames1)))
+            #print("Read Framess??? " + str(f2.readframes(n_frames2 - n_frames1)))
+            pass
         
         print("Uhh:  " + str(n_frames1 ))
 
