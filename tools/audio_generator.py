@@ -194,6 +194,9 @@ class AudioGenerator:
                 print(f"Processed {sample} samples...")
         
         print("Audio generation complete...")
+        
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
 
         self.save_wav(save_path + title, arr, sample_rate)
         print("Audio saved.")
