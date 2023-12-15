@@ -235,7 +235,76 @@ class AudioGenerator:
 
                 
         return wav_file_paths
+        
+    def combine_audio_segments(self, input_data, combined_file_path, save_path):
+        print("~~~~save_path: " + save_path)
 
+        # Construct the full file path
+        full_file_path = os.path.join(save_path, combined_file_path.lstrip('/'))
+        # Create the directory if it does not exist
+        os.makedirs(os.path.dirname(full_file_path), exist_ok=True)
+
+        if not full_file_path.endswith('.wav'):
+            raise ValueError("The full_file_path should be a .wav file path, not a directory.")
+
+        # Check if a directory with the same name exists
+        if os.path.isdir(full_file_path):
+            raise ValueError(f"A directory with the name {full_file_path} already exists.")
+
+        # Initialize variables for combined audio data
+        combined_audio_data = []
+        params = None
+
+        # Check if input_data is a directory path
+        if isinstance(input_data, (str, bytes, os.PathLike)) and os.path.isdir(input_data):
+            # List all segment files in the directory and sort them
+            segment_files = sorted(os.listdir(input_data))
+            print("test2")
+            # Iterate over and combine each segment file
+            for file in segment_files:
+                with wave.open(os.path.join(input_data, file), 'rb') as segment:
+                    # Read and append audio data
+                    combined_audio_data.extend(segment.readframes(segment.getnframes()))
+                    if not params:
+                        params = segment.getparams()
+            print("test3")
+
+        elif isinstance(input_data, list) and input_data:
+            print("test4")
+            # Combine raw audio data segments
+            for i, segment in enumerate(input_data):
+                combined_audio_data.extend(segment)
+                if not params:
+                    # Here, set your audio parameters based on how you handle the audio data
+                    # For example, if all segments are 44100 Hz, 16-bit, stereo:
+                    num_channels = 2
+                    sample_width = 2  # 2 bytes per sample (16 bit)
+                    sample_rate = 44100
+                    params = (num_channels, sample_width, sample_rate, 0, 'NONE', 'not compressed')
+                # Print the number of frames for each raw audio data in input_data
+                num_frames = len(segment)  # Assuming segment is a NumPy array or similar
+                print(f"Raw Segment {i}: Number of frames: {num_frames}")
+            print("test5")
+
+        else:
+            raise ValueError("Invalid input. Must be a directory path or a list of audio data segments.")
+
+        # Convert combined_audio_data to a bytearray if it's not already
+        if not isinstance(combined_audio_data, bytearray):
+            combined_audio_data = bytearray(np.array(combined_audio_data, dtype=np.int16).tobytes())
+
+        # Save combined audio data to combined_file_path
+        if not params:
+            raise ValueError("Audio parameters could not be determined. Please check input data.")
+        print("test9")
+        with wave.open(full_file_path, 'wb') as output_file:
+            output_file.setparams(params)
+            output_file.writeframes(combined_audio_data)
+        print("test10")
+
+
+
+"""
     def combine_audio_segments(self, input_data, combined_file_path, save_path):
         print("~~~~save_path: " + save_path)
     
@@ -314,7 +383,7 @@ class AudioGenerator:
         print("test10")
 
 
-
+"""
 
     def gen_x(self, duration, sample_rate, freq):
         return np.linspace(0, duration * freq - freq / sample_rate, int(duration * sample_rate))
