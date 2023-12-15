@@ -82,17 +82,22 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
         print("preset test")
         chosen_preset = "custom"
         print("preset changed")
+    elif (preset == "variable_frequency"):
+        print("Preset variable_frequency")
+        chosen_preset = "variable_frequency"       
     else:
         print("Preset error")
         return False
     
     print("Creating binaural audio - 0")
     print(f"Chosen preset equals {chosen_preset}")
-    freq_default = presets[chosen_preset]["freq_default"]
-    freq_default = presets[chosen_preset]["freq_default"]
-    binaural_default = presets[chosen_preset]["binaural_default"]
-    entrainment_type = "binaural"
-    sound_type = "sine"
+    if (chosen_preset != "variable_frequency"):
+        freq_default = presets[chosen_preset]["freq_default"]
+        freq_default = presets[chosen_preset]["freq_default"]
+        binaural_default = presets[chosen_preset]["binaural_default"]
+        entrainment_type = "binaural"
+        sound_type = "sine"
+        
     print("Creating binaural audio - 1")
     audio_gen = AudioGenerator()
     print("Creating binaural audio - 2")
