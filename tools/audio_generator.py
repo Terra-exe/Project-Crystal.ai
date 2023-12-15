@@ -124,7 +124,6 @@ class AudioGenerator:
         print("Saved here: " + save_path + title)
 
 
-
     def generate_audio_data(self, duration, base_freq, binaural_freq, volume):
         """
         Generate a segment of binaural audio.
@@ -140,35 +139,26 @@ class AudioGenerator:
         print(f"Base frequency (left ear): {base_freq} Hz")
         print(f"Binaural frequency (right ear): {binaural_freq} Hz")
         print(f"Volume: {volume}")
-        # Check if base_freq is too high
-        if base_freq > 32767:
-            print("Base frequency is too high, reducing to 32767 Hz")
-            base_freq = 32767
 
-        volume = 0.9999
-
-        # Convert duration from seconds to milliseconds
+        # Convert duration from seconds to milliseconds for pydub
         duration_ms = duration * 1000
 
         # Generate sine wave for left ear
         print("Generating sine wave for left ear...")
-        print(f"Base frequency: {base_freq}")
-        print(f"Duration: {duration_ms} ms")
-        print(f"Scaled volume: {volume}")
+        left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=0.5)
 
-        left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=volume)
-        left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=volume)
-
-
-        # Generate sine wave for right ear with the binaural frequency
+        # Generate sine wave for right ear
         print("Generating sine wave for right ear...")
-        right_channel = Sine(binaural_freq).to_audio_segment(duration=duration_ms, volume=volume)
-
+        right_channel = Sine(binaural_freq).to_audio_segment(duration=duration_ms, volume=0.5)
+        # Normalize the audio channels
+        left_channel = left_channel.normalize()
+        right_channel = right_channel.normalize()
+        
         # Combine into a stereo audio segment
         print("Combining left and right channels into stereo audio...")
         stereo_audio = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
 
-        print(f"Generated audio data with base frequency {base_freq} Hz and binaural frequency {binaural_freq} Hz")
+        print("Binaural audio segment generated successfully.")
         return stereo_audio
 
 
