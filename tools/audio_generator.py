@@ -125,44 +125,44 @@ class AudioGenerator:
 
 
 
-def generate_audio_data(self, duration, base_freq, binaural_freq, volume):
-    """
-    Generate a segment of binaural audio.
+    def generate_audio_data(self, duration, base_freq, binaural_freq, volume):
+        """
+        Generate a segment of binaural audio.
 
-    :param duration: Duration of the audio segment in seconds
-    :param base_freq: Frequency for the left ear in Hz
-    :param binaural_freq: Frequency for the right ear in Hz
-    :param volume: Volume of the audio, range from 0.0 to 1.0
-    :return: AudioSegment object representing the binaural audio
-    """
-    print("Generating binaural audio segment...")
-    print(f"Duration: {duration} seconds")
-    print(f"Base frequency (left ear): {base_freq} Hz")
-    print(f"Binaural frequency (right ear): {binaural_freq} Hz")
-    print(f"Volume: {volume}")
+        :param duration: Duration of the audio segment in seconds
+        :param base_freq: Frequency for the left ear in Hz
+        :param binaural_freq: Frequency for the right ear in Hz
+        :param volume: Volume of the audio, range from 0.0 to 1.0
+        :return: AudioSegment object representing the binaural audio
+        """
+        print("Generating binaural audio segment...")
+        print(f"Duration: {duration} seconds")
+        print(f"Base frequency (left ear): {base_freq} Hz")
+        print(f"Binaural frequency (right ear): {binaural_freq} Hz")
+        print(f"Volume: {volume}")
 
-    # Check if volume is too high
-    if volume > 1.0:
-        print("Volume is too high, reducing to 1.0")
-        volume = 1.0
+        # Check if volume is too high
+        if volume > 1.0:
+            print("Volume is too high, reducing to 1.0")
+            volume = 1.0
 
-    # Convert duration from seconds to milliseconds
-    duration_ms = duration * 1000
+        # Convert duration from seconds to milliseconds
+        duration_ms = duration * 1000
 
-    # Generate sine wave for left ear
-    print("Generating sine wave for left ear...")
-    left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=volume)
+        # Generate sine wave for left ear
+        print("Generating sine wave for left ear...")
+        left_channel = Sine(base_freq).to_audio_segment(duration=duration_ms, volume=volume)
 
-    # Generate sine wave for right ear with the binaural frequency
-    print("Generating sine wave for right ear...")
-    right_channel = Sine(binaural_freq).to_audio_segment(duration=duration_ms, volume=volume)
+        # Generate sine wave for right ear with the binaural frequency
+        print("Generating sine wave for right ear...")
+        right_channel = Sine(binaural_freq).to_audio_segment(duration=duration_ms, volume=volume)
 
-    # Combine into a stereo audio segment
-    print("Combining left and right channels into stereo audio...")
-    stereo_audio = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
+        # Combine into a stereo audio segment
+        print("Combining left and right channels into stereo audio...")
+        stereo_audio = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
 
-    print(f"Generated audio data with base frequency {base_freq} Hz and binaural frequency {binaural_freq} Hz")
-    return stereo_audio
+        print(f"Generated audio data with base frequency {base_freq} Hz and binaural frequency {binaural_freq} Hz")
+        return stereo_audio
 
 
     '''
