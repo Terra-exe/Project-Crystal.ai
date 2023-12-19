@@ -214,6 +214,34 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["value"] = "<GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
+        elif (type == "<MYGOD>"):
+            wait["value"] = "<MYGOD>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<OHMYGOD>"):
+            wait["value"] = "<OHMYGOD>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<OHMYGOSH>"):
+            wait["value"] = "<OHMYGOSH>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<SEXYMOAN>"):
+            wait["value"] = "<SEXYMOAN>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<UHOHMYGOD>"):
+            wait["value"] = "<UHOHMYGOD>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<WOW1>"):
+            wait["value"] = "<WOW1>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<WOW2>"):
+            wait["value"] = "<WOW2>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
 
 
 

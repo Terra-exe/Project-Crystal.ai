@@ -318,6 +318,22 @@ def api_create_audio_file():
                             segment_filename_local = r"sound_effects/GRIMES2_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS.wav"  
                         elif (soundEffect_name == "<GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>"):
                             segment_filename_local = r"sound_effects/GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS.wav"
+                        elif (soundEffect_name == "<MYGOD>"):
+                            segment_filename_local = r"sound_effects/MYGOD.wav"
+                        elif (soundEffect_name == "<OHMYGOD>"):
+                            segment_filename_local = r"sound_effects/OHMYGOD.wav"
+                        elif (soundEffect_name == "<OHMYGOSH>"):
+                            segment_filename_local = r"sound_effects/OHMYGOSH.wav"
+                        elif (soundEffect_name == "<SEXYMOAN>"):
+                            segment_filename_local = r"sound_effects/SEXYMOAN.wav"
+                        elif (soundEffect_name == "<UHOHMYGOD>"):
+                            segment_filename_local = r"sound_effects/UHOHMYGOD.wav"
+                        elif (soundEffect_name == "<WOW1>"):
+                            segment_filename_local = r"sound_effects/WOW1.wav"
+                        elif (soundEffect_name == "<WOW2>"):
+                            segment_filename_local = r"sound_effects/WOW2.wav"
+
+
 
                         segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
                         #segment_filename_local = generate_silent_file(int(float(9) * 1000), "/tmp/silence.wav")
