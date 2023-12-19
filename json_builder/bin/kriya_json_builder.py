@@ -242,6 +242,14 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["value"] = "<WOW2>"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
+        elif (type == "<SYNTHPULSE1RIGHT>"):
+            wait["value"] = "<SYNTHPULSE1RIGHT>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<SYNTHPULSE1LEFT>"):
+            wait["value"] = "<SYNTHPULSE1LEFT>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
 
 
 

@@ -41,9 +41,8 @@ def segmentTextForTime(inputText):
     "<SYNTHPULSE2>", "<GRIMES_ANY_SUFFICIENTLY_ADVANCED>", "<GRIMES_MADE NOT BORN>", 
     "<GRIMES_MODERN_GODS_FOR_MODERN_GIRLS>", "<GRIMES_OUR_LADY_OF_PERPETUAL_CHAOS_TM>", 
     "<GRIMES1_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>", "<GRIMES2_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>", 
-    "<GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>", "<MYGOD>", "<OHMYGOD>", "<OHMYGOSH>", "<SEXYMOAN>", "<UHOHMYGOD>", "<WOW1>", "<WOW2>"
+    "<GRIMES3_DO_YOU_PRAY_AT_THE_ALTAR_OF_CHAOS>", "<MYGOD>", "<OHMYGOD>", "<OHMYGOSH>", "<SEXYMOAN>", "<UHOHMYGOD>", "<WOW1>", "<WOW2>", "<SYNTHPULSE1RIGHT>", "<SYNTHPULSE1LEFT>"
     ]
-
 
     # Create a regular expression pattern from the delimiters
     pattern = '|'.join(map(re.escape, delimiters))
