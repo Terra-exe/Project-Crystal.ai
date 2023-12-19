@@ -332,6 +332,8 @@ def api_create_audio_file():
                             segment_filename_local = r"sound_effects/WOW1.wav"
                         elif (soundEffect_name == "<WOW2>"):
                             segment_filename_local = r"sound_effects/WOW2.wav"
+                        elif (soundEffect_name == "<MAGIC>"):
+                            segment_filename_local = r"sound_effects/MAGIC.wav"
 
                         elif (soundEffect_name == "<SYNTHPULSE1RIGHT>"):
                             segment_filename_local = r"sound_effects/SYNTHPULSE1RIGHT.wav"
