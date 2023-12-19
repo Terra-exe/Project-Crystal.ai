@@ -46,7 +46,7 @@ class AudioGenerator:
         entrainment_type=None,
         volume_generator=None,
         gradual_freq_change=None,
-        volume=0.1):
+        volume=1.0):
     
         print("Creating binaural audio - 4")
 
@@ -130,7 +130,7 @@ class AudioGenerator:
 
 
 
-    def generate_gradual_audio(self, start_preset, mid_preset, end_preset, duration, save_path, title, do_fade_in_out, sound_type, freq=None, binaural=None, entrainment_type=None, volume_generator=None, gradual_freq_change=None, volume=0.1):
+    def generate_gradual_audio(self, start_preset, mid_preset, end_preset, duration, save_path, title, do_fade_in_out, sound_type, freq=None, binaural=None, entrainment_type=None, volume_generator=None, gradual_freq_change=None, volume=1.0):
         """
         Generate a customizable binaural beat audio file.
 
