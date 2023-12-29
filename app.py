@@ -1025,7 +1025,7 @@ def upload_to_youtube():
         # Save the audio folder locally
         audio_file_path = '/tmp/' + s3_input_file_key 
         audio_file_output_path = '/tmp/' + s3_output_file_key + title
-        youtubeImageTitle = "CrystalAI.png"
+        youtubeImageTitle = "DefaultYoutubeImage.png"
         youtube_image_path_filename = '/tmp/' + youtubeImageTitle
         dir_path = os.path.dirname(audio_file_path)
         dir_path_output = os.path.dirname(audio_file_output_path)
