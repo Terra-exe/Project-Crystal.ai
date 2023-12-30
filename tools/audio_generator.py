@@ -587,7 +587,7 @@ class AudioGenerator:
         x_2 = self.gen_x(duration, sample_rate, beat_freq)
 
         y_1 = tone_generator(x_1)
-        y_2 = volume_generator(x_2) / 2 + 0.5
+        y_2 = volume_generator(x_2) / 1 + 0.5
 
         y = y_1 * y_2
 
