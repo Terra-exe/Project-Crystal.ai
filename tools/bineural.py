@@ -49,7 +49,7 @@ presets_background = {
     },
 }
 
-def create_binaural_audio(preset, duration, save_path, title, gradual_freq_change=None, volume=1.0, start_preset=None, mid_preset=None, end_preset=None):
+def create_binaural_audio(preset, duration, save_path, title, gradual_freq_change=None, volume=0.5, start_preset=None, mid_preset=None, end_preset=None):
     chosen_preset = {}
     
     print("Creating binaural audio")
