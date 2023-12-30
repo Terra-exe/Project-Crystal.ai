@@ -46,7 +46,7 @@ class AudioGenerator:
         entrainment_type=None,
         volume_generator=None,
         gradual_freq_change=None,
-        volume=1.0):
+        volume=0.5):
     
         print("Creating binaural audio - 4")
 
