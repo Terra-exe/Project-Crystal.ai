@@ -381,7 +381,7 @@ def merge_audio_files(input_file1, input_file2, output_file):
         print("Saved Output File")
 
 
-    
+'''
 if __name__ == '__main__':
     duration = 10  # in seconds
     
@@ -401,3 +401,4 @@ if __name__ == '__main__':
             in_file = f"{output_folder}preset_{preset}.wav"
             out_file = f"{output_folder}preset_{preset}_pink_background.wav"
             merge_audio_files(in_file, background_file, out_file)
+'''
