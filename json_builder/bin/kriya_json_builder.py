@@ -251,7 +251,7 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
 
-                elif (type == "<MAGIC>"):
+        elif (type == "<MAGIC>"):
             wait["value"] = "<MAGIC>"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
