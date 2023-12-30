@@ -251,11 +251,42 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
 
-        elif (type == "<MAGIC>"):
+                elif (type == "<MAGIC>"):
             wait["value"] = "<MAGIC>"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
-
+        elif (type == "<EXPERIENCE>"):
+            wait["value"] = "<EXPERIENCE>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GLITTER>"):
+            wait["value"] = "<GLITTER>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<WOAH>"):
+            wait["value"] = "<WOAH>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<BAMBIRESET>"):
+            wait["value"] = "<BAMBIRESET>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<SPARKLEINTRO>"):
+            wait["value"] = "<SPARKLEINTRO>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<RESET>"):
+            wait["value"] = "<RESET>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<POWERDOWN>"):
+            wait["value"] = "<POWERDOWN>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<MAGICWINK>"):
+            wait["value"] = "<MAGICWINK>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
 
 
         elif (type == "#"):

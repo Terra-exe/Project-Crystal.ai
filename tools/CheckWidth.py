@@ -27,7 +27,7 @@ for filename in os.listdir(folder_path):
         else:
             print(f'File: {filename}, Sample Width: {audio.sample_width}, Frame Rate: {audio.frame_rate}')
 
-"""
+
 for filename in os.listdir(folder_path):
     if filename.endswith(".mp3") or filename.endswith(".wav"):  # Add other file extensions if needed
         file_path = os.path.join(folder_path, filename)
@@ -39,4 +39,4 @@ for filename in os.listdir(folder_path):
             # Note: This may not produce the desired results as it's a complex conversion
             audio.set_sample_width(2).export(file_path, format="wav")
             print(f'File: {filename}, Sample Width: {audio.sample_width}')
-"""
+

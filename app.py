@@ -340,7 +340,32 @@ def api_create_audio_file():
                         elif (soundEffect_name == "<SYNTHPULSE1LEFT>"):
                             segment_filename_local = r"sound_effects/SYNTHPULSE1LEFT.wav"
 
+                        elif (soundEffect_name == "<MAGIC>"):
+                            segment_filename_local = r"sound_effects/MAGIC.wav"
+                        elif (soundEffect_name == "<EXPERIENCE>"):
+                            segment_filename_local = r"sound_effects/EXPERIENCE.wav"
+                        elif (soundEffect_name == "<GLITTER>"):
+                            segment_filename_local = r"sound_effects/GLITTER.wav"
+                        elif (soundEffect_name == "<EXPERIENCE>"):
+                            segment_filename_local = r"sound_effects/EXPERIENCE.wav"
+                        elif (soundEffect_name == "<WOAH>"):
+                            segment_filename_local = r"sound_effects/WOAH.wav"
+                        elif (soundEffect_name == "<BAMBIRESET>"):
+                            segment_filename_local = r"sound_effects/BAMBIRESET.wav"
 
+                            
+                        elif (soundEffect_name == "<SPARKLEINTRO>"):
+                            segment_filename_local = r"sound_effects/SPARKLEINTRO.wav"
+                        elif (soundEffect_name == "<RESET>"):
+                            segment_filename_local = r"sound_effects/RESET.wav"
+                        elif (soundEffect_name == "<RESET1>"):
+                            segment_filename_local = r"sound_effects/RESET1.wav"
+                        elif (soundEffect_name == "<POWERDOWN>"):
+                            segment_filename_local = r"sound_effects/POWERDOWN.wav"
+                        elif (soundEffect_name == "<MAGICWINK>"):
+                            segment_filename_local = r"sound_effects/MAGICWINK.wav"
+                        elif (soundEffect_name == "<DUCKSQUEAK>"):
+                            segment_filename_local = r"sound_effects/DUCKSQUEAK.wav"
 
                         segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
                         #segment_filename_local = generate_silent_file(int(float(9) * 1000), "/tmp/silence.wav")

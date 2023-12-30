@@ -266,7 +266,7 @@ def generate_variable_frequency_binaural(preset, start_freq, mid_freq, end_freq,
 
 
 
-def create_background_audio(preset, duration, save_path, volume=1.0):
+def create_background_audio(preset, duration, save_path, volume=0.5):
     freq_default = preset["freq_default"]
     binaural_default = preset["binaural_default"]
     sound_type = "pink"
