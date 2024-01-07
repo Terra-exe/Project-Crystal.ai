@@ -366,6 +366,14 @@ def api_create_audio_file():
                             segment_filename_local = r"sound_effects/MAGICWINK.wav"
                         elif (soundEffect_name == "<DUCKSQUEAK>"):
                             segment_filename_local = r"sound_effects/DUCKSQUEAK.wav"
+                        elif (soundEffect_name == "<INHALE>"):
+                            segment_filename_local = r"sound_effects/INHALE.wav"
+                        elif (soundEffect_name == "<EXHALE>"):
+                            segment_filename_local = r"sound_effects/EXHALE.wav"      
+                        elif (soundEffect_name == "<LEVELUP>"):
+                            segment_filename_local = r"sound_effects/LEVELUP.wav"                                                                                 
+                        elif (soundEffect_name == "<OHM>"):
+                            segment_filename_local = r"sound_effects/OHM.wav"                                                                                  
 
                         segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
                         #segment_filename_local = generate_silent_file(int(float(9) * 1000), "/tmp/silence.wav")

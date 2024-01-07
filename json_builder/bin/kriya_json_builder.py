@@ -287,6 +287,35 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["value"] = "<MAGICWINK>"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
+        elif (type == "<DUCKSQUEAK>"):
+            wait["value"] = "<DUCKSQUEAK>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+
+
+        elif (type == "<INHALE>"):
+            wait["value"] = "<INHALE>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<EXHALE>"):
+            wait["value"] = "<EXHALE>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<EXHALE>"):
+            wait["value"] = "<RESET>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<LEVELUP>"):
+            wait["value"] = "<LEVELUP>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<OHM>"):
+            wait["value"] = "<OHM>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+
+
+
 
 
         elif (type == "#"):
