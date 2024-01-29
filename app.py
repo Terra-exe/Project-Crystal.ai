@@ -373,8 +373,35 @@ def api_create_audio_file():
                         elif (soundEffect_name == "<LEVELUP>"):
                             segment_filename_local = r"sound_effects/LEVELUP.wav"                                                                                 
                         elif (soundEffect_name == "<OHM>"):
-                            segment_filename_local = r"sound_effects/OHM.wav"                                                                                  
+                            segment_filename_local = r"sound_effects/OHM.wav"    
+                        elif (soundEffect_name == "<CROWNBELL>"):
+                            segment_filename_local = r"sound_effects/CROWNBELL.wav"
+                        elif (soundEffect_name == "<3RDEYEBELL>"):
+                            segment_filename_local = r"sound_effects/3RDEYEBELL.wav"
+                        elif (soundEffect_name == "<THROATBELL>"):
+                            segment_filename_local = r"sound_effects/THROATBELL.wav"
+                        elif (soundEffect_name == "<HEARTBELL>"):
+                            segment_filename_local = r"sound_effects/HEARTBELL.wav"
+                        elif (soundEffect_name == "<SOLARBELL>"):
+                            segment_filename_local = r"sound_effects/SOLARBELL.wav"      
+                        elif (soundEffect_name == "<SACRALBELL>"):
+                            segment_filename_local = r"sound_effects/SACRALBELL.wav"                                                                                 
+                        elif (soundEffect_name == "<ROOTBELL>"):
+                            segment_filename_local = r"sound_effects/ROOTBELL.wav" 
+                        elif (soundEffect_name == "<OHITSYOU>"):
+                            segment_filename_local = r"sound_effects/OHITSYOU.wav" 
+                        elif (soundEffect_name == "<POP2>"):
+                            segment_filename_local = r"sound_effects/POP2.wav"     
 
+                        elif (soundEffect_name == "<GRIMES_ANY_SUFFICIENTLY_ADVANCED_GLADOS>"):
+                            segment_filename_local = r"sound_effects/GRIMES_ANY_SUFFICIENTLY_ADVANCED_GLADOS.wav" 
+
+
+                        elif (soundEffect_name == "<MUTELUNATIC>"):
+                            segment_filename_local = r"sound_effects/MUTELUNATIC.wav" 
+
+
+                             
                         segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
                         #segment_filename_local = generate_silent_file(int(float(9) * 1000), "/tmp/silence.wav")
                         upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)

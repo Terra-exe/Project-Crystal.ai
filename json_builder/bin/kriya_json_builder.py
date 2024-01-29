@@ -316,6 +316,52 @@ def processText(inputText, comma, period, newLine): # values from the main setti
 
 
 
+        elif (type == "<CROWNBELL>"):
+            wait["value"] = "<CROWNBELL>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<3RDEYEBELL>"):
+            wait["value"] = "<3RDEYEBELL>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<THROATBELL>"):
+            wait["value"] = "<THROATBELL>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<HEARTBELL>"):
+            wait["value"] = "<HEARTBELL>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<SOLARBELL>"):
+            wait["value"] = "<SOLARBELL>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<SACRALBELL>"):
+            wait["value"] = "<SACRALBELL>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<ROOTBELL>"):
+            wait["value"] = "<ROOTBELL>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<OHITSYOU>"):
+            wait["value"] = "<OHITSYOU>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<POP2>"):
+            wait["value"] = "<POP2>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<GRIMES_ANY_SUFFICIENTLY_ADVANCED_GLADOS>"):
+            wait["value"] = "<GRIMES_ANY_SUFFICIENTLY_ADVANCED_GLADOS>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+
+        elif (type == "<MUTELUNATIC>"):
+            wait["value"] = "<MUTELUNATIC>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+
 
 
         elif (type == "#"):
