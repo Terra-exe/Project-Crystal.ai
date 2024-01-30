@@ -43,13 +43,13 @@
                         <option value="pink">Pink</option>
                         <option value="custom">Custom</option>
                         <option value="variable_frequency">Variable Frequency</option>
-                        <option value="Crown 480Hz">Crown 480Hz</option>
-                        <option value="Third Eye 426.7Hz">Third Eye 426.7Hz</option>
-                        <option value="Throat 384Hz">Throat 384Hz</option>
-                        <option value="Heart 341.3Hz">Heart 341.3Hz</option>
-                        <option value="Solar Plexus 320Hz">Solar Plexus 320Hz</option>
-                        <option value="Sacral  288Hz">Sacral  288Hz</option>
-                        <option value="Root 256Hz">Root 256Hz</option>
+                        <option value="crown">crown 480Hz</option>
+                        <option value="3rdeye">third eye 426.7Hz</option>
+                        <option value="throat">throat 384Hz</option>
+                        <option value="heart">heart 341.3Hz</option>
+                        <option value="solar">solar plexus 320Hz</option>
+                        <option value="sacral">sacral  288Hz</option>
+                        <option value="root">root 256Hz</option>
 
                     </select>
 
@@ -63,13 +63,13 @@
                             <option value="beta">Beta</option>
                             <option value="gamma">Gamma</option>            
                             <option value="custom">Custom</option>
-                            <option value="Crown 480Hz">Crown 480Hz</option>
-                            <option value="Third Eye 426.7Hz">Third Eye 426.7Hz</option>
-                            <option value="Throat 384Hz">Throat 384Hz</option>
-                            <option value="Heart 341.3Hz">Heart 341.3Hz</option>
-                            <option value="Solar Plexus 320Hz">Solar Plexus 320Hz</option>
-                            <option value="Sacral  288Hz">Sacral  288Hz</option>
-                            <option value="Root 256Hz">Root 256Hz</option>
+                            <option value="crown">crown 480Hz</option>
+                            <option value="3rdeye">third eye 426.7Hz</option>
+                            <option value="throat">throat 384Hz</option>
+                            <option value="heart">heart 341.3Hz</option>
+                            <option value="solar">solar plexus 320Hz</option>
+                            <option value="sacral">sacral  288Hz</option>
+                            <option value="root">root 256Hz</option>
                             <!-- Other frequency options -->
                         </select>
 
@@ -81,13 +81,13 @@
                             <option value="beta">Beta</option>
                             <option value="gamma">Gamma</option>            
                             <option value="custom">Custom</option>
-                            <option value="Crown 480Hz">Crown 480Hz</option>
-                            <option value="Third Eye 426.7Hz">Third Eye 426.7Hz</option>
-                            <option value="Throat 384Hz">Throat 384Hz</option>
-                            <option value="Heart 341.3Hz">Heart 341.3Hz</option>
-                            <option value="Solar Plexus 320Hz">Solar Plexus 320Hz</option>
-                            <option value="Sacral  288Hz">Sacral  288Hz</option>
-                            <option value="Root 256Hz">Root 256Hz</option>
+                            <option value="crown">crown 480Hz</option>
+                            <option value="3rdeye">third eye 426.7Hz</option>
+                            <option value="throat">throat 384Hz</option>
+                            <option value="heart">heart 341.3Hz</option>
+                            <option value="solar">solar plexus 320Hz</option>
+                            <option value="sacral">sacral  288Hz</option>
+                            <option value="root">root 256Hz</option>
                         </select>
 
                         <label for="end_freq">End Frequency:</label>
@@ -98,13 +98,13 @@
                             <option value="beta">Beta</option>
                             <option value="gamma">Gamma</option>            
                             <option value="custom">Custom</option>
-                            <option value="Crown 480Hz">Crown 480Hz</option>
-                            <option value="Third Eye 426.7Hz">Third Eye 426.7Hz</option>
-                            <option value="Throat 384Hz">Throat 384Hz</option>
-                            <option value="Heart 341.3Hz">Heart 341.3Hz</option>
-                            <option value="Solar Plexus 320Hz">Solar Plexus 320Hz</option>
-                            <option value="Sacral  288Hz">Sacral  288Hz</option>
-                            <option value="Root 256Hz">Root 256Hz</option>
+                            <option value="crown">crown 480Hz</option>
+                            <option value="3rdeye">third eye 426.7Hz</option>
+                            <option value="throat">throat 384Hz</option>
+                            <option value="heart">heart 341.3Hz</option>
+                            <option value="solar">solar plexus 320Hz</option>
+                            <option value="sacral">sacral  288Hz</option>
+                            <option value="root">root 256Hz</option>
                         </select>
                     </div>
 
