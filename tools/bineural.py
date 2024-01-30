@@ -109,31 +109,31 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
         print("preset changed")
     elif (preset == "root"):
         print("preset test")
-        chosen_preset = "_root"
+        chosen_preset = "5_root"
         print("preset changed")  
     elif (preset == "sacral"):
         print("preset test")
-        chosen_preset = "_sacral"
+        chosen_preset = "6_sacral"
         print("preset changed")
     elif (preset == "solar"):
         print("preset test")
-        chosen_preset = "_solar"
+        chosen_preset = "7_solar"
         print("preset changed")
     elif (preset == "heart"):
         print("preset test")
-        chosen_preset = "_heart"
+        chosen_preset = "8_heart"
         print("preset changed")    
     elif (preset == "throat"):
         print("preset test")
-        chosen_preset = "_throat"
+        chosen_preset = "9_throat"
         print("preset changed")
     elif (preset == "3rdeye"):
         print("preset test")
-        chosen_preset = "_3rdeye"
+        chosen_preset = "10_3rdeye"
         print("preset changed")
     elif (preset == "crown"):
         print("preset test")
-        chosen_preset = "_crown"
+        chosen_preset = "11_crown"
         print("preset changed")              
     elif (preset == "custom"):
         print("preset test")

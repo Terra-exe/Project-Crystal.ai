@@ -47,7 +47,7 @@
                         <option value="throat">throat 384Hz</option>
                         <option value="heart">heart 341.3Hz</option>
                         <option value="solar">solar plexus 320Hz</option>
-                        <option value="sacral">sacral  288Hz</option>
+                        <option value="sacral">sacral 288Hz</option>
                         <option value="root">root 256Hz</option>
                     </select>
                 </div>
