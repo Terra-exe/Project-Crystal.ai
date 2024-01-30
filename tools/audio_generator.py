@@ -181,7 +181,7 @@ class AudioGenerator:
         """
         presets = {
             "0_delta": {
-                "freq_default": 300, # (100, 400)
+                "freq_default": 256, # (100, 400)
                 "binaural_default": 2.5, # (1, 4),
             },
             "1_theta": {
@@ -199,6 +199,34 @@ class AudioGenerator:
             "4_gamma": {
                 "freq_default": 300, # (500, 2000)
                 "binaural_default": 30, # (30, 100),
+            },
+            "5_root": {
+                "freq_default": 252 , # Associated Frequency: 256 Hz
+                "binaural_default": 8, # (4, 8),
+            },
+            "6_sacral": {
+                "freq_default": 283.5, # Associated Frequency: 288 Hz
+                "binaural_default": 9, # (8, 12),
+            },
+            "7_solar": {
+                "freq_default": 314.5, #  Associated Frequency: 320 Hz
+                "binaural_default": 11, # (12, 30),
+            },
+            "8_heart": {
+                "freq_default": 335.3, # Associated Frequency: 341.3 Hz
+                "binaural_default": 12, # (30, 100),
+            },
+            "9_throat": {
+                "freq_default": 378, # Associated Frequency: 384 Hz
+                "binaural_default": 12.5, # (30, 100),
+            },
+            "10_3rdeye": {
+                "freq_default": 420.2, # Associated Frequency: 426.7 Hz
+                "binaural_default": 13, # (30, 100),
+            },
+            "11_crown": {
+                "freq_default": 472.5, # Associated Frequency: 480 Hz
+                "binaural_default": 15, # (30, 100),
             }
         }
 
@@ -207,7 +235,14 @@ class AudioGenerator:
             'theta': '1_theta',
             'alpha': '2_alpha',
             'beta': '3_beta',
-            'gamma': '4_gamma'
+            'gamma': '4_gamma',
+            'root': '5_root',
+            'sacral': '6_sacral',
+            'solar': '7_solar',
+            'heart': '8_heart',
+            'throat': '9_throat',
+            '3rdeye': '10_3rdeye',
+            'crown': '11_crown'
         }
 
         start_preset = preset_mapping[start_preset]

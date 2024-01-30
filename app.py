@@ -400,6 +400,9 @@ def api_create_audio_file():
                         elif (soundEffect_name == "<MUTELUNATIC>"):
                             segment_filename_local = r"sound_effects/MUTELUNATIC.wav" 
 
+                        elif (soundEffect_name == "<ITSDANGEROUS>"):
+                            segment_filename_local = r"sound_effects/ITSDANGEROUS.wav" 
+
 
                              
                         segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
