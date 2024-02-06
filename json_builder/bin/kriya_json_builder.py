@@ -369,6 +369,19 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["value"] = "<ARENTDROIDS>"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
+        elif (type == "<WHATWILLYOUFIND>"):
+            wait["value"] = "<ARENTDROIDS>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+
+        elif (type == "<1MHARHARAYHAREEWAHHAYGURU>"):
+            wait["value"] = "<1MHARHARAYHAREEWAHHAYGURU>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<TANTRICHAR3M>"):
+            wait["value"] = "<TANTRICHAR3M>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
 
 
         elif (type == "#"):

@@ -406,6 +406,16 @@ def api_create_audio_file():
                         elif (soundEffect_name == "<ARENTDROIDS>"):
                             segment_filename_local = r"sound_effects/ARENTDROIDS.wav" 
 
+                        elif (soundEffect_name == "<WHATWILLYOUFIND>"):
+                            segment_filename_local = r"sound_effects/WHATWILLYOUFIND.wav" 
+
+
+                        elif (soundEffect_name == "<TANTRICHAR3M>"):
+                            segment_filename_local = r"sound_effects/TANTRICHAR3M.wav" 
+
+                        elif (soundEffect_name == "<1MHARHARAYHAREEWAHHAYGURU>"):
+                            segment_filename_local = r"sound_effects/1MHARHARAYHAREEWAHHAYGURU.wav" 
+
 
                              
                             
