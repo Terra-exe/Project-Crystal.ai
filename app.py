@@ -418,6 +418,11 @@ def api_create_audio_file():
 
 
                              
+                        elif (soundEffect_name == "<5MSATANAMA>"):
+                            segment_filename_local = r"sound_effects/5MSATANAMA.wav" 
+
+
+                             
                             
 
                         segment_filename_s3 = f"genfile_{filename}_{i}_#_{soundEffect_name}.wav"
