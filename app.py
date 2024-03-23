@@ -55,6 +55,11 @@ ELEVENLABS_VOICE_ID_Freya = "jsCqWAovK2LkecY7zXl4"
 ELEVENLABS_VOICE_ID_ADAM = "pNInz6obpgDQGcFmaJgB"
 ELEVENLABS_VOICE_ID_DEFAULT = ELEVENLABS_VOICE_ID_Freya # Freya - Replace with your specific voice ID
 
+ELEVENLABS_API_KEY_DEFAULT = "ELEVENLABS_API_KEY_2"
+ELEVENLABS_API_KEY_1 = "ELEVENLABS_API_KEY"
+ELEVENLABS_API_KEY_2 = "ELEVENLABS_API_KEY_2"
+
+
 
 #from flask import Flask
 app = Flask(__name__)
@@ -459,7 +464,7 @@ def api_create_audio_file():
     else:
         try:
 
-            elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
+            elevenlabs_api_key = os.environ.get(ELEVENLABS_API_KEY_DEFAULT)  # Use the environment variable
             voice_id = ELEVENLABS_VOICE_ID_DEFAULT        
             elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
             querystring = {"output_format":"pcm_16000"}
@@ -484,28 +489,6 @@ def api_create_audio_file():
             response.raise_for_status()  # This will raise an exception for HTTP errors
             pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
             
-            
-            """elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
-            voice_id = ELEVENLABS_VOICE_ID_DEFAULT
-            elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
-
-            headers = {
-                "xi-api-key": f"{elevenlabs_api_key}",
-                "Content-Type": "application/json"
-            }
-            payload = {
-                "voice_settings": {
-                    "similarity_boost": 1,
-                    "stability": 1
-                },
-                "text": kriya_obj.title
-            }
-            #response = requests.post(elevenlabs_endpoint, headers=headers, json=data, stream=True)
-            response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers)
-
-            response.raise_for_status()  # This will raise an exception for HTTP errors
-            pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
-        """
         except Exception as e3:
             print(f"Error during conversion to speech with ElevenLabs: {e3}")
             return jsonify({'message': f'Error during conversion to speech with ElevenLabs: {e3}'}), 500
@@ -610,7 +593,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     else:
 
         # Setup for ElevenLabs API call
-        elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
+        elevenlabs_api_key = os.environ.get(ELEVENLABS_API_KEY_DEFAULT)  # Use the environment variable
         voice_id = ELEVENLABS_VOICE_ID_DEFAULT        
         elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
         querystring = {"output_format":"pcm_16000"}
@@ -634,27 +617,6 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
         response.raise_for_status()  # This will raise an exception for HTTP errors
         pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
         
-        """
-        # Setup for ElevenLabs API call
-        elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
-        voice_id = ELEVENLABS_VOICE_ID_DEFAULT
-        elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
-        headers = {
-                "xi-api-key": f"{elevenlabs_api_key}",
-                "Content-Type": "application/json"
-            }
-        payload = {
-                "voice_settings": {
-                    "similarity_boost": 1,
-                    "stability": 1
-                },
-                "text": text
-            }
-        #response = requests.post(elevenlabs_endpoint, headers=headers, json=data, stream=True)
-        response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers)
-        response.raise_for_status()  # This will raise an exception for HTTP errors
-        pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
-    """
 
     # Convert PCM to WAV using pydub
     sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=1, frame_rate=16000)
