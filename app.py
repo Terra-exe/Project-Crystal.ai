@@ -454,7 +454,31 @@ def api_create_audio_file():
             return jsonify({'message': f'Error during conversion to speech with AWS Polly: {e3}'}), 500
     else:
         try:
-            elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
+
+            
+            url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4"
+
+            querystring = {"output_format":"pcm_16000"}
+            payload = {
+                "text": "Pop",
+                "voice_settings": {
+                    "stability": 1,
+                    "similarity_boost": 1
+                }
+            }
+            headers = {
+                "xi-api-key": "a1fd630e18d08e2e26bd309d4c35143e",
+                "Content-Type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
+        
+
+
+            response.raise_for_status()  # This will raise an exception for HTTP errors
+            pcm_data = response.content
+            
+            """elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
             voice_id = ELEVENLABS_VOICE_ID_DEFAULT
             elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
 
@@ -474,7 +498,7 @@ def api_create_audio_file():
 
             response.raise_for_status()  # This will raise an exception for HTTP errors
             pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
-        
+        """
         except Exception as e3:
             print(f"Error during conversion to speech with ElevenLabs: {e3}")
             return jsonify({'message': f'Error during conversion to speech with ElevenLabs: {e3}'}), 500
@@ -594,7 +618,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
         }
 
         response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
-        print(response.text)
+    
 
 
         response.raise_for_status()  # This will raise an exception for HTTP errors
