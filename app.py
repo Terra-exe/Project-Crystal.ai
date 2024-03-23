@@ -464,7 +464,7 @@ def api_create_audio_file():
             elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
             querystring = {"output_format":"pcm_16000"}
             payload = {
-                "text": "Pop",
+                "text": kriya_obj.title,
                 "voice_settings": {
                     "stability": 1,
                     "similarity_boost": 1
@@ -615,7 +615,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
         elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
         querystring = {"output_format":"pcm_16000"}
         payload = {
-            "text": "Pop",
+            "text": text,
             "voice_settings": {
                 "stability": 1,
                 "similarity_boost": 1
