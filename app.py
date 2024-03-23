@@ -578,14 +578,15 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
 
     else:
         
-        url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4"
+        url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4/stream"
+
         querystring = {"output_format":"pcm_16000"}
         payload = {
-            "text": "Test",
             "voice_settings": {
-                "stability": 1,
-                "similarity_boost": 1
-            }
+                "similarity_boost": 1,
+                "stability": 1
+            },
+            "text": "test"
         }
         headers = {
             "xi-api-key": "a1fd630e18d08e2e26bd309d4c35143e",
