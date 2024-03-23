@@ -456,7 +456,7 @@ def api_create_audio_file():
         try:
 
             
-            url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4"
+            url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4/stream"
 
             querystring = {"output_format":"pcm_16000"}
             payload = {
@@ -602,7 +602,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
 
     else:
         
-        url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4"
+        url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4/stream"
 
         querystring = {"output_format":"pcm_16000"}
         payload = {
