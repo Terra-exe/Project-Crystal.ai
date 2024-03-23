@@ -457,11 +457,21 @@ def api_create_audio_file():
             elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
             voice_id = ELEVENLABS_VOICE_ID_DEFAULT
             elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
-            headers = {"Authorization": f"Bearer {elevenlabs_api_key}"}
-            data = {
+
+            headers = {
+                "xi-api-key": f"{elevenlabs_api_key}",
+                "Content-Type": "application/json"
+            }
+            payload = {
+                "voice_settings": {
+                    "similarity_boost": 1,
+                    "stability": 1
+                },
                 "text": kriya_obj.title
             }
-            response = requests.post(elevenlabs_endpoint, headers=headers, json=data, stream=True)
+            #response = requests.post(elevenlabs_endpoint, headers=headers, json=data, stream=True)
+            response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers)
+
             response.raise_for_status()  # This will raise an exception for HTTP errors
             pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
         
@@ -571,11 +581,19 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
         elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
         voice_id = ELEVENLABS_VOICE_ID_DEFAULT
         elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
-        headers = {"Authorization": f"Bearer {elevenlabs_api_key}"}
-        data = {
-            "text": text,
-        }
-        response = requests.post(elevenlabs_endpoint, headers=headers, json=data, stream=True)
+        headers = {
+                "xi-api-key": f"{elevenlabs_api_key}",
+                "Content-Type": "application/json"
+            }
+        payload = {
+                "voice_settings": {
+                    "similarity_boost": 1,
+                    "stability": 1
+                },
+                "text": text
+            }
+        #response = requests.post(elevenlabs_endpoint, headers=headers, json=data, stream=True)
+        response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers)
         response.raise_for_status()  # This will raise an exception for HTTP errors
         pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
     
