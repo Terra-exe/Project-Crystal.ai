@@ -593,7 +593,8 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
         }
 
         response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
-    
+        pcm_data = response.content
+
         
         """
         # Setup for ElevenLabs API call
