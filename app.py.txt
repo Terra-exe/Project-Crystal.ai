@@ -228,7 +228,7 @@ def api_create_audio_file():
                             segment_filename = f"genfile_{filename}_{i}_#_{value_cut}.wav"
                             #segment_full_file_path = os.path.join(dump_dir_path, segment_filename)
                             
-                            # Using Amazon Polly or ElevenLabs for text-to-speech, value = text
+                            # Using Amazon Polly for text-to-speech, value = text
                             tts_and_save_to_s3(bucket_name, s3_gen_file_key + segment_filename, value)
                             # Increment counter
                             i+=1
@@ -440,59 +440,9 @@ def api_create_audio_file():
                     segment_filename_local = generate_silent_file(int(float(wait.value) * 1000), "/tmp/silence.wav")
                     upload_to_s3(bucket_name, s3_gen_file_key + segment_filename_s3, segment_filename_local)
                     i+=1
+                        
 
 
-    if USE_AWS_POLLY:
-        try:
-            response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='pcm', VoiceId='Salli')
-            pcm_data = response['AudioStream'].read()
-        except Exception as e3:
-            with open(error_file_path, 'w') as error_file:
-                error_file.write(str(e3))
-            s3.upload_file(error_file_path, bucket_name, s3_key_error)
-            print(f"Error during conversion to speech with AWS Polly: {e3}")
-            return jsonify({'message': f'Error during conversion to speech with AWS Polly: {e3}'}), 500
-    else:
-        try:
-            elevenlabs_api_key = "YOUR_ELEVENLABS_API_KEY_HERE"
-            elevenlabs_endpoint = "https://api.elevenlabs.io/synthesize"
-            headers = {"Authorization": f"Bearer {elevenlabs_api_key}"}
-            data = {
-                "text": kriya_obj.title,
-                "voice": "freya"
-            }
-            response = requests.post(elevenlabs_endpoint, headers=headers, json=data)
-            response.raise_for_status()  # Ensure HTTP request was successful
-
-            # Assuming ElevenLabs returns binary audio data directly in response.content
-            pcm_data = response.content
-        except Exception as e3:
-            print(f"Error during conversion to speech with ElevenLabs: {e3}")
-            return jsonify({'message': f'Error during conversion to speech with ElevenLabs: {e3}'}), 500
-
-    # Convert PCM to WAV and process as before
-    sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=1, frame_rate=16000)
-    buffer = io.BytesIO()
-    sound.export(buffer, format="wav")
-    wav_data = buffer.getvalue()
-
-    output = os.path.join("/tmp", s3_key)
-    try:
-        with open(output, "wb") as file:
-            file.write(wav_data)
-    except IOError as ioe:
-        print(ioe)
-        return jsonify({'message': f'Error: File {output} could not be written.'}), 500
-
-    # Upload the file to s3
-    s3.upload_file(output, bucket_name, s3_key)
-    print(f'File {output} uploaded to {bucket_name} at {s3_key}')
-
-    return jsonify({'message': 'Success'})
-
-
-
-"""
     # Use Amazon Polly to convert the text to speech
     try:
         response = polly.synthesize_speech(Text=kriya_obj.title, OutputFormat='pcm', VoiceId='Salli')
@@ -535,8 +485,6 @@ def api_create_audio_file():
                 print(f'File {output} uploaded to {bucket_name} at {s3_key}')
 
     return jsonify({'message': 'Success'})
-"""
-
 
 # Step 1: Generate the silent segment
 def generate_silent_file(duration_milliseconds, filename):
@@ -566,7 +514,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
                     )
         # The response's 'AudioStream' body contains the audio data in the specified format
         pcm_data = response['AudioStream'].read()
-
+        
     else:
         # Setup for ElevenLabs API call
         elevenlabs_api_key = "YOUR_ELEVENLABS_API_KEY_HERE"
@@ -577,8 +525,9 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
             "voice": "freya"
         }
         response = requests.post(elevenlabs_endpoint, headers=headers, json=data)
-        # Assuming the response contains a direct audio stream; adjust as needed based on ElevenLabs' actual response structure
-        pcm_data = response.content
+        # Logic to handle ElevenLabs response and save to S3 goes here
+        # Note: You'll need to adjust this according to how ElevenLabs returns the audio data
+
 
     # Convert PCM to WAV using pydub
     sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=1, frame_rate=16000)
@@ -777,6 +726,82 @@ if __name__ == "__main__":
     else:
         port = 8137
     app.run(host='0.0.0.0', port=port)
+
+
+
+
+
+
+
+
+
+
+"""
+### This can be deleted
+@app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
+def api_create_audio_file():
+    data = {}
+    try:
+        data = request.get_json() # get the JSON object from the request
+        #print(data)
+        
+    except Exception as e:
+        print(e)
+        return {"success": False}, 500 
+
+    title = data["title"]
+
+    try:
+        # call your Python function to create the audio file
+        print("\n\n---------GENERATING JSON---------\n\n")
+        print("\n\n---------GENERATING JSON---------\n\n")
+        print("\n\n---------GENERATING JSON---------\n\n")
+        
+        # Make sure jsondata is serializable
+        try:
+            jsondata = kriya_json_builder.kriya_webformat_to_json(data)
+            url = r"http://192.168.0.34:5001/bambi-tts-api"
+            headers = {'Content-Type': 'application/json'}
+            
+            # Send the request to create the tts-audio
+            response = requests.post(url, json=jsondata)
+            print('Response:', response.text)
+            
+        except (ValueError, TypeError) as e:
+            print("Error: Data is not valid JSON - ", e)
+            return
+
+    
+        # Print the response
+        print("\nJSON Response from Remote: " + str(response.text))
+        print("\nJSON Response from Remote: " + str(response.json()))
+        
+        print("\n\n---------JSON COMPLETE---------\\n\n")
+        print("\n\n---------JSON COMPLETE---------\\n\n")
+        print("\n\n---------JSON COMPLETE---------\\n\n")
+
+        return f"audios\{title}"
+    except Exception as e:
+        print(e)
+        return {"success": False}, 500
+    
+"""
+"""
+"""
+    
+
+
+
+"""
+
+#sys.path.insert(1, r'\\SERVER\python server\Crystal_TTS')
+sys.path.insert(1, r'\\SERVER\d\audios')
+sys.path.insert(1, r'\\THE-DOCTOR\website')
+sys.path.insert(1, r'\\THE-DOCTOR\website\tools')
+
+"""
+
+
 
 
 
