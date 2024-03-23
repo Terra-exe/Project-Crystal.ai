@@ -577,6 +577,26 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
         pcm_data = response['AudioStream'].read()
 
     else:
+        
+        url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4"
+
+        payload = {
+            "text": "Test",
+            "voice_settings": {
+                "stability": 1,
+                "similarity_boost": 1
+            }
+        }
+        headers = {
+            "xi-api-key": "a1fd630e18d08e2e26bd309d4c35143e",
+            "Content-Type": "application/json"
+        }
+
+        response = requests.request("POST", url, json=payload, headers=headers)
+
+        print(response.text)
+        
+        """
         # Setup for ElevenLabs API call
         elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
         voice_id = ELEVENLABS_VOICE_ID_DEFAULT
@@ -596,7 +616,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
         response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers)
         response.raise_for_status()  # This will raise an exception for HTTP errors
         pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
-    
+    """
 
     # Convert PCM to WAV using pydub
     sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=1, frame_rate=16000)
