@@ -476,8 +476,8 @@ def api_create_audio_file():
             }
 
            
-            print(f"Current API Key: {elevenlabs_api_key}")
-            print(f"Current Voice ID: {voice_id}")
+            #print(f"Current API Key: {elevenlabs_api_key}")
+            #print(f"Current Voice ID: {voice_id}")
 
 
             response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers, params=querystring)
@@ -626,8 +626,8 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
                 "Content-Type": "application/json"
         }
 
-        print(f"Current API Key: {elevenlabs_api_key}")
-        print(f"Current Voice ID: {voice_id}")
+        #print(f"Current API Key: {elevenlabs_api_key}")
+        #print(f"Current Voice ID: {voice_id}")
 
 
         response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers, params=querystring)
