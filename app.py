@@ -579,7 +579,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     else:
         
         url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4"
-
+        querystring = {"output_format":"pcm_16000"}
         payload = {
             "text": "Test",
             "voice_settings": {
@@ -592,8 +592,8 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
             "Content-Type": "application/json"
         }
 
-        response = requests.request("POST", url, json=payload, headers=headers)
-        pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
+        response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
+        pcm_data = response  # Assuming direct binary content; adjust based on actual response format
         
         """
         # Setup for ElevenLabs API call
