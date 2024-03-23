@@ -50,7 +50,7 @@ APP6_DESCRIPTION = r"Audio / Bineural Merge"
 APP7_DESCRIPTION = r"Audio / to MP4 - Youtube Submit"
 APP51_DESCRIPTION = r"Audio / Merge files, save to S3"
 
-USE_AWS_POLLY = True #False = ElevenLabs Freya
+USE_AWS_POLLY = False #False = ElevenLabs Freya
 
 #from flask import Flask
 app = Flask(__name__)
@@ -454,7 +454,7 @@ def api_create_audio_file():
             return jsonify({'message': f'Error during conversion to speech with AWS Polly: {e3}'}), 500
     else:
         try:
-            elevenlabs_api_key = "YOUR_ELEVENLABS_API_KEY_HERE"
+            elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
             elevenlabs_endpoint = "https://api.elevenlabs.io/synthesize"
             headers = {"Authorization": f"Bearer {elevenlabs_api_key}"}
             data = {
@@ -462,10 +462,9 @@ def api_create_audio_file():
                 "voice": "freya"
             }
             response = requests.post(elevenlabs_endpoint, headers=headers, json=data)
-            response.raise_for_status()  # Ensure HTTP request was successful
-
-            # Assuming ElevenLabs returns binary audio data directly in response.content
-            pcm_data = response.content
+            response.raise_for_status()  # This will raise an exception for HTTP errors
+            pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
+        
         except Exception as e3:
             print(f"Error during conversion to speech with ElevenLabs: {e3}")
             return jsonify({'message': f'Error during conversion to speech with ElevenLabs: {e3}'}), 500
@@ -569,7 +568,7 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
 
     else:
         # Setup for ElevenLabs API call
-        elevenlabs_api_key = "YOUR_ELEVENLABS_API_KEY_HERE"
+        elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
         elevenlabs_endpoint = "https://api.elevenlabs.io/synthesize"  # Example endpoint
         headers = {"Authorization": f"Bearer {elevenlabs_api_key}"}
         data = {
@@ -577,8 +576,9 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
             "voice": "freya"
         }
         response = requests.post(elevenlabs_endpoint, headers=headers, json=data)
-        # Assuming the response contains a direct audio stream; adjust as needed based on ElevenLabs' actual response structure
-        pcm_data = response.content
+        response.raise_for_status()  # This will raise an exception for HTTP errors
+        pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
+    
 
     # Convert PCM to WAV using pydub
     sound = AudioSegment.from_raw(io.BytesIO(pcm_data), sample_width=2, channels=1, frame_rate=16000)
