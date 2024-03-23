@@ -51,7 +51,11 @@ APP7_DESCRIPTION = r"Audio / to MP4 - Youtube Submit"
 APP51_DESCRIPTION = r"Audio / Merge files, save to S3"
 
 USE_AWS_POLLY = False #False = ElevenLabs Freya
-ELEVENLABS_VOICE_ID_DEFAULT = "jsCqWAovK2LkecY7zXl4" # Freya - Replace with your specific voice ID
+ELEVENLABS_VOICE_ID_Freya = "jsCqWAovK2LkecY7zXl4"
+ELEVENLABS_VOICE_ID_ADAM = "pNInz6obpgDQGcFmaJgB"
+ELEVENLABS_VOICE_ID_DEFAULT = ELEVENLABS_VOICE_ID_ADAM # Freya - Replace with your specific voice ID
+
+
 #from flask import Flask
 app = Flask(__name__)
 
