@@ -455,10 +455,13 @@ def api_create_audio_file():
     else:
         try:
 
-                
+            # Expected values
+            expected_api_key = "a1fd630e18d08e2e26bd309d4c35143e"
+            expected_voice_id = "jsCqWAovK2LkecY7zXl4"
+    
             elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
             voice_id = ELEVENLABS_VOICE_ID_DEFAULT        
-            elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/"
+            elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
             querystring = {"output_format":"pcm_16000"}
             payload = {
                 "text": "Pop",
@@ -471,6 +474,18 @@ def api_create_audio_file():
                     "xi-api-key": f"{elevenlabs_api_key}",
                     "Content-Type": "application/json"
             }
+
+            if elevenlabs_api_key == expected_api_key and voice_id == expected_voice_id:
+                print("API Key and Voice ID are correctly set.")
+            else:
+                print("API Key or Voice ID does not match the expected values.")
+                # Optionally, provide more details about the mismatch
+                if elevenlabs_api_key != expected_api_key:
+                    print(f"Current API Key: {elevenlabs_api_key}, Expected: {expected_api_key}")
+                if voice_id != expected_voice_id:
+                    print(f"Current Voice ID: {voice_id}, Expected: {expected_voice_id}")
+
+
 
             response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers, params=querystring)
             response.raise_for_status()  # This will raise an exception for HTTP errors
@@ -600,10 +615,14 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
         pcm_data = response['AudioStream'].read()
 
     else:
+        # Expected values
+        expected_api_key = "a1fd630e18d08e2e26bd309d4c35143e"
+        expected_voice_id = "jsCqWAovK2LkecY7zXl4"
+        
         # Setup for ElevenLabs API call
         elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
         voice_id = ELEVENLABS_VOICE_ID_DEFAULT        
-        elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/"
+        elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
         querystring = {"output_format":"pcm_16000"}
         payload = {
             "text": "Pop",
@@ -616,6 +635,17 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
                 "xi-api-key": f"{elevenlabs_api_key}",
                 "Content-Type": "application/json"
         }
+
+        if elevenlabs_api_key == expected_api_key and voice_id == expected_voice_id:
+            print("API Key and Voice ID are correctly set.")
+        else:
+            print("API Key or Voice ID does not match the expected values.")
+            # Optionally, provide more details about the mismatch
+            if elevenlabs_api_key != expected_api_key:
+                print(f"Current API Key: {elevenlabs_api_key}, Expected: {expected_api_key}")
+            if voice_id != expected_voice_id:
+                print(f"Current Voice ID: {voice_id}, Expected: {expected_voice_id}")
+
 
         response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers, params=querystring)
         response.raise_for_status()  # This will raise an exception for HTTP errors
