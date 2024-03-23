@@ -51,7 +51,7 @@ APP7_DESCRIPTION = r"Audio / to MP4 - Youtube Submit"
 APP51_DESCRIPTION = r"Audio / Merge files, save to S3"
 
 USE_AWS_POLLY = False #False = ElevenLabs Freya
-
+ELEVENLABS_VOICE_ID_DEFAULT = "jsCqWAovK2LkecY7zXl4" # Freya - Replace with your specific voice ID
 #from flask import Flask
 app = Flask(__name__)
 
@@ -455,13 +455,13 @@ def api_create_audio_file():
     else:
         try:
             elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
-            elevenlabs_endpoint = "https://api.elevenlabs.io/synthesize"
+            voice_id = ELEVENLABS_VOICE_ID_DEFAULT
+            elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
             headers = {"Authorization": f"Bearer {elevenlabs_api_key}"}
             data = {
-                "text": kriya_obj.title,
-                "voice": "freya"
+                "text": kriya_obj.title
             }
-            response = requests.post(elevenlabs_endpoint, headers=headers, json=data)
+            response = requests.post(elevenlabs_endpoint, headers=headers, json=data, stream=True)
             response.raise_for_status()  # This will raise an exception for HTTP errors
             pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
         
@@ -569,13 +569,13 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
     else:
         # Setup for ElevenLabs API call
         elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
-        elevenlabs_endpoint = "https://api.elevenlabs.io/synthesize"  # Example endpoint
+        voice_id = ELEVENLABS_VOICE_ID_DEFAULT
+        elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
         headers = {"Authorization": f"Bearer {elevenlabs_api_key}"}
         data = {
             "text": text,
-            "voice": "freya"
         }
-        response = requests.post(elevenlabs_endpoint, headers=headers, json=data)
+        response = requests.post(elevenlabs_endpoint, headers=headers, json=data, stream=True)
         response.raise_for_status()  # This will raise an exception for HTTP errors
         pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
     
