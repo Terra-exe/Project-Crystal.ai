@@ -455,9 +455,10 @@ def api_create_audio_file():
     else:
         try:
 
-            
-            url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4/stream"
-
+                
+            elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
+            voice_id = ELEVENLABS_VOICE_ID_DEFAULT        
+            elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
             querystring = {"output_format":"pcm_16000"}
             payload = {
                 "text": "Pop",
@@ -467,16 +468,14 @@ def api_create_audio_file():
                 }
             }
             headers = {
-                "xi-api-key": "a1fd630e18d08e2e26bd309d4c35143e",
-                "Content-Type": "application/json"
+                    "xi-api-key": f"{elevenlabs_api_key}",
+                    "Content-Type": "application/json"
             }
 
-            response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
-        
-
-
+            response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers, params=querystring)
             response.raise_for_status()  # This will raise an exception for HTTP errors
-            pcm_data = response.content
+            pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
+            
             
             """elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
             voice_id = ELEVENLABS_VOICE_ID_DEFAULT
@@ -601,9 +600,10 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
         pcm_data = response['AudioStream'].read()
 
     else:
-        
-        url = "https://api.elevenlabs.io/v1/text-to-speech/jsCqWAovK2LkecY7zXl4/stream"
-
+        # Setup for ElevenLabs API call
+        elevenlabs_api_key = os.environ.get('ELEVENLABS_API_KEY')  # Use the environment variable
+        voice_id = ELEVENLABS_VOICE_ID_DEFAULT        
+        elevenlabs_endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream"
         querystring = {"output_format":"pcm_16000"}
         payload = {
             "text": "Pop",
@@ -613,17 +613,13 @@ def tts_and_save_to_s3(bucket_name, s3_key, text):
             }
         }
         headers = {
-            "xi-api-key": "a1fd630e18d08e2e26bd309d4c35143e",
-            "Content-Type": "application/json"
+                "xi-api-key": f"{elevenlabs_api_key}",
+                "Content-Type": "application/json"
         }
 
-        response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
-    
-
-
+        response = requests.request("POST", elevenlabs_endpoint, json=payload, headers=headers, params=querystring)
         response.raise_for_status()  # This will raise an exception for HTTP errors
-        pcm_data = response.content
-
+        pcm_data = response.content  # Assuming direct binary content; adjust based on actual response format
         
         """
         # Setup for ElevenLabs API call
