@@ -68,6 +68,10 @@ presets = {
     "11_crown": {
         "freq_default": 472.5, # Associated Frequency: 480 Hz
         "binaural_default": 15, # (30, 100),
+    },
+    "12_none": {
+        "freq_default": 0,
+        "binaural_default": 0,
     }
 
 }
@@ -84,61 +88,64 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
     print("Creating binaural audio")
     print("preset tester")
     if (preset == "delta"):
-        print("preset test")
+         
         chosen_preset = "0_delta"
-        print("preset changed")
+         
     elif (preset == "theta"):
-        print("preset test")
+         
         chosen_preset = "1_theta"
-        print("preset changed")
+         
     elif (preset == "alpha"):
-        print("preset test")
+         
         chosen_preset = "2_alpha"
-        print("preset changed")
+         
     elif (preset == "beta"):
-        print("preset test")
+         
         chosen_preset = "3_beta"
-        print("preset changed")
+         
     elif (preset == "gamma"):
-        print("preset test")
+         
         chosen_preset = "4_gamma"
-        print("preset changed")
+         
     elif (preset == "pink"):
-        print("preset test")
+         
         chosen_preset = "_pink"
-        print("preset changed")
+         
     elif (preset == "root"):
-        print("preset test")
+         
         chosen_preset = "5_root"
-        print("preset changed")  
+           
     elif (preset == "sacral"):
-        print("preset test")
+         
         chosen_preset = "6_sacral"
-        print("preset changed")
+         
     elif (preset == "solar"):
-        print("preset test")
+         
         chosen_preset = "7_solar"
-        print("preset changed")
+         
     elif (preset == "heart"):
-        print("preset test")
+         
         chosen_preset = "8_heart"
-        print("preset changed")    
+             
     elif (preset == "throat"):
-        print("preset test")
+         
         chosen_preset = "9_throat"
-        print("preset changed")
+         
     elif (preset == "3rdeye"):
-        print("preset test")
+         
         chosen_preset = "10_3rdeye"
-        print("preset changed")
+         
     elif (preset == "crown"):
-        print("preset test")
+         
         chosen_preset = "11_crown"
-        print("preset changed")              
+                       
     elif (preset == "custom"):
-        print("preset test")
+         
         chosen_preset = "custom"
-        print("preset changed")
+         
+    elif (preset == "none"):
+        chosen_preset = "none"
+         
     elif (preset == "variable_frequency"):
         print("Preset variable_frequency")
         chosen_preset = "variable_frequency" 
@@ -151,54 +158,56 @@ def create_binaural_audio(preset, duration, save_path, title, gradual_freq_chang
     print("Creating binaural audio - 0")
     print(f"Chosen preset equals {chosen_preset}")
     if (chosen_preset != "variable_frequency"):
+        
         freq_default = presets[chosen_preset]["freq_default"]
         freq_default = presets[chosen_preset]["freq_default"]
         binaural_default = presets[chosen_preset]["binaural_default"]
+
+    if (chosen_preset != "none"):  
+        entrainment_type = "binaural"
+        sound_type = "sine"
+
+        print("Creating binaural audio - 1")
+        audio_gen = AudioGenerator()
+        print("Creating binaural audio - 2")
+        print(f"save_path = {save_path}{title}")
+
     
-    entrainment_type = "binaural"
-    sound_type = "sine"
-
-    print("Creating binaural audio - 1")
-    audio_gen = AudioGenerator()
-    print("Creating binaural audio - 2")
-    print(f"save_path = {save_path}{title}")
-
-   
-    if gradual_freq_change:
-        # Call generate_gradual_audio if gradual_freq_change is True
-        # You need to provide start_preset, mid_preset, and end_preset
-        print(" audio_gen.generate_gradual_audio(start_preset, mid_preset, end_preset, duration, save_path, title")
-        audio_gen.generate_gradual_audio(
-            start_preset,
-            mid_preset,
-            end_preset,
-            duration,
-            save_path,
-            title,
-            False, #fade in/out
-            sound_type,
-            freq_default,
-            binaural_default,
-            entrainment_type,
-            volume_generator=None,
-            gradual_freq_change=True,
-            volume=volume
-        )
-    else:
-        audio_gen.generate_audio(
-            save_path,
-            title,
-            duration,
-            False, #fade in/out
-            sound_type,
-            freq_default,
-            binaural_default,
-            entrainment_type,
-            volume_generator=None,
-            gradual_freq_change=None,
-            volume=volume
-        )
-    print("Creating binaural audio - 3")
+        if gradual_freq_change:
+            # Call generate_gradual_audio if gradual_freq_change is True
+            # You need to provide start_preset, mid_preset, and end_preset
+            print(" audio_gen.generate_gradual_audio(start_preset, mid_preset, end_preset, duration, save_path, title")
+            audio_gen.generate_gradual_audio(
+                start_preset,
+                mid_preset,
+                end_preset,
+                duration,
+                save_path,
+                title,
+                False, #fade in/out
+                sound_type,
+                freq_default,
+                binaural_default,
+                entrainment_type,
+                volume_generator=None,
+                gradual_freq_change=True,
+                volume=volume
+            )
+        else:
+            audio_gen.generate_audio(
+                save_path,
+                title,
+                duration,
+                False, #fade in/out
+                sound_type,
+                freq_default,
+                binaural_default,
+                entrainment_type,
+                volume_generator=None,
+                gradual_freq_change=None,
+                volume=volume
+            )
+        print("Creating binaural audio - 3")
     return save_path        
 
 
