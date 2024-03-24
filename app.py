@@ -55,10 +55,10 @@ ELEVENLABS_VOICE_ID_Freya = "jsCqWAovK2LkecY7zXl4"
 ELEVENLABS_VOICE_ID_ADAM = "pNInz6obpgDQGcFmaJgB"
 ELEVENLABS_VOICE_ID_DEFAULT = ELEVENLABS_VOICE_ID_Freya # Freya - Replace with your specific voice ID
 
-ELEVENLABS_API_KEY_DEFAULT = "ELEVENLABS_API_KEY_3"
 ELEVENLABS_API_KEY_1 = "ELEVENLABS_API_KEY"
 ELEVENLABS_API_KEY_2 = "ELEVENLABS_API_KEY_2"
-ELEVENLABS_API_KEY_2 = "ELEVENLABS_API_KEY_3"
+ELEVENLABS_API_KEY_3 = "ELEVENLABS_API_KEY_3"
+ELEVENLABS_API_KEY_DEFAULT = ELEVENLABS_API_KEY_3
 
 
 
@@ -123,6 +123,28 @@ def api_serve_audio():
 
 @app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
 def api_create_audio_file():
+
+
+    # Extract voice selection and API key from the form data or JSON
+    voice_selection = request.form.get('voiceSelection') or request.json.get('voiceSelection')
+    api_key_selection = request.form.get('apiKeySelection') or request.json.get('apiKeySelection')
+
+    # Set global variables based on the voice selection
+    if voice_selection == "USE_AWS_POLLY":
+        USE_AWS_POLLY = True
+        ELEVENLABS_VOICE_ID_DEFAULT = None  # or keep the previous value if necessary
+    else:
+        USE_AWS_POLLY = False
+        ELEVENLABS_VOICE_ID_DEFAULT = voice_selection  # Assuming the value matches the global var names
+
+        # Set the API key if ElevenLabs voice is selected
+        if api_key_selection:
+            ELEVENLABS_API_KEY_DEFAULT = api_key_selection
+
+    print(USE_AWS_POLLY)
+    print(ELEVENLABS_VOICE_ID_DEFAULT)
+    print(ELEVENLABS_API_KEY_DEFAULT)
+    
 
     # Path to audio-gen directory
     dir_path = "/tmp/audio-dumps/audio-gen-files"

@@ -26,6 +26,20 @@
         </select>
 		<button id="play-demo" type="button" class="btn btn-primary">Demo</button>
 		<br><br>
+        <!-- Voice Selection Dropdown -->
+        <select id="voiceSelection" name="voiceSelection" onchange="voiceChanged()">
+            <option value="USE_AWS_POLLY">USE_AWS_POLLY</option>
+            <option value="ELEVENLABS_VOICE_ID_Freya">ELEVENLABS_VOICE_ID_Freya</option>
+            <option value="ELEVENLABS_VOICE_ID_ADAM">ELEVENLABS_VOICE_ID_ADAM</option>
+        </select>
+
+        <!-- API Key Selection Dropdown (initially hidden) -->
+        <select id="apiKeySelection" name="apiKeySelection" style="display:none;">
+            <option value="ELEVENLABS_API_KEY_1">ELEVENLABS_API_KEY_1</option>
+            <option value="ELEVENLABS_API_KEY_2">ELEVENLABS_API_KEY_2</option>
+            <option value="ELEVENLABS_API_KEY_3">ELEVENLABS_API_KEY_3</option>
+        </select>
+
 		<details>
 			<summary>Instructions</summary>
                 <ul>
@@ -46,16 +60,16 @@
                     <small>Default speech delays/pauses in seconds: </small>
                     <br>
                     <label for="comma-pause"><strong>Comma (,):</strong></label>
-                    <input type="text" id="comma-pause" name="comma_pause" pattern="\d*\.?\d+" placeholder="0.5"  maxlength="3" size="3" oninput="this.value = this.value.replace(/[^\d\.]/g, '')" style="height: 20px;">
+                    <input type="text" id="comma-pause" name="comma_pause" pattern="\d*\.?\d+" placeholder="0.2"  maxlength="4" size="4" oninput="this.value = this.value.replace(/[^\d\.]/g, '')" style="height: 20px;">
 
                     <label for="period-pause"><strong>Period (.):</strong></label>
-                    <input type="text" id="period-pause" name="period_pause" pattern="\d*\.?\d+" placeholder="1" maxlength="3" size="3" oninput="this.value = this.value.replace(/[^\d\.]/g, '')" style="height: 20px;">
+                    <input type="text" id="period-pause" name="period_pause" pattern="\d*\.?\d+" placeholder="0.2" maxlength="4" size="4" oninput="this.value = this.value.replace(/[^\d\.]/g, '')" style="height: 20px;">
 
                     <label for="newline-pause"><strong>New Line:</strong></label>
-                    <input type="text" id="newline-pause" name="newline_pause" pattern="\d*\.?\d+" placeholder="2" maxlength="3" size="3" oninput="this.value = this.value.replace(/[^\d\.]/g, '')" style="height: 20px;">
+                    <input type="text" id="newline-pause" name="newline_pause" pattern="\d*\.?\d+" placeholder="0.5" maxlength="4" size="4" oninput="this.value = this.value.replace(/[^\d\.]/g, '')" style="height: 20px;">
 
                     <label for="newsection-pause"><strong>New Section:</strong></label>
-                    <input type="text" id="newsection-pause" name="newsection_pause" pattern="\d*\.?\d+" placeholder="5" maxlength="5" size="3" oninput="this.value = this.value.replace(/[^\d\.]/g, '')" style="height: 20px;">
+                    <input type="text" id="newsection-pause" name="newsection_pause" pattern="\d*\.?\d+" placeholder="2" maxlength="5" size="4" oninput="this.value = this.value.replace(/[^\d\.]/g, '')" style="height: 20px;">
                 </div>
 
                 <div class="ml-auto" style="width: 20%;">
@@ -154,6 +168,15 @@
             audio.play();
         });
 
+        function voiceChanged() {
+            var voice = document.getElementById("voiceSelection").value;
+            var apiKeySelect = document.getElementById("apiKeySelection");
+            if (voice == "USE_AWS_POLLY") {
+                apiKeySelect.style.display = "none";
+            } else {
+                apiKeySelect.style.display = "block";
+            }
+        }
 
         ///////////////////
         //Add Step Button//
@@ -470,18 +493,18 @@
             }
             
             if (!formData["comma_pause"] || parseFloat(formData["comma_pause"]) < 0.1 || parseFloat(formData["comma_pause"]) > 999) {
-                formData["comma_pause"] = "0.5";
+                formData["comma_pause"] = "0.2";
             }
             
             if (!formData["period_pause"] || parseFloat(formData["period_pause"]) < 0.1 || parseFloat(formData["period_pause"]) > 999) {
-               formData["period_pause"] = "1";
+               formData["period_pause"] = "0.5";
             }
             
             if (!formData["newline_pause"] || parseFloat(formData["newline_pause"]) < 0.1 || parseFloat(formData["newline_pause"]) > 999) {
-                formData["newline_pause"] = "2";
+                formData["newline_pause"] = "0.5";
             }
             if (!formData["newsection_pause"] || parseFloat(formData["newsection_pause"]) < 0.1 || parseFloat(formData["newsection_pause"]) > 9999) {
-                formData["newsection_pause"] = "5";
+                formData["newsection_pause"] = "2";
             }
 
 
