@@ -29,7 +29,7 @@
         <!-- Voice Selection Dropdown -->
         <select id="voiceSelection" name="voiceSelection" onchange="voiceChanged()">
             <option value="USE_AWS_POLLY">USE_AWS_POLLY</option>
-            <option value="ELEVENLABS_VOICE_ID_Freya">ELEVENLABS_VOICE_ID_Freya</option>
+            <option value="ELEVENLABS_VOICE_ID_FREYA">ELEVENLABS_VOICE_ID_FREYA</option>
             <option value="ELEVENLABS_VOICE_ID_ADAM">ELEVENLABS_VOICE_ID_ADAM</option>
         </select>
 

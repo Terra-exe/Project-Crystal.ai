@@ -51,9 +51,9 @@ APP7_DESCRIPTION = r"Audio / to MP4 - Youtube Submit"
 APP51_DESCRIPTION = r"Audio / Merge files, save to S3"
 
 USE_AWS_POLLY = False #False = ElevenLabs Freya
-ELEVENLABS_VOICE_ID_Freya = "jsCqWAovK2LkecY7zXl4"
+ELEVENLABS_VOICE_ID_FREYA = "jsCqWAovK2LkecY7zXl4"
 ELEVENLABS_VOICE_ID_ADAM = "pNInz6obpgDQGcFmaJgB"
-ELEVENLABS_VOICE_ID_DEFAULT = ELEVENLABS_VOICE_ID_Freya # Freya - Replace with your specific voice ID
+ELEVENLABS_VOICE_ID_DEFAULT = ELEVENLABS_VOICE_ID_FREYA # Freya - Replace with your specific voice ID
 
 ELEVENLABS_API_KEY_1 = "ELEVENLABS_API_KEY"
 ELEVENLABS_API_KEY_2 = "ELEVENLABS_API_KEY_2"
@@ -173,22 +173,34 @@ def api_create_audio_file():
         print("voice_selection: " + voice_selection)
         print("api_key_selection: " + api_key_selection)
 
-        # Update the global variables based on the form input
-        if voice_selection == "USE_AWS_POLLY":
-            USE_AWS_POLLY = True
-            ELEVENLABS_VOICE_ID_DEFAULT = None  # or any other default logic
-        else:
-            USE_AWS_POLLY = False
-            ELEVENLABS_VOICE_ID_DEFAULT = voice_selection  # Assume voice_selection contains the voice ID
+        # Map the form selection to the actual global variable values
+        voice_id_map = {
+            "ELEVENLABS_VOICE_ID_FREYA": ELEVENLABS_VOICE_ID_FREYA,
+            "ELEVENLABS_VOICE_ID_ADAM": ELEVENLABS_VOICE_ID_ADAM
+        }
 
-        # Check if the ElevenLabs voice ID requires an API key and set it accordingly
-        if api_key_selection:
-            ELEVENLABS_API_KEY_DEFAULT = api_key_selection
+        api_key_map = {
+            "ELEVENLABS_API_KEY_1": ELEVENLABS_API_KEY_1,
+            "ELEVENLABS_API_KEY_2": ELEVENLABS_API_KEY_2,
+            "ELEVENLABS_API_KEY_3": ELEVENLABS_API_KEY_3
+        }
+
+        if voice_selection in voice_id_map:
+            ELEVENLABS_VOICE_ID_DEFAULT = voice_id_map[voice_selection]
+            USE_AWS_POLLY = False  # Assuming non-AWS Polly selection means ElevenLabs is used
+        else:
+            USE_AWS_POLLY = True  # Default to AWS Polly if no matching selection is found
+
+        # Set the API key based on the selection, default to ELEVENLABS_API_KEY_3 if not found
+        ELEVENLABS_API_KEY_DEFAULT = api_key_map.get(api_key_selection, ELEVENLABS_API_KEY_3)
+
+
+
 
         print(USE_AWS_POLLY)
         print(ELEVENLABS_VOICE_ID_DEFAULT)
         print(ELEVENLABS_API_KEY_DEFAULT)
-        
+
         # Initialize clients for Polly and S3
         if USE_AWS_POLLY == True:
             polly = boto3.client('polly', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
