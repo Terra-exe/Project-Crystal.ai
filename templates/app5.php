@@ -478,6 +478,10 @@
 
             var formData = {
                 title: document.getElementById('title').value,
+                // Assuming 'voiceSelection' is the ID for the dropdown for voice choice
+                voiceSelection: document.getElementById('voiceSelection').value,
+                // Assuming 'apiKeySelection' is the ID for the dropdown for the API key, which may not be present for all choices
+                apiKeySelection: document.getElementById('apiKeySelection') ? document.getElementById('apiKeySelection').value : '',            
                 voice: document.getElementById('voice').value,
                 comma_pause: document.getElementById('comma-pause').value,
                 period_pause: document.getElementById('period-pause').value,

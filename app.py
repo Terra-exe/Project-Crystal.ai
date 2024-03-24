@@ -126,30 +126,6 @@ def api_create_audio_file():
 
     global USE_AWS_POLLY, ELEVENLABS_VOICE_ID_DEFAULT, ELEVENLABS_API_KEY_DEFAULT  # Declare as global
 
-    # Extract voice selection and API key from the form data or JSON
-    voice_selection = request.form.get('voiceSelection') or request.json.get('voiceSelection')
-    api_key_selection = request.form.get('apiKeySelection') or request.json.get('apiKeySelection')
-
-    print("voice_selection: " + voice_selection)
-    print("api_key_selection: " + api_key_selection)
-
-    # Set global variables based on the voice selection
-    if voice_selection == "USE_AWS_POLLY":
-        USE_AWS_POLLY = True
-        ELEVENLABS_VOICE_ID_DEFAULT = None  # or keep the previous value if necessary
-    else:
-        USE_AWS_POLLY = False
-        ELEVENLABS_VOICE_ID_DEFAULT = voice_selection  # Assuming the value matches the global var names
-
-        # Set the API key if ElevenLabs voice is selected
-        if api_key_selection:
-            ELEVENLABS_API_KEY_DEFAULT = api_key_selection
-
-    print(USE_AWS_POLLY)
-    print(ELEVENLABS_VOICE_ID_DEFAULT)
-    print(ELEVENLABS_API_KEY_DEFAULT)
-    
-
     # Path to audio-gen directory
     dir_path = "/tmp/audio-dumps/audio-gen-files"
     # Check if audio-gen directory exists, create one if not
@@ -169,10 +145,7 @@ def api_create_audio_file():
     print("\n\n---------GENERATING JSON---------\n\n")
 
 
-    # Initialize clients for Polly and S3
-    if USE_AWS_POLLY == True:
-        polly = boto3.client('polly', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
-    
+
     s3 = boto3.client('s3', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
     bucket_name = 'crystal-audio-processing'
     s3_key = 'audio-dumps/audio-gen-files/Kriya.wav'
@@ -193,6 +166,35 @@ def api_create_audio_file():
         # Getting JSON data from the POST request
         input_json = request.get_json()
         
+        # Extracting `voiceSelection` and `apiKeySelection` from the input JSON
+        voice_selection = input_json.get('voiceSelection', None)
+        api_key_selection = input_json.get('apiKeySelection', None)
+        
+        print("voice_selection: " + voice_selection)
+        print("api_key_selection: " + api_key_selection)
+
+        # Update the global variables based on the form input
+        if voice_selection == "USE_AWS_POLLY":
+            USE_AWS_POLLY = True
+            ELEVENLABS_VOICE_ID_DEFAULT = None  # or any other default logic
+        else:
+            USE_AWS_POLLY = False
+            ELEVENLABS_VOICE_ID_DEFAULT = voice_selection  # Assume voice_selection contains the voice ID
+
+        # Check if the ElevenLabs voice ID requires an API key and set it accordingly
+        if api_key_selection:
+            ELEVENLABS_API_KEY_DEFAULT = api_key_selection
+
+        print(USE_AWS_POLLY)
+        print(ELEVENLABS_VOICE_ID_DEFAULT)
+        print(ELEVENLABS_API_KEY_DEFAULT)
+        
+        # Initialize clients for Polly and S3
+        if USE_AWS_POLLY == True:
+            polly = boto3.client('polly', region_name='us-west-2', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
+    
+        
+
         # Save the JSON data to a file and upload the file to S3
         json_file_path = os.path.join("/tmp", s3_key_json)
         with open(json_file_path, 'w') as json_file:
