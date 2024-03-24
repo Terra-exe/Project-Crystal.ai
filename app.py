@@ -130,6 +130,9 @@ def api_create_audio_file():
     voice_selection = request.form.get('voiceSelection') or request.json.get('voiceSelection')
     api_key_selection = request.form.get('apiKeySelection') or request.json.get('apiKeySelection')
 
+    print("voice_selection: " + voice_selection)
+    print("api_key_selection: " + api_key_selection)
+
     # Set global variables based on the voice selection
     if voice_selection == "USE_AWS_POLLY":
         USE_AWS_POLLY = True
