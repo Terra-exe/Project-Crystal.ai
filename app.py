@@ -124,6 +124,7 @@ def api_serve_audio():
 @app.route('/' + APP5_TITLE.lower() + '/create-audio-file', methods=['POST'])
 def api_create_audio_file():
 
+    global USE_AWS_POLLY, ELEVENLABS_VOICE_ID_DEFAULT, ELEVENLABS_API_KEY_DEFAULT  # Declare as global
 
     # Extract voice selection and API key from the form data or JSON
     voice_selection = request.form.get('voiceSelection') or request.json.get('voiceSelection')
