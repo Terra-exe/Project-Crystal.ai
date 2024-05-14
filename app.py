@@ -61,7 +61,8 @@ ELEVENLABS_API_KEY_3 = "ELEVENLABS_API_KEY_3"
 ELEVENLABS_API_KEY_4 = "ELEVENLABS_API_KEY_4"
 ELEVENLABS_API_KEY_5 = "ELEVENLABS_API_KEY_5"
 ELEVENLABS_API_KEY_6 = "ELEVENLABS_API_KEY_6"
-ELEVENLABS_API_KEY_DEFAULT = ELEVENLABS_API_KEY_3
+ELEVENLABS_API_KEY_7 = "ELEVENLABS_API_KEY_7"
+ELEVENLABS_API_KEY_DEFAULT = ELEVENLABS_API_KEY_4
 
 
 
@@ -188,7 +189,8 @@ def api_create_audio_file():
             "ELEVENLABS_API_KEY_3": ELEVENLABS_API_KEY_3,
             "ELEVENLABS_API_KEY_4": ELEVENLABS_API_KEY_4,
             "ELEVENLABS_API_KEY_5": ELEVENLABS_API_KEY_5,
-            "ELEVENLABS_API_KEY_6": ELEVENLABS_API_KEY_6
+            "ELEVENLABS_API_KEY_6": ELEVENLABS_API_KEY_6,
+            "ELEVENLABS_API_KEY_7": ELEVENLABS_API_KEY_7
             
         }
 
@@ -199,7 +201,7 @@ def api_create_audio_file():
             USE_AWS_POLLY = True  # Default to AWS Polly if no matching selection is found
 
         # Set the API key based on the selection, default to ELEVENLABS_API_KEY_3 if not found
-        ELEVENLABS_API_KEY_DEFAULT = api_key_map.get(api_key_selection, ELEVENLABS_API_KEY_3)
+        ELEVENLABS_API_KEY_DEFAULT = api_key_map.get(api_key_selection, ELEVENLABS_API_KEY_4)
 
 
 

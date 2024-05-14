@@ -41,6 +41,7 @@
             <option value="ELEVENLABS_API_KEY_4">ELEVENLABS_API_KEY_4</option>
             <option value="ELEVENLABS_API_KEY_5">ELEVENLABS_API_KEY_5</option>
             <option value="ELEVENLABS_API_KEY_6">ELEVENLABS_API_KEY_6</option>
+            <option value="ELEVENLABS_API_KEY_7">ELEVENLABS_API_KEY_7</option>
         </select>
 
 		<details>
