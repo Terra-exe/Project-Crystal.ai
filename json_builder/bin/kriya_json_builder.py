@@ -386,6 +386,22 @@ def processText(inputText, comma, period, newLine): # values from the main setti
             wait["value"] = "<5MSATANAMA>"
             wait["type"] = "soundEffect"
             wait["description"] = "A sound effect"
+        elif (type == "<BUBBLEPOP>"):
+            wait["value"] = "<BUBBLEPOP>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<BUBBLESPOP1>"):
+            wait["value"] = "<BUBBLESPOP1>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<BUBBLESPOP2QUIET>"):
+            wait["value"] = "<BUBBLESPOP2QUIET>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
+        elif (type == "<TIMELOCK>"):
+            wait["value"] = "<TIMELOCK>"
+            wait["type"] = "soundEffect"
+            wait["description"] = "A sound effect"
 
 
         elif (type == "#"):
