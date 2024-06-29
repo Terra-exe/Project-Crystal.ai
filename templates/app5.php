@@ -31,6 +31,7 @@
             <option value="USE_AWS_POLLY">USE_AWS_POLLY</option>
             <option value="ELEVENLABS_VOICE_ID_FREYA">ELEVENLABS_VOICE_ID_FREYA</option>
             <option value="ELEVENLABS_VOICE_ID_ADAM">ELEVENLABS_VOICE_ID_ADAM</option>
+            <option value="ELEVENLABS_VOICE_ID_GIGI">ELEVENLABS_VOICE_ID_GIGI</option>
         </select>
 
         <!-- API Key Selection Dropdown (initially hidden) -->
