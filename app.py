@@ -482,7 +482,14 @@ def api_create_audio_file():
                              
                         elif (soundEffect_name == "<5MSATANAMA>"):
                             segment_filename_local = r"sound_effects/5MSATANAMA.wav" 
-
+                        elif (soundEffect_name == "<BUBBLEPOP>"):
+                            segment_filename_local = r"sound_effects/BUBBLEPOP.wav" 
+                        elif (soundEffect_name == "<BUBBLESPOP1>"):
+                            segment_filename_local = r"sound_effects/BUBBLESPOP1.wav" 
+                        elif (soundEffect_name == "<BUBBLESPOP2QUIET>"):
+                            segment_filename_local = r"sound_effects/BUBBLESPOP2QUIET.wav" 
+                        elif (soundEffect_name == "<TIMELOCK>"):
+                            segment_filename_local = r"sound_effects/TIMELOCK.wav" 
 
                              
                             
